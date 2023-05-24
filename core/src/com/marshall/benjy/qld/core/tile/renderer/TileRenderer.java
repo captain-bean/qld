@@ -15,10 +15,10 @@ public class TileRenderer {
 
     public TileRenderer(AssetManager assetManager) {
         typeRenderers.put(TileTypes.PAVEMENT,
-                new TileTypeRenderer(TileTypes.PAVEMENT, "Plate_Sidewalk_01.obj", assetManager));
+                new TileTypeRenderer(TileTypes.PAVEMENT, "blockSnow.g3db", assetManager));
 
         typeRenderers.put(TileTypes.WOOD,
-                new TileTypeRenderer(TileTypes.WOOD, "Plate_Wood_01.obj", assetManager));
+                new TileTypeRenderer(TileTypes.WOOD, "block.g3db", assetManager));
     }
 
     public Model getTileModel(Tile tile) {
