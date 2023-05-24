@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -28,72 +29,57 @@ import java.util.ArrayList;
 
 public class RenderManager {
 
-    private AssetManager assetManager;
+	private AssetManager assetManager;
 
-    private LevelRenderer levelRenderer;
-    private OrthographicCamera cam;
-    private ModelBatch modelBatch;
-    private Environment environment;
-    private CameraInputController camController;
-    private Shader shader;
-    
-    private boolean loading = true;
+	private LevelRenderer levelRenderer;
+	private PerspectiveCamera cam;
+	private ModelBatch modelBatch;
+	private CameraInputController camController;
 
-    public RenderManager() {
-    	
-        assetManager = new AssetManager();
+	private DefaultRenderer shadedRenderer;
 
-        Level level = LevelGenerator.testLevel();
-        levelRenderer = new LevelRenderer(level, assetManager);
+	public RenderManager() {
 
-        environment = new Environment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+		assetManager = new AssetManager();
 
-        
+		Level level = LevelGenerator.testLevel();
+		levelRenderer = new LevelRenderer(level, assetManager);
 
-        
-        cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        
-        cam.position.set(100f, 50f, 100f);
-        cam.lookAt(0, 0, 0);
-        cam.near = .00001f;
-        cam.far = 100000f;
-        cam.zoom = .2f;
-        cam.update();
-        camController = new CameraInputController(cam);
-        Gdx.input.setInputProcessor(camController);
+		// TODO Camera Setup method / Camera control class
+		cam = new PerspectiveCamera(50, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cam.position.set(100f, 30f, 100f);
+		cam.lookAt(0, 0, 0);
+		cam.near = .1f;
+		cam.far = 1000f;
+		cam.update();
+		camController = new CameraInputController(cam);
+		Gdx.input.setInputProcessor(camController);
 
-        modelBatch = new ModelBatch();
-        
-        shader = new TestShader();
-        shader.init();
+		modelBatch = new ModelBatch();
 
-        assetManager.finishLoading();
-    }
-    public void render(GameState state) {
-    	
-    
-    		
-    	
-    	
-        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		shadedRenderer = new DefaultRenderer(null, assetManager, cam, modelBatch);
 
-        camController.update();
+		assetManager.finishLoading();
 
-        modelBatch.begin(cam);
-        modelBatch.render(levelRenderer.getInstances(), environment);
-        modelBatch.end();
-        
-        
-    }
+	}
 
-    public void dispose() {
-        modelBatch.dispose();
-        assetManager.dispose();
-    }
+	public void render(GameState state) {
+
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+		camController.update();
+
+		modelBatch.begin(cam);
+		shadedRenderer.render(state, levelRenderer.getInstances());
+		// modelBatch.render(levelRenderer.getInstances(), environment, shader);
+		modelBatch.end();
+
+	}
+
+	public void dispose() {
+		modelBatch.dispose();
+		assetManager.dispose();
+	}
 
 }
-
-
