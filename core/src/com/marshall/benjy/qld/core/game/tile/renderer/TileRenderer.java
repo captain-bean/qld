@@ -1,14 +1,12 @@
-package com.marshall.benjy.qld.core.tile.renderer;
+package com.marshall.benjy.qld.core.game.tile.renderer;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.marshall.benjy.qld.core.tile.Tile;
-import com.marshall.benjy.qld.core.tile.TileTypes;
+import com.marshall.benjy.qld.core.game.tile.TileTypes;
+import com.marshall.benjy.qld.core.game.tile.Tile;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class TileRenderer {
     private Map<TileTypes, TileTypeRenderer> typeRenderers = new HashMap<>();

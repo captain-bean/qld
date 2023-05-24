@@ -1,6 +1,6 @@
-package com.marshall.benjy.qld.core.level;
+package com.marshall.benjy.qld.core.game.level;
 
-import com.marshall.benjy.qld.core.tile.Tile;
+import com.marshall.benjy.qld.core.game.tile.Tile;
 
 public class Level {
 

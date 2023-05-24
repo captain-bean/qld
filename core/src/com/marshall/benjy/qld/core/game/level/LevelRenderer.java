@@ -1,11 +1,10 @@
-package com.marshall.benjy.qld.core.level;
+package com.marshall.benjy.qld.core.game.level;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.marshall.benjy.qld.core.tile.Tile;
-import com.marshall.benjy.qld.core.tile.TileTypes;
-import com.marshall.benjy.qld.core.tile.renderer.TileRenderer;
+import com.marshall.benjy.qld.core.game.tile.Tile;
+import com.marshall.benjy.qld.core.game.tile.renderer.TileRenderer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +16,6 @@ public class LevelRenderer {
 
 	private Level level;
 
-	
 	public List<ModelInstance> instances = new ArrayList<>();
 	private TileRenderer tileRenderer;
 
