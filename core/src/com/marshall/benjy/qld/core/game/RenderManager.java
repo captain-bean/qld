@@ -5,18 +5,16 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.Shader;
-import com.marshall.benjy.qld.core.game.GameState;
+import com.marshall.benjy.qld.core.shaders.TestShader;
 import com.marshall.benjy.qld.core.game.level.Level;
 import com.marshall.benjy.qld.core.game.level.LevelGenerator;
 import com.marshall.benjy.qld.core.game.level.LevelRenderer;
-import com.marshall.benjy.qld.core.shaders.TestShader;
 
 public class RenderManager {
 
     private AssetManager assetManager;
     private LevelRenderer levelRenderer;
     private ModelBatch modelBatch;
-
     private Shader shader;
 
     public RenderManager() {

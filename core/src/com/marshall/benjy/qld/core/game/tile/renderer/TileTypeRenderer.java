@@ -27,10 +27,7 @@ public class TileTypeRenderer {
 
 		if (assetManager.isLoaded(texturePath)) {
 			tileModel = assetManager.get(texturePath, Model.class);
-			
 		}
-
-		System.out.println(texturePath);
 
 		return tileModel;
 	}

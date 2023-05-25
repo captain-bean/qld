@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core;
+package com.marshall.benjy.qld.core.shaders;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
+import com.marshall.benjy.qld.core.game.GameState;
 
 public class DefaultRenderer {
 

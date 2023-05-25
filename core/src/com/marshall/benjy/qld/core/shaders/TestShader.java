@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core;
+package com.marshall.benjy.qld.core.shaders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;

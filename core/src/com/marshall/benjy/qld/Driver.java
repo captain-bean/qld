@@ -4,28 +4,24 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.marshall.benjy.qld.core.game.ControlManager;
 import com.marshall.benjy.qld.core.game.GameState;
 import com.marshall.benjy.qld.core.game.RenderManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Driver extends ApplicationAdapter {
-
-	GameState state;
-	RenderManager renderManager;
-
-	ControlManager controlManager;
+	private Game game;
 	@Override
 	public void create () {
-		state = new GameState();
-		renderManager = new RenderManager();
-		controlManager = new ControlManager();
+		System.setProperty("log4j.configurationFactory", LogConfigurator.class.getName());
+		game = new Game();
 	}
 
 	@Override
 	public void render () {
-		state = controlManager.acceptInputs(state);
-		renderManager.render(state);
+		game.render();
 	}
 
 	@Override
 	public void dispose () {
-		renderManager.dispose();
+		game.dispose();
 	}
 }
