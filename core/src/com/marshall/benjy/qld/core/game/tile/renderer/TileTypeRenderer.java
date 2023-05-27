@@ -7,7 +7,6 @@ import com.marshall.benjy.qld.core.game.tile.TileTypes;
 public class TileTypeRenderer {
 
 	private AssetManager assetManager;
-
 	private TileTypes type;
 	private String texturePath;
 	private Model tileModel;

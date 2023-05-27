@@ -1,17 +1,20 @@
 package com.marshall.benjy.qld.core.game;
 
-import com.marshall.benjy.qld.core.game.GameState;
+import com.badlogic.gdx.Gdx;
+import com.marshall.benjy.qld.core.game.control.KeyboardInputHandler;
 
 public class ControlManager {
 
-    public ControlManager() {
+    private GameState state;
+    public ControlManager(GameState state) {
+        this.state = state;
+        Gdx.input.setInputProcessor(new KeyboardInputHandler());
 
     }
 
     public GameState acceptInputs(GameState gameState) {
         // Look for inputs
 
-        // Create new game state
 
         return gameState;
     }

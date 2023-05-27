@@ -17,7 +17,7 @@ public class Game {
         logger.info("Initializing app...");
         state = new GameState();
         renderManager = new RenderManager();
-        controlManager = new ControlManager();
+        controlManager = new ControlManager(state);
     }
 
     public void render() {
