@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.Shader;
+import com.marshall.benjy.qld.core.shaders.DefaultRenderer;
 import com.marshall.benjy.qld.core.shaders.TestShader;
 import com.marshall.benjy.qld.core.game.level.Level;
 import com.marshall.benjy.qld.core.game.level.LevelGenerator;
@@ -17,6 +18,8 @@ public class RenderManager {
     private ModelBatch modelBatch;
     private Shader shader;
 
+    private DefaultRenderer testRenderer;
+    
     public RenderManager() {
         assetManager = new AssetManager();
 
@@ -25,6 +28,8 @@ public class RenderManager {
 
         modelBatch = new ModelBatch();
         
+        
+        testRenderer = new DefaultRenderer(modelBatch);
         shader = new TestShader();
         shader.init();
 
@@ -36,7 +41,8 @@ public class RenderManager {
 
 
         modelBatch.begin(state.getWorld().getCamera());
-        modelBatch.render(levelRenderer.getInstances(), state.getWorld().getEnvironment());
+        testRenderer.render(state, levelRenderer.getInstances());
+       // modelBatch.render(levelRenderer.getInstances(), state.getWorld().getEnvironment());
         modelBatch.end();
     }
 

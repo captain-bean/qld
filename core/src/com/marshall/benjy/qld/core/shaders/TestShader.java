@@ -1,5 +1,8 @@
 package com.marshall.benjy.qld.core.shaders;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -20,37 +23,43 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.marshall.benjy.qld.Game;
 
 public class TestShader implements Shader {
 	ShaderProgram program;
 	Camera camera;
 	RenderContext context;
-	int u_projTrans;
-	int u_worldTrans;
-	int u_color;
-	int u_lightPos;
-	int u_lightColor;
-	int u_lightPower;
-	int u_viewPos;
-	int u_shininess;
-	int u_ambient;
 
+	int materialAmbient, materialDiffuse, materialSpecular, materialShiny;
+	int lightPosition, lightAmbient, lightDiffuse, lightSpecular, lightIntensity;
+	int projectionMatrix, worldMatrix,viewPosition;
+	
+
+    private static final Logger logger = LogManager.getLogger(TestShader.class);
+    
 	@Override
 	public void init() {
 		String vert = Gdx.files.internal("Shaders/test.vert").readString();
-		String frag = Gdx.files.internal("Shaders/test.frag").readString();
+		String frag = Gdx.files.internal("Shaders/default.frag").readString();
 		program = new ShaderProgram(vert, frag);
 		if (!program.isCompiled())
 			throw new GdxRuntimeException(program.getLog());
-		u_projTrans = program.getUniformLocation("u_projTrans");
-		u_worldTrans = program.getUniformLocation("u_worldTrans");
-		u_lightPos = program.getUniformLocation("u_lightPos");
-		u_lightColor = program.getUniformLocation("u_lightColor");
-		u_lightPower = program.getUniformLocation("u_lightPower");
-		u_viewPos = program.getUniformLocation("u_viewPos");
-		u_shininess = program.getUniformLocation("u_shininess");
-		u_color = program.getUniformLocation("u_color");
-		u_ambient = program.getUniformLocation("u_ambient");
+		
+		materialAmbient = program.getUniformLocation("material.ambient");
+		materialDiffuse = program.getUniformLocation("material.diffuse");
+		materialSpecular = program.getUniformLocation("material.specular");
+		materialShiny = program.getUniformLocation("material.shininess");
+		
+
+		lightPosition = program.getUniformLocation("light.position");
+		lightAmbient = program.getUniformLocation("light.ambient");
+		lightDiffuse = program.getUniformLocation("light.diffuse");
+		lightSpecular = program.getUniformLocation("light.specular");
+		lightIntensity = program.getUniformLocation("light.power");
+		
+		worldMatrix = program.getUniformLocation("worldMatrix");
+		projectionMatrix = program.getUniformLocation("projectionMatrix");
+		viewPosition = program.getUniformLocation("viewPos");
 	}
 
 	@Override
@@ -63,7 +72,8 @@ public class TestShader implements Shader {
 		this.camera = camera;
 		this.context = context;
 		program.bind();
-		program.setUniformMatrix(u_projTrans, camera.combined);
+		program.setUniformMatrix(projectionMatrix, camera.combined);
+		program.setUniformf(viewPosition, camera.position);
 		context.setDepthTest(GL20.GL_LESS);
 		context.setCullFace(GL20.GL_BACK);
 		
@@ -71,37 +81,45 @@ public class TestShader implements Shader {
 
 	@Override
 	public void render(Renderable renderable) {
-		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
+		bindUniforms(renderable);
+		renderable.meshPart.render(program);
+		
+	}
+	
+	private void bindUniforms(Renderable renderable) {
+		
+		program.setUniformMatrix(worldMatrix, renderable.worldTransform);
 
 		Material material = renderable.material;
+		
 		ColorAttribute diffColorAttribute = (ColorAttribute) material.get(ColorAttribute.Diffuse);
-
-		System.out.println("Diffuse Color:" + diffColorAttribute.color.r + ", "+ diffColorAttribute.color.g + ", "+ diffColorAttribute.color.b + ", " + diffColorAttribute.color.a + "");
-		program.setUniformf(u_color, diffColorAttribute.color.r, diffColorAttribute.color.g, diffColorAttribute.color.b,
+		program.setUniformf(materialDiffuse, diffColorAttribute.color.r, diffColorAttribute.color.g, diffColorAttribute.color.b,
 				diffColorAttribute.color.a);
 		
 
 		ColorAttribute ambColorAttribute = (ColorAttribute) material.get(ColorAttribute.Ambient);
-		System.out.println("Ambient Color:" + ambColorAttribute.color.r + ", "+ ambColorAttribute.color.g + ", "+ ambColorAttribute.color.b + ", " + ambColorAttribute.color.a + "");
-		program.setUniformf(u_ambient, ambColorAttribute.color.r, ambColorAttribute.color.g, ambColorAttribute.color.b);
+		program.setUniformf(materialAmbient, ambColorAttribute.color.r, ambColorAttribute.color.g, ambColorAttribute.color.b);
 		
+		ColorAttribute specColorAttribute = (ColorAttribute) material.get(ColorAttribute.Specular);
+		program.setUniformf(materialSpecular, specColorAttribute.color.r, specColorAttribute.color.g, specColorAttribute.color.b);
 		
 		
 		FloatAttribute floatAttribute = ((FloatAttribute)material.get(FloatAttribute.Shininess));
-		program.setUniformf(u_shininess, 60);
-		System.out.println(floatAttribute.value);
+		program.setUniformf(materialShiny, floatAttribute.value);
 
 		Array<PointLight> lights = ((PointLightsAttribute) renderable.environment
 				.get(PointLightsAttribute.Type)).lights;
 		if (lights.size > 0) {
-			program.setUniformf(u_lightPos, lights.get(0).position);
-			program.setUniformf(u_lightColor, lights.get(0).color.r, lights.get(0).color.g, lights.get(0).color.b);
-			program.setUniformf(u_lightPower, lights.get(0).intensity);
+			program.setUniformf(lightPosition, lights.get(0).position);
+			program.setUniformf(lightDiffuse, lights.get(0).color.r * 0.5f, lights.get(0).color.g * 0.5f, lights.get(0).color.b * 0.5f );
+			Color colorLightAmb = ((ColorAttribute) (renderable.environment.get(ColorAttribute.AmbientLight))).color;
+			program.setUniformf(lightAmbient, colorLightAmb.r,colorLightAmb.g, colorLightAmb.b);
+			program.setUniformf(lightSpecular, lights.get(0).color.r, lights.get(0).color.g, lights.get(0).color.b);
+			program.setUniformf(lightIntensity, lights.get(0).intensity);
 			
 		}
 		
-		program.setUniformf(u_viewPos, camera.position);
-		renderable.meshPart.render(program);
+
 		
 	}
 
