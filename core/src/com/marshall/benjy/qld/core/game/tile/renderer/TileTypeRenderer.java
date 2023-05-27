@@ -1,13 +1,8 @@
-package com.marshall.benjy.qld.core.tile.renderer;
+package com.marshall.benjy.qld.core.game.tile.renderer;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.marshall.benjy.qld.core.tile.Tile;
-import com.marshall.benjy.qld.core.tile.TileTypes;
-
-import java.util.function.Consumer;
+import com.marshall.benjy.qld.core.game.tile.TileTypes;
 
 public class TileTypeRenderer {
 
@@ -32,10 +27,7 @@ public class TileTypeRenderer {
 
 		if (assetManager.isLoaded(texturePath)) {
 			tileModel = assetManager.get(texturePath, Model.class);
-			
 		}
-
-		System.out.println(texturePath);
 
 		return tileModel;
 	}

@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core;
+package com.marshall.benjy.qld.core.shaders;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
+import com.marshall.benjy.qld.core.game.GameState;
 
 public class DefaultRenderer {
 
-	private AssetManager assetManager;
-	private Camera cam;
+
 	private String texturePath;
 	private Environment environment;
 	private Shader shader;
@@ -23,19 +23,14 @@ public class DefaultRenderer {
 
 	private PointLight light;
 	
-	public DefaultRenderer(String path, AssetManager assetManager, Camera cam, ModelBatch modelBatch) {
+	public DefaultRenderer(ModelBatch modelBatch) {
 
-		this.assetManager = assetManager;
 		this.modelBatch = modelBatch;
-		this.cam = cam;
 
-		if (path != null) {
-			this.texturePath = "Models/" + path;
-			assetManager.load(texturePath, Model.class);
-		}
+		
 		environment = new Environment();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, 1f));
-		light = new PointLight().set(1.0f, 1.0f, 1.0f, -50f, 100f, 50f, 7000f);
+		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.2f, 0.2f, 0.2f, 1f));
+		light = new PointLight().set(1.0f, 1.0f, 1.0f, 100f, 100f, 50f, 2f);
 		environment.add(light);
 
 		shader = new TestShader();
