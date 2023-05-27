@@ -36,9 +36,9 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 void main()
 {    
    
-    vec3 output = CalcPointLight(light, v_normal,v_fragPos, viewPos);
+    vec3 result = CalcPointLight(light, v_normal,v_fragPos, viewPos);
     
-    gl_FragColor = vec4(output, 1.0);
+    gl_FragColor = vec4(result, 1.0);
 }
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewPos){
@@ -51,7 +51,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewPos){
     vec3 norm = normalize(normal);
     vec3 lightDir = normalize(light.position - fragPos);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = (light.diffuse * light.power) * (diff * material.diffuse);
+    vec3 diffuse = light.diffuse; //(light.diffuse * light.power) * (diff * material.diffuse);
     
     // specular
     vec3 viewDir = normalize(viewPos - fragPos);

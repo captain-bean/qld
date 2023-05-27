@@ -19,10 +19,6 @@ public class KeyboardInputHandler implements InputProcessor {
         playerMovementController = new PlayerMovementController();
     }
 
-    public void updateGameState(GameState state) {
-        this.state = state;
-    }
-
     @Override
     public boolean keyDown(int keycode) {
         Player player = state.getPlayer();

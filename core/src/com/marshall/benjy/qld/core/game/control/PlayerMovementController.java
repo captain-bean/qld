@@ -13,9 +13,7 @@ public class PlayerMovementController {
 
     public void movePlayer(Player player, int deltaX, int deltaY) {
         Position oldPosition = player.getPosition();
-        logger.info("Old position: " + oldPosition);
         Position newPosition = new Position(oldPosition.getX() + deltaX, oldPosition.getY() + deltaY);
         player.setPosition(newPosition);
-        logger.info("New player position: " + newPosition);
     }
 }
