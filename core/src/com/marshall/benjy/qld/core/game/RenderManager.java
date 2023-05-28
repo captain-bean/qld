@@ -42,7 +42,7 @@ public class RenderManager {
 
         modelBatch.begin(state.getWorld().getCamera());
         testRenderer.render(state, levelRenderer.getInstances());
-       // modelBatch.render(levelRenderer.getInstances(), state.getWorld().getEnvironment());
+        //modelBatch.render(levelRenderer.getInstances(), state.getWorld().getEnvironment());
         modelBatch.end();
     }
 

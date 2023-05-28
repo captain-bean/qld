@@ -19,7 +19,7 @@ public class World {
 
 		cam = new PerspectiveCamera(50, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		cam.position.set(100f, 50f, 100f);
+		cam.position.set(50f, 50f, 50f);
 		cam.lookAt(0, 0, 0);
 		cam.near = .1f;
 		cam.far = 1000f;
