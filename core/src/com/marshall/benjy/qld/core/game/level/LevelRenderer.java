@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.marshall.benjy.qld.Game;
+import com.marshall.benjy.qld.core.game.Constants;
 import com.marshall.benjy.qld.core.game.tile.Tile;
 import com.marshall.benjy.qld.core.game.tile.renderer.TileRenderer;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +17,6 @@ import java.util.List;
 public class LevelRenderer {
 
 	private static final Logger logger = LogManager.getLogger(LevelRenderer.class);
-	private float SCALE = 10f;
 
 	private Level level;
 
@@ -41,7 +41,7 @@ public class LevelRenderer {
 					return;
 				}
 				ModelInstance tileInstance = new ModelInstance(tileModel);
-				tileInstance.transform.setToTranslation((x - level.getTiles().length / 2)  * SCALE , 0, (z - level.getTiles().length / 2) * SCALE ); 
+				tileInstance.transform.setToTranslation(x * Constants.SCALE, 0, z * Constants.SCALE);
 				instances.add(tileInstance);
 			}
 		}
