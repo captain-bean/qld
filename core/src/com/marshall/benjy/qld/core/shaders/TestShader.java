@@ -31,7 +31,6 @@ public class TestShader implements Shader {
 	RenderContext context;
 
 	int materialAmbient, materialDiffuse, materialSpecular, materialShiny;
-	int lightPosition, lightAmbient, lightDiffuse, lightSpecular, lightIntensity;
 	int projectionMatrix, worldMatrix,viewPosition;
 	
 
@@ -50,12 +49,6 @@ public class TestShader implements Shader {
 		materialSpecular = program.getUniformLocation("material.specular");
 		materialShiny = program.getUniformLocation("material.shininess");
 		
-
-		lightPosition = program.getUniformLocation("light.position");
-		lightAmbient = program.getUniformLocation("light.ambient");
-		lightDiffuse = program.getUniformLocation("light.diffuse");
-		lightSpecular = program.getUniformLocation("light.specular");
-		lightIntensity = program.getUniformLocation("light.power");
 		
 		worldMatrix = program.getUniformLocation("worldMatrix");
 		projectionMatrix = program.getUniformLocation("projectionMatrix");
@@ -109,15 +102,22 @@ public class TestShader implements Shader {
 
 		Array<PointLight> lights = ((PointLightsAttribute) renderable.environment
 				.get(PointLightsAttribute.Type)).lights;
-		if (lights.size > 0) {
-			program.setUniformf(lightPosition, lights.get(0).position);
-			program.setUniformf(lightDiffuse, lights.get(0).color.r * 0.5f, lights.get(0).color.g * 0.5f, lights.get(0).color.b * 0.5f );
-			Color colorLightAmb = ((ColorAttribute) (renderable.environment.get(ColorAttribute.AmbientLight))).color;
-			program.setUniformf(lightAmbient, colorLightAmb.r,colorLightAmb.g, colorLightAmb.b);
-			program.setUniformf(lightSpecular, lights.get(0).color.r, lights.get(0).color.g, lights.get(0).color.b);
-			program.setUniformf(lightIntensity, lights.get(0).intensity);
-			
-		}
+		
+		Color colorLightAmb = ((ColorAttribute) (renderable.environment.get(ColorAttribute.AmbientLight))).color;
+
+		program.setUniformf("pointLightsSize", lights.size);
+		
+		float constant = 1f;
+		for(int i = 0; i < lights.size; i++) {
+			program.setUniformf("pointLights["+i+"].position", lights.get(i).position);
+			program.setUniformf("pointLights["+i+"].diffuse", lights.get(i).color.r , lights.get(i).color.g , lights.get(i).color.b );
+			program.setUniformf("pointLights["+i+"].ambient", colorLightAmb.r,colorLightAmb.g, colorLightAmb.b);
+			program.setUniformf("pointLights["+i+"].specular", lights.get(i).color.r, lights.get(i).color.g, lights.get(i).color.b);
+			program.setUniformf("pointLights["+i+"].constant", 1f);
+			program.setUniformf("pointLights["+i+"].linear",  constant / (float)Math.pow(lights.get(i).intensity,2)); 
+			program.setUniformf("pointLights["+i+"].quadratic", constant / (float)Math.pow(lights.get(i).intensity,3));
+		}			
+		
 		
 
 		

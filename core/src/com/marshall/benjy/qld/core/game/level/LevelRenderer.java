@@ -39,7 +39,7 @@ public class LevelRenderer {
 					return;
 				}
 				ModelInstance tileInstance = new ModelInstance(tileModel);
-				tileInstance.transform.setToTranslation(x * SCALE, 0, z * SCALE);
+				tileInstance.transform.setToTranslation((x - level.getTiles().length / 2)  * SCALE , 0, (z - level.getTiles().length / 2) * SCALE ); 
 				instances.add(tileInstance);
 			}
 		}

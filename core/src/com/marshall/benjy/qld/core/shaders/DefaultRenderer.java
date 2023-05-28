@@ -31,9 +31,17 @@ public class DefaultRenderer {
 		
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.2f, 0.2f, 0.2f, 1f));
-		light = new PointLight().set(1.0f, 1.0f, 1.0f, 100f, 100f, 50f, 2f);
+		light = new PointLight().set(1.0f, 1.0f, 0.0f, 25f, 15f, 25f, 100f);
 		environment.add(light);
-
+		light = new PointLight().set(1.0f, 0.0f, 0f, -25f, 15f, 25f, 100f);
+		environment.add(light);
+		light = new PointLight().set(0.0f, 1.0f, 0f, 25f, 15f, -25f, 100f);
+		environment.add(light);
+		light = new PointLight().set(0.0f, 0.0f, 1f, -25f, 15f, -25f, 100f);
+		environment.add(light);
+		light = new PointLight().set(1.0f, 1.0f, 1f, 50f, 15f, 50f, 10f);
+		environment.add(light);
+		
 		shader = new TestShader();
 		shader.init();
 	}
