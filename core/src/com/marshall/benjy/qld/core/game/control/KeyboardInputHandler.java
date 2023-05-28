@@ -5,18 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.marshall.benjy.qld.core.game.GameState;
 import com.marshall.benjy.qld.core.game.player.Player;
-import com.marshall.benjy.qld.core.game.player.PlayerMovementController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class KeyboardInputHandler implements InputProcessor {
     private static final Logger logger = LogManager.getLogger(KeyboardInputHandler.class);
     private GameState state;
-    private PlayerMovementController playerMovementController;
+    private MovementController movementController;
 
     public KeyboardInputHandler(GameState state) {
         this.state = state;
-        playerMovementController = new PlayerMovementController(state.getPlayer());
+        movementController = new MovementController(state);
     }
 
     @Override
@@ -25,16 +24,16 @@ public class KeyboardInputHandler implements InputProcessor {
         Player player = state.getPlayer();
         switch (keycode) {
             case Input.Keys.W:
-                playerMovementController.movePlayer(0, -1);
+                movementController.movePlayer(0, -1);
                 break;
             case Input.Keys.A:
-                playerMovementController.movePlayer(-1, 0);
+                movementController.movePlayer(-1, 0);
                 break;
             case Input.Keys.S:
-                playerMovementController.movePlayer(0, 1);
+                movementController.movePlayer(0, 1);
                 break;
             case Input.Keys.D:
-                playerMovementController.movePlayer(1, 0);
+                movementController.movePlayer(1, 0);
                 break;
             case Input.Keys.ESCAPE:
                 Gdx.app.exit();

@@ -17,6 +17,9 @@ public class TileRenderer {
 
         typeRenderers.put(TileTypes.WOOD,
                 new TileTypeRenderer(TileTypes.WOOD, "block.g3db", assetManager));
+
+        typeRenderers.put(TileTypes.BLOWED_UP,
+                new TileTypeRenderer(TileTypes.BLOWED_UP, "blockSnowHexagonLow.g3db", assetManager));
     }
 
     public Model getTileModel(Tile tile) {
