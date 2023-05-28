@@ -5,9 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.marshall.benjy.qld.core.game.GameState;
 import com.marshall.benjy.qld.core.game.player.Player;
+import com.marshall.benjy.qld.core.game.player.PlayerRenderer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class KeyboardInputHandler implements InputProcessor {
-
+    private static final Logger logger = LogManager.getLogger(KeyboardInputHandler.class);
     private GameState state;
     private PlayerMovementController playerMovementController;
     public KeyboardInputHandler() {
@@ -21,6 +24,7 @@ public class KeyboardInputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        logger.info("Key down event received: " + keycode);
         Player player = state.getPlayer();
         switch (keycode) {
             case Input.Keys.W:

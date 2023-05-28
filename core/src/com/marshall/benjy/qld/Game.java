@@ -16,12 +16,11 @@ public class Game {
     public Game() {
         logger.info("Initializing app...");
         state = new GameState();
-        renderManager = new RenderManager();
+        renderManager = new RenderManager(state);
         controlManager = new ControlManager(state);
     }
 
     public void render() {
-        state = controlManager.acceptInputs(state);
         renderManager.render(state);
     }
 
