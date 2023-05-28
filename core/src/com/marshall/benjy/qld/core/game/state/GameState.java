@@ -1,6 +1,6 @@
-package com.marshall.benjy.qld.core.game;
+package com.marshall.benjy.qld.core.game.state;
 
-import com.marshall.benjy.qld.core.control.LevelGenerator;
+import com.marshall.benjy.qld.core.game.LevelGenerator;
 import com.marshall.benjy.qld.core.render.DevEnvironment;
 
 public class GameState {

@@ -1,8 +1,8 @@
-package com.marshall.benjy.qld.core.game;
+package com.marshall.benjy.qld.core.game.state;
 
-import com.marshall.benjy.qld.core.game.datatype.Position;
-import com.marshall.benjy.qld.core.game.tile.Tile;
-import com.marshall.benjy.qld.core.game.tile.TileTypes;
+import com.marshall.benjy.qld.core.datatype.Position;
+import com.marshall.benjy.qld.core.game.state.tile.Tile;
+import com.marshall.benjy.qld.core.game.state.tile.TileTypes;
 
 import java.util.ArrayList;
 import java.util.List;

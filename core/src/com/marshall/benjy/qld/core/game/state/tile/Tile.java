@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.tile;
+package com.marshall.benjy.qld.core.game.state.tile;
 
 public class Tile {
 

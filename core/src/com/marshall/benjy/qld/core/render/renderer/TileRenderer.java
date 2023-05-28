@@ -2,8 +2,8 @@ package com.marshall.benjy.qld.core.render.renderer;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.marshall.benjy.qld.core.game.tile.TileTypes;
-import com.marshall.benjy.qld.core.game.tile.Tile;
+import com.marshall.benjy.qld.core.game.state.tile.TileTypes;
+import com.marshall.benjy.qld.core.game.state.tile.Tile;
 
 import java.util.HashMap;
 import java.util.Map;

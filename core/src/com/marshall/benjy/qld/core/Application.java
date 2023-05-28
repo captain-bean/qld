@@ -3,7 +3,7 @@ package com.marshall.benjy.qld.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.marshall.benjy.qld.core.control.ControlManager;
-import com.marshall.benjy.qld.core.game.GameState;
+import com.marshall.benjy.qld.core.game.state.GameState;
 import com.marshall.benjy.qld.core.render.RenderManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

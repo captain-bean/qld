@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
-import com.marshall.benjy.qld.core.game.Constants;
+import com.marshall.benjy.qld.core.Constants;
 import com.marshall.benjy.qld.core.render.shaders.DefaultShader;
 
 public class WorldRenderer {

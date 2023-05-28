@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.datatype;
+package com.marshall.benjy.qld.core.datatype;
 
 public class Position {
 

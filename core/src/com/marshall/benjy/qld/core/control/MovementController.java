@@ -1,9 +1,9 @@
 package com.marshall.benjy.qld.core.control;
 
-import com.marshall.benjy.qld.core.game.datatype.Position;
-import com.marshall.benjy.qld.core.game.GameState;
-import com.marshall.benjy.qld.core.game.Level;
-import com.marshall.benjy.qld.core.game.Player;
+import com.marshall.benjy.qld.core.datatype.Position;
+import com.marshall.benjy.qld.core.game.state.GameState;
+import com.marshall.benjy.qld.core.game.state.Level;
+import com.marshall.benjy.qld.core.game.state.Player;
 
 public class MovementController {
     private GameState state;
