@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.marshall.benjy.qld.core.Constants;
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.tile.Tile;
-import com.marshall.benjy.qld.core.render.renderer.TileRenderer;
+import com.marshall.benjy.qld.core.render.tile.TileRenderer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
