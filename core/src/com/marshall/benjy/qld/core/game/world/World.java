@@ -31,12 +31,12 @@ public class World {
 		light = new PointLight().set(1.0f, 1.0f, 1f, 50f, 15f, 50f, 10f);
 		environment.add(light);
 
-		cam = new PerspectiveCamera(50, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cam = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		cam.position.set(50f, 50f, 50f);
+		cam.position.set(10f, 30f, 50f);
 		cam.lookAt(0, 0, 0);
 		cam.near = .1f;
-		cam.far = 1000f;
+		cam.far = 500f;
 		cam.update();
 	}
 
