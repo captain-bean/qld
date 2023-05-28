@@ -29,9 +29,8 @@ public class Player {
     public void setPosition(Position position) {
         this.position = position;
         logger.info("Updating player's position: " + position);
-        playerMovedListeners.forEach(thing -> {
-            logger.info("Player moved listener called..");
-            thing.accept(this);
+        playerMovedListeners.forEach(listener -> {
+            listener.accept(this);
         });
     }
 }
