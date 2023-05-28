@@ -37,8 +37,8 @@ public class DefaultShader implements Shader {
     
 	@Override
 	public void init() {
-		String vert = Gdx.files.internal("Shaders/test.vert").readString();
-		String frag = Gdx.files.internal("Shaders/test.frag").readString();
+		String vert = Gdx.files.internal("Shaders/Default.vert").readString();
+		String frag = Gdx.files.internal("Shaders/Default.frag").readString();
 		program = new ShaderProgram(vert, frag);
 		if (!program.isCompiled())
 			throw new GdxRuntimeException(program.getLog());
@@ -103,18 +103,19 @@ public class DefaultShader implements Shader {
 		
 		Color colorLightAmb = ((ColorAttribute) (renderable.environment.get(ColorAttribute.AmbientLight))).color;
 
-		/*program.setUniformi("pointLightsSize", lights.size);
+		program.setUniformi("pointLightsSize", lights.size);
 		
 		float constant = 1f;
 		for(int i = 0; i < lights.size; i++) {
 			program.setUniformf("pointLights["+i+"].position", lights.get(i).position);
-			program.setUniformf("pointLights["+i+"].diffuse", lights.get(i).color.r , lights.get(i).color.g , lights.get(i).color.b );
+			program.setUniformf("pointLights["+i+"].diffuse", lights.get(i).color.r , lights.get(i).color.g , lights.get(i).color.b);
 			program.setUniformf("pointLights["+i+"].ambient", colorLightAmb.r,colorLightAmb.g, colorLightAmb.b);
 			program.setUniformf("pointLights["+i+"].specular", lights.get(i).color.r, lights.get(i).color.g, lights.get(i).color.b);
 			program.setUniformf("pointLights["+i+"].constant", 1f);
 			program.setUniformf("pointLights["+i+"].linear",  constant / (float)Math.pow(lights.get(i).intensity,2)); 
 			program.setUniformf("pointLights["+i+"].quadratic", constant / (float)Math.pow(lights.get(i).intensity,3));
-		}	*/
+			program.setUniformf("pointLights["+i+"].intensity", lights.get(i).intensity);
+		}	
 		
 		
 
