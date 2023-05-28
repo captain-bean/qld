@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.control;
+package com.marshall.benjy.qld.core.game.control;
 
 import com.marshall.benjy.qld.core.datatype.Position;
 import com.marshall.benjy.qld.core.game.state.GameState;

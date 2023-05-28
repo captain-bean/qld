@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.control;
+package com.marshall.benjy.qld.core.game.control;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

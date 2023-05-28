@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.render.tile;
+package com.marshall.benjy.qld.core.game.render.tile;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;

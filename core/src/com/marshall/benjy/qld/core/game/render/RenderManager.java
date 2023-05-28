@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.render;
+package com.marshall.benjy.qld.core.game.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;

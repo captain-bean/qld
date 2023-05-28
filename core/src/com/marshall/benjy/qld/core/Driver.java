@@ -1,6 +1,7 @@
 package com.marshall.benjy.qld.core;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.marshall.benjy.qld.core.game.Application;
 
 public class Driver extends ApplicationAdapter {
 	private Application game;

@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.render;
+package com.marshall.benjy.qld.core.game.render;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
-import com.marshall.benjy.qld.core.Constants;
-import com.marshall.benjy.qld.core.render.shaders.DefaultShader;
+import com.marshall.benjy.qld.core.game.Constants;
+import com.marshall.benjy.qld.core.game.render.shaders.DefaultShader;
 
 public class WorldRenderer {
 

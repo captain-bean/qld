@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.render.shaders;
+package com.marshall.benjy.qld.core.game.render.shaders;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
