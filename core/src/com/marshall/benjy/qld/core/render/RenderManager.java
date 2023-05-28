@@ -1,13 +1,10 @@
-package com.marshall.benjy.qld.core.game;
+package com.marshall.benjy.qld.core.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.marshall.benjy.qld.core.game.player.PlayerRenderer;
-import com.marshall.benjy.qld.core.game.world.WorldRenderer;
-import com.marshall.benjy.qld.core.game.level.LevelRenderer;
+import com.marshall.benjy.qld.core.game.GameState;
 
 public class RenderManager {
     private AssetManager assetManager;

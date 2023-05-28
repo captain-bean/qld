@@ -1,21 +1,21 @@
-package com.marshall.benjy.qld;
+package com.marshall.benjy.qld.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
-import com.marshall.benjy.qld.core.game.ControlManager;
+import com.marshall.benjy.qld.core.control.ControlManager;
 import com.marshall.benjy.qld.core.game.GameState;
-import com.marshall.benjy.qld.core.game.RenderManager;
+import com.marshall.benjy.qld.core.render.RenderManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Game {
-    private static final Logger logger = LogManager.getLogger(Game.class);
+public class Application {
+    private static final Logger logger = LogManager.getLogger(Application.class);
 
     private GameState state;
     private RenderManager renderManager;
     private ControlManager controlManager;
 
-    public Game() {
+    public Application() {
         logger.info("Initializing app...");
 
         Gdx.graphics.setUndecorated(true);

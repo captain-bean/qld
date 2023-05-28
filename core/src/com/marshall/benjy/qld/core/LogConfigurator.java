@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld;
+package com.marshall.benjy.qld.core;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Filter;

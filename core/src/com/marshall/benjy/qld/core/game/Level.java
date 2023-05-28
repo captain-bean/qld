@@ -1,6 +1,6 @@
-package com.marshall.benjy.qld.core.game.level;
+package com.marshall.benjy.qld.core.game;
 
-import com.marshall.benjy.qld.core.datatype.Position;
+import com.marshall.benjy.qld.core.game.datatype.Position;
 import com.marshall.benjy.qld.core.game.tile.Tile;
 import com.marshall.benjy.qld.core.game.tile.TileTypes;
 

@@ -1,10 +1,10 @@
-package com.marshall.benjy.qld.core.game.control;
+package com.marshall.benjy.qld.core.control;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.marshall.benjy.qld.core.game.GameState;
-import com.marshall.benjy.qld.core.game.player.Player;
+import com.marshall.benjy.qld.core.game.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

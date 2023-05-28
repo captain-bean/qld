@@ -1,13 +1,12 @@
-package com.marshall.benjy.qld.core.game.player;
+package com.marshall.benjy.qld.core.render;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.marshall.benjy.qld.core.game.Constants;
+import com.marshall.benjy.qld.core.game.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.function.Consumer;
 
 public class PlayerRenderer {
 

@@ -1,7 +1,7 @@
-package com.marshall.benjy.qld.core.game;
+package com.marshall.benjy.qld.core.control;
 
 import com.badlogic.gdx.Gdx;
-import com.marshall.benjy.qld.core.game.control.KeyboardInputHandler;
+import com.marshall.benjy.qld.core.game.GameState;
 
 public class ControlManager {
 

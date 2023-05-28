@@ -1,7 +1,7 @@
-package com.marshall.benjy.qld.core.game.player;
+package com.marshall.benjy.qld.core.game;
 
 
-import com.marshall.benjy.qld.core.datatype.Position;
+import com.marshall.benjy.qld.core.game.datatype.Position;
 
 import java.util.ArrayList;
 import java.util.List;

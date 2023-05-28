@@ -1,26 +1,21 @@
 package com.marshall.benjy.qld.core.game;
 
-import com.marshall.benjy.qld.core.datatype.Position;
-import com.marshall.benjy.qld.core.game.level.Level;
-import com.marshall.benjy.qld.core.game.level.LevelGenerator;
-import com.marshall.benjy.qld.core.game.player.Player;
-import com.marshall.benjy.qld.core.game.tile.Tile;
-import com.marshall.benjy.qld.core.game.tile.TileTypes;
-import com.marshall.benjy.qld.core.game.world.World;
+import com.marshall.benjy.qld.core.control.LevelGenerator;
+import com.marshall.benjy.qld.core.render.DevEnvironment;
 
 public class GameState {
 
-    private World world;
+    private DevEnvironment world;
     private Level level;
     private Player player;
 
     public GameState() {
-        this.world = new World();
+        this.world = new DevEnvironment();
         this.level = LevelGenerator.testLevel();
         this.player = new Player();
     }
 
-    public World getWorld() {
+    public DevEnvironment getWorld() {
         return world;
     }
     public Level getLevel() {

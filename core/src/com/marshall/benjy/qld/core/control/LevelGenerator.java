@@ -1,5 +1,6 @@
-package com.marshall.benjy.qld.core.game.level;
+package com.marshall.benjy.qld.core.control;
 
+import com.marshall.benjy.qld.core.game.Level;
 import com.marshall.benjy.qld.core.game.tile.Tile;
 import com.marshall.benjy.qld.core.game.tile.TileTypes;
 

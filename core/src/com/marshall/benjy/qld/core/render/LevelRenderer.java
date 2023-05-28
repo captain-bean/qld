@@ -1,12 +1,12 @@
-package com.marshall.benjy.qld.core.game.level;
+package com.marshall.benjy.qld.core.render;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.marshall.benjy.qld.Game;
 import com.marshall.benjy.qld.core.game.Constants;
+import com.marshall.benjy.qld.core.game.Level;
 import com.marshall.benjy.qld.core.game.tile.Tile;
-import com.marshall.benjy.qld.core.game.tile.renderer.TileRenderer;
+import com.marshall.benjy.qld.core.render.renderer.TileRenderer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
