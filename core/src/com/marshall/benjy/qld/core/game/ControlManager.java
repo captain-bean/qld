@@ -11,11 +11,4 @@ public class ControlManager {
         Gdx.input.setInputProcessor(new KeyboardInputHandler());
 
     }
-
-    public GameState acceptInputs(GameState gameState) {
-        // Look for inputs
-
-
-        return gameState;
-    }
 }

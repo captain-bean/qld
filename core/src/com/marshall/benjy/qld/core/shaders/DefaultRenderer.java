@@ -1,5 +1,6 @@
 package com.marshall.benjy.qld.core.shaders;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -41,6 +42,10 @@ public class DefaultRenderer {
 		update();
 
 		modelBatch.render(instances, environment, shader);
+	}
+
+	public void render(GameState state, ModelInstance instance) {
+		render(state, Collections.singletonList(instance));
 	}
 
 	private void update() {

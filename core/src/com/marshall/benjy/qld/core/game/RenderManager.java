@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.Shader;
+import com.marshall.benjy.qld.core.game.player.PlayerRenderer;
 import com.marshall.benjy.qld.core.shaders.DefaultRenderer;
 import com.marshall.benjy.qld.core.shaders.TestShader;
 import com.marshall.benjy.qld.core.game.level.Level;
@@ -12,23 +13,22 @@ import com.marshall.benjy.qld.core.game.level.LevelGenerator;
 import com.marshall.benjy.qld.core.game.level.LevelRenderer;
 
 public class RenderManager {
-
     private AssetManager assetManager;
     private LevelRenderer levelRenderer;
+    private PlayerRenderer playerRenderer;
     private ModelBatch modelBatch;
     private Shader shader;
-
     private DefaultRenderer testRenderer;
     
-    public RenderManager() {
+    public RenderManager(GameState state) {
         assetManager = new AssetManager();
 
-        Level level = LevelGenerator.testLevel();
+        Level level = state.getLevel();
         levelRenderer = new LevelRenderer(level, assetManager);
+        playerRenderer = new PlayerRenderer(state.getPlayer(), "bomb.g3db", assetManager);
 
         modelBatch = new ModelBatch();
-        
-        
+
         testRenderer = new DefaultRenderer(modelBatch);
         shader = new TestShader();
         shader.init();
@@ -42,7 +42,7 @@ public class RenderManager {
 
         modelBatch.begin(state.getWorld().getCamera());
         testRenderer.render(state, levelRenderer.getInstances());
-       // modelBatch.render(levelRenderer.getInstances(), state.getWorld().getEnvironment());
+        testRenderer.render(state, playerRenderer.getPlayerModelInstance());
         modelBatch.end();
     }
 
