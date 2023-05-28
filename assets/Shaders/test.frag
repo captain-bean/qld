@@ -25,7 +25,7 @@ void main() {
 vec3 normal = normalize(v_normal); 
 vec3 lightDir = u_lightPos - v_fragPos;
 float distance = length(lightDir);
-float attenuation = 1 / (distance * distance) ;
+float attenuation = 1.0 / (distance * distance) ;
 lightDir = normalize(lightDir);
 
 
@@ -43,9 +43,9 @@ specular = pow(specAngle, u_shininess);
 }
 
 
-
-vec3 colorLinear = u_ambient * v_color +
-    v_color * lambertian * u_lightColor * u_lightPower * attenuation +
+vec3 colorVec3 = v_color.rgb;
+vec3 colorLinear = u_ambient * colorVec3 +
+    colorVec3 * lambertian * u_lightColor * u_lightPower * attenuation +
     specColor * specular * u_lightColor * u_lightPower * attenuation;
 
 

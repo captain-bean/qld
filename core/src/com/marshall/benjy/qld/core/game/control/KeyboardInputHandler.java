@@ -13,13 +13,10 @@ public class KeyboardInputHandler implements InputProcessor {
     private static final Logger logger = LogManager.getLogger(KeyboardInputHandler.class);
     private GameState state;
     private PlayerMovementController playerMovementController;
-    public KeyboardInputHandler() {
-        this(new GameState());
-    }
 
     public KeyboardInputHandler(GameState state) {
         this.state = state;
-        playerMovementController = new PlayerMovementController();
+        playerMovementController = new PlayerMovementController(state.getPlayer());
     }
 
     @Override
@@ -28,16 +25,16 @@ public class KeyboardInputHandler implements InputProcessor {
         Player player = state.getPlayer();
         switch (keycode) {
             case Input.Keys.W:
-                playerMovementController.movePlayer(player, -1, 0);
+                playerMovementController.movePlayer(-1, 0);
                 break;
             case Input.Keys.A:
-                playerMovementController.movePlayer(player, 0, -1);
+                playerMovementController.movePlayer(0, -1);
                 break;
             case Input.Keys.S:
-                playerMovementController.movePlayer(player, 1, 0);
+                playerMovementController.movePlayer(1, 0);
                 break;
             case Input.Keys.D:
-                playerMovementController.movePlayer(player, 0, 1);
+                playerMovementController.movePlayer(0, 1);
                 break;
            default:
                 return false;

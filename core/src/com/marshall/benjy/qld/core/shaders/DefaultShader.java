@@ -25,21 +25,20 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.marshall.benjy.qld.Game;
 
-public class TestShader implements Shader {
+public class DefaultShader implements Shader {
 	ShaderProgram program;
-	Camera camera;
 	RenderContext context;
 
 	int materialAmbient, materialDiffuse, materialSpecular, materialShiny;
 	int projectionMatrix, worldMatrix,viewPosition;
 	
 
-    private static final Logger logger = LogManager.getLogger(TestShader.class);
+    private static final Logger logger = LogManager.getLogger(DefaultShader.class);
     
 	@Override
 	public void init() {
 		String vert = Gdx.files.internal("Shaders/test.vert").readString();
-		String frag = Gdx.files.internal("Shaders/default.frag").readString();
+		String frag = Gdx.files.internal("Shaders/test.frag").readString();
 		program = new ShaderProgram(vert, frag);
 		if (!program.isCompiled())
 			throw new GdxRuntimeException(program.getLog());
@@ -62,7 +61,6 @@ public class TestShader implements Shader {
 
 	@Override
 	public void begin(Camera camera, RenderContext context) {
-		this.camera = camera;
 		this.context = context;
 		program.bind();
 		program.setUniformMatrix(projectionMatrix, camera.combined);
@@ -76,9 +74,9 @@ public class TestShader implements Shader {
 	public void render(Renderable renderable) {
 		bindUniforms(renderable);
 		renderable.meshPart.render(program);
-		
+
 	}
-	
+
 	private void bindUniforms(Renderable renderable) {
 		
 		program.setUniformMatrix(worldMatrix, renderable.worldTransform);
@@ -105,7 +103,7 @@ public class TestShader implements Shader {
 		
 		Color colorLightAmb = ((ColorAttribute) (renderable.environment.get(ColorAttribute.AmbientLight))).color;
 
-		program.setUniformf("pointLightsSize", lights.size);
+		/*program.setUniformi("pointLightsSize", lights.size);
 		
 		float constant = 1f;
 		for(int i = 0; i < lights.size; i++) {
@@ -116,7 +114,7 @@ public class TestShader implements Shader {
 			program.setUniformf("pointLights["+i+"].constant", 1f);
 			program.setUniformf("pointLights["+i+"].linear",  constant / (float)Math.pow(lights.get(i).intensity,2)); 
 			program.setUniformf("pointLights["+i+"].quadratic", constant / (float)Math.pow(lights.get(i).intensity,3));
-		}			
+		}	*/
 		
 		
 

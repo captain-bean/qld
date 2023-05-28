@@ -8,7 +8,7 @@ public class ControlManager {
     private GameState state;
     public ControlManager(GameState state) {
         this.state = state;
-        Gdx.input.setInputProcessor(new KeyboardInputHandler());
+        Gdx.input.setInputProcessor(new KeyboardInputHandler(state));
 
     }
 }

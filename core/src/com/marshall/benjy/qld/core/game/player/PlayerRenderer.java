@@ -20,6 +20,8 @@ public class PlayerRenderer {
         this.texturePath = "Models/" + textureName;
         this.assetManager = assetManager;
 
+        this.player.addMovementListener(this::updateModelInstance);
+
         assetManager.load(texturePath, Model.class);
     }
 
@@ -40,7 +42,7 @@ public class PlayerRenderer {
         playerModelInstance = new ModelInstance(
                 assetManager.get(texturePath, Model.class));
 
-        playerModelInstance.transform.translate(player.getPosition().getX() * 100, 0, player.getPosition().getY() * 100);
+        playerModelInstance.transform.translate(player.getPosition().getX() * 10, 0, player.getPosition().getY() * 10);
         playerModelInstance.transform.scale(5, 5, 5);
     }
 }

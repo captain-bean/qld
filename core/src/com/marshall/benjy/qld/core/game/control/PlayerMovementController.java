@@ -11,9 +11,15 @@ public class PlayerMovementController {
 
     private static final Logger logger = LogManager.getLogger(PlayerMovementController.class);
 
-    public void movePlayer(Player player, int deltaX, int deltaY) {
+    private Player player;
+    public PlayerMovementController (Player player) {
+        this.player = player;
+    }
+
+    public void movePlayer(int deltaX, int deltaY) {
         Position oldPosition = player.getPosition();
         Position newPosition = new Position(oldPosition.getX() + deltaX, oldPosition.getY() + deltaY);
         player.setPosition(newPosition);
+
     }
 }
