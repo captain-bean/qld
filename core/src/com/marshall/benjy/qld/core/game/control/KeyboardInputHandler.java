@@ -1,5 +1,6 @@
 package com.marshall.benjy.qld.core.game.control;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.marshall.benjy.qld.core.game.GameState;
@@ -35,6 +36,8 @@ public class KeyboardInputHandler implements InputProcessor {
             case Input.Keys.D:
                 playerMovementController.movePlayer(1, 0);
                 break;
+            case Input.Keys.ESCAPE:
+                Gdx.app.exit();
            default:
                 return false;
         }

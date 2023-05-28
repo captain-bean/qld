@@ -1,5 +1,7 @@
 package com.marshall.benjy.qld;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.marshall.benjy.qld.core.game.ControlManager;
 import com.marshall.benjy.qld.core.game.GameState;
 import com.marshall.benjy.qld.core.game.RenderManager;
@@ -15,6 +17,11 @@ public class Game {
 
     public Game() {
         logger.info("Initializing app...");
+
+        Gdx.graphics.setUndecorated(true);
+        Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
+        Gdx.graphics.setWindowedMode(displayMode.width, displayMode.height);
+
         state = new GameState();
         renderManager = new RenderManager(state);
         controlManager = new ControlManager(state);
