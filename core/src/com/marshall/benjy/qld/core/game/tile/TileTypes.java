@@ -1,5 +1,5 @@
 package com.marshall.benjy.qld.core.game.tile;
 
 public enum TileTypes {
-    PAVEMENT, WOOD
+    PAVEMENT, WOOD, BLOWED_UP
 }

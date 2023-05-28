@@ -26,6 +26,8 @@ public class LevelRenderer {
 	public LevelRenderer(Level level, AssetManager assetManager) {
 		this.level = level;
 		this.tileRenderer = new TileRenderer(assetManager);
+
+		this.level.addTileDestroyedListener((tile) -> updateInstances());
 	}
 
 	public void updateInstances() {
