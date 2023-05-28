@@ -44,7 +44,7 @@ public class Level {
     }
 
     public boolean validPlayerPosition(Position position) {
-        if(position.getX() < 0 || position.getY() < 0) {
+        if(position.getX() < 0 || position.getY() < 0 || position.getX() >= tiles.length || position.getY() >= tiles[0].length) {
             return false;
         }
         return true;
