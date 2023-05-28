@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.marshall.benjy.qld.core.game.Constants;
 
 public class World {
 
@@ -33,10 +34,10 @@ public class World {
 
 		cam = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		cam.position.set(10f, 30f, 50f);
-		cam.lookAt(0, 0, 0);
-		cam.near = .1f;
-		cam.far = 500f;
+		cam.position.set(Constants.SCALE * 3.25f, Constants.SCALE * 3, Constants.SCALE * 8);
+		cam.lookAt(Constants.SCALE * 3, Constants.SCALE * -2, Constants.SCALE * 3);
+		cam.near = Constants.SCALE * .001f;
+		cam.far = Constants.SCALE * 50f;
 		cam.update();
 	}
 

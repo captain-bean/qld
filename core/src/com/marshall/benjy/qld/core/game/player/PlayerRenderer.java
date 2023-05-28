@@ -3,6 +3,7 @@ package com.marshall.benjy.qld.core.game.player;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.marshall.benjy.qld.core.game.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,7 +43,11 @@ public class PlayerRenderer {
         playerModelInstance = new ModelInstance(
                 assetManager.get(texturePath, Model.class));
 
-        playerModelInstance.transform.translate(player.getPosition().getX() * 10, 0, player.getPosition().getY() * 10);
-        playerModelInstance.transform.scale(5, 5, 5);
+        playerModelInstance.transform.translate(player.getPosition().getX() * Constants.SCALE,
+                Constants.SCALE * .8f,
+                player.getPosition().getY() * Constants.SCALE);
+        playerModelInstance.transform.scale(Constants.SCALE * .1f,
+                Constants.SCALE * .1f,
+                Constants.SCALE * .1f);
     }
 }
