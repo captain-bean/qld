@@ -1,9 +1,6 @@
-package com.marshall.benjy.qld.core.game.control;
+package com.marshall.benjy.qld.core.game.player;
 
-import com.marshall.benjy.qld.Game;
 import com.marshall.benjy.qld.core.datatype.Position;
-import com.marshall.benjy.qld.core.game.GameState;
-import com.marshall.benjy.qld.core.game.player.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
