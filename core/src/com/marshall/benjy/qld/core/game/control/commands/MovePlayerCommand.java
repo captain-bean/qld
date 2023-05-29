@@ -1,17 +1,24 @@
-package com.marshall.benjy.qld.core.game.control;
+package com.marshall.benjy.qld.core.game.control.commands;
 
 import com.marshall.benjy.qld.core.datatype.Position;
+import com.marshall.benjy.qld.core.game.control.commands.Command;
 import com.marshall.benjy.qld.core.game.state.GameState;
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.Player;
 
-public class MovementController {
+public class MovePlayerCommand extends Command {
+
     private GameState state;
-    public MovementController (GameState state) {
+    private int deltaX;
+    private int deltaY;
+
+    public MovePlayerCommand(GameState state, int deltaX, int deltaY){
         this.state = state;
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
     }
 
-    public void movePlayer(int deltaX, int deltaY) {
+    public void execute() {
         Player player = state.getPlayer();
         Level level = state.getLevel();
 
@@ -23,6 +30,4 @@ public class MovementController {
             level.blowUp(newPosition);
         }
     }
-
-
 }

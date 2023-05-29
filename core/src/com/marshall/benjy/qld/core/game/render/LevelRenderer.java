@@ -17,9 +17,7 @@ import java.util.List;
 public class LevelRenderer {
 
 	private static final Logger logger = LogManager.getLogger(LevelRenderer.class);
-
 	private Level level;
-
 	public List<ModelInstance> instances = new ArrayList<>();
 	private TileRenderer tileRenderer;
 
@@ -48,7 +46,6 @@ public class LevelRenderer {
 	}
 
 	public List<ModelInstance> getInstances() {
-		
 		if (!instances.isEmpty()) {
 			return instances;
 		}

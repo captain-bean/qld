@@ -2,9 +2,9 @@ package com.marshall.benjy.qld.core.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
-import com.marshall.benjy.qld.core.game.control.ControlManager;
+import com.marshall.benjy.qld.core.game.control.MainController;
 import com.marshall.benjy.qld.core.game.state.GameState;
-import com.marshall.benjy.qld.core.game.render.RenderManager;
+import com.marshall.benjy.qld.core.game.render.ScreenRenderer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,8 +12,8 @@ public class Application {
     private static final Logger logger = LogManager.getLogger(Application.class);
 
     private GameState state;
-    private RenderManager renderManager;
-    private ControlManager controlManager;
+    private ScreenRenderer renderer;
+    private MainController controller;
 
     public Application() {
         logger.info("Initializing app...");
@@ -23,15 +23,15 @@ public class Application {
         Gdx.graphics.setWindowedMode(displayMode.width, displayMode.height);
 
         state = new GameState();
-        renderManager = new RenderManager(state);
-        controlManager = new ControlManager(state);
+        renderer = new ScreenRenderer(state);
+        controller = new MainController(state, renderer);
     }
 
     public void render() {
-        renderManager.render(state);
+        renderer.render();
     }
 
     public void dispose() {
-        renderManager.dispose();
+        renderer.dispose();
     }
 }

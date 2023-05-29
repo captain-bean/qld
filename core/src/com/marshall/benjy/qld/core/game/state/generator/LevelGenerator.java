@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game;
+package com.marshall.benjy.qld.core.game.state.generator;
 
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.tile.Tile;
