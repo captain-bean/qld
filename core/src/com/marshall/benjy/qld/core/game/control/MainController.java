@@ -12,6 +12,6 @@ public class MainController {
         this.state = state;
         this.renderer = renderer;
 
-        Gdx.input.setInputProcessor(new KeyboardInputReceiver(state));
+        Gdx.input.setInputProcessor(new KeyboardInputReceiver(state, renderer));
     }
 }

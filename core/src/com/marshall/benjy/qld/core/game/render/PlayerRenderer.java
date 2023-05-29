@@ -44,7 +44,7 @@ public class PlayerRenderer {
 
         playerModelInstance.transform.translate(player.getPosition().getX() * Constants.SCALE,
                 Constants.SCALE * .8f,
-                player.getPosition().getY() * Constants.SCALE);
+                player.getPosition().getZ() * Constants.SCALE);
         playerModelInstance.transform.scale(Constants.SCALE * .1f,
                 Constants.SCALE * .1f,
                 Constants.SCALE * .1f);

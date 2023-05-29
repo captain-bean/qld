@@ -1,7 +1,6 @@
 package com.marshall.benjy.qld.core.game.control.commands;
 
 import com.marshall.benjy.qld.core.datatype.Position;
-import com.marshall.benjy.qld.core.game.control.commands.Command;
 import com.marshall.benjy.qld.core.game.state.GameState;
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.Player;
@@ -23,7 +22,7 @@ public class MovePlayerCommand extends Command {
         Level level = state.getLevel();
 
         Position oldPosition = player.getPosition();
-        Position newPosition = new Position(oldPosition.getX() + deltaX, oldPosition.getY() + deltaY);
+        Position newPosition = new Position(oldPosition.getX() + deltaX, oldPosition.getZ() + deltaY);
 
         if(level.validPlayerPosition(newPosition)) {
             player.setPosition(newPosition);

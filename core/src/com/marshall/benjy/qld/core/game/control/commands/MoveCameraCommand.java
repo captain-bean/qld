@@ -19,5 +19,6 @@ public class MoveCameraCommand extends Command {
 
     public void execute() {
         camera.position.add(delta);
+        camera.update();
     }
 }

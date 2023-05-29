@@ -3,21 +3,21 @@ package com.marshall.benjy.qld.core.datatype;
 public class Position {
 
     private int x;
-    private int y;
+    private int z;
 
-    public Position(int x, int y) {
+    public Position(int x, int z) {
         this.x = x;
-        this.y = y;
+        this.z = z;
     }
 
     public int getX() {
         return x;
     }
-    public int getY() {
-        return y;
+    public int getZ() {
+        return z;
     }
 
     public String toString() {
-        return x + ", " + y;
+        return x + ", " + z;
     }
 }

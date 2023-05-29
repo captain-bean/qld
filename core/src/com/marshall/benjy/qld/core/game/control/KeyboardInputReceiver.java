@@ -3,9 +3,12 @@ package com.marshall.benjy.qld.core.game.control;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector3;
 import com.marshall.benjy.qld.core.game.control.commands.Command;
 import com.marshall.benjy.qld.core.game.control.commands.ExitAppCommand;
+import com.marshall.benjy.qld.core.game.control.commands.MoveCameraCommand;
 import com.marshall.benjy.qld.core.game.control.commands.MovePlayerCommand;
+import com.marshall.benjy.qld.core.game.render.ScreenRenderer;
 import com.marshall.benjy.qld.core.game.state.GameState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +22,7 @@ public class KeyboardInputReceiver implements InputProcessor {
 
     private Map<Integer, Command> keyCommands = new HashMap<>();
 
-    public KeyboardInputReceiver(GameState state) {
+    public KeyboardInputReceiver(GameState state, ScreenRenderer renderer) {
         this.state = state;
 
         keyCommands.put(Input.Keys.ESCAPE, new ExitAppCommand());
@@ -29,11 +32,16 @@ public class KeyboardInputReceiver implements InputProcessor {
         keyCommands.put(Input.Keys.S, new MovePlayerCommand(state, 0, 1));
         keyCommands.put(Input.Keys.D, new MovePlayerCommand(state, 1, 0));
 
+        keyCommands.put(Input.Keys.I, new MoveCameraCommand(renderer.getCamera(), new Vector3(0, 10, 0)));
+        keyCommands.put(Input.Keys.K, new MoveCameraCommand(renderer.getCamera(), new Vector3(0, -10, 0)));
+        keyCommands.put(Input.Keys.J, new MoveCameraCommand(renderer.getCamera(), new Vector3(-10, 0, 0)));
+        keyCommands.put(Input.Keys.L, new MoveCameraCommand(renderer.getCamera(), new Vector3(10, 0, 0)));
+        keyCommands.put(Input.Keys.U, new MoveCameraCommand(renderer.getCamera(), new Vector3(0, 0, -10)));
+        keyCommands.put(Input.Keys.O, new MoveCameraCommand(renderer.getCamera(), new Vector3(0, 0, 10)));
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        logger.info("Key down event received: " + keycode);
         Command command = keyCommands.get(keycode);
         if(command != null) {
             command.execute();

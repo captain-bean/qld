@@ -29,7 +29,7 @@ public class Level {
     }
 
     private void setTile(Position position, Tile newTile) {
-        tiles[position.getX()][position.getY()] = newTile;
+        tiles[position.getX()][position.getZ()] = newTile;
     }
 
     public void blowUp(Position position) {
@@ -44,7 +44,7 @@ public class Level {
     }
 
     public boolean validPlayerPosition(Position position) {
-        if(position.getX() < 0 || position.getY() < 0 || position.getX() >= tiles.length || position.getY() >= tiles[0].length) {
+        if(position.getX() < 0 || position.getZ() < 0 || position.getX() >= tiles.length || position.getZ() >= tiles[0].length) {
             return false;
         }
         return true;

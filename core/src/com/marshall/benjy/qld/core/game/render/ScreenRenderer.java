@@ -53,6 +53,10 @@ public class ScreenRenderer {
         assetManager.dispose();
     }
 
+    public Camera getCamera() {
+        return camera;
+    }
+
 }
 
 
