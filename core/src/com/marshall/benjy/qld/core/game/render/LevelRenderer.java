@@ -1,12 +1,12 @@
-package com.marshall.benjy.qld.core.game.level;
+package com.marshall.benjy.qld.core.game.render;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.marshall.benjy.qld.Game;
 import com.marshall.benjy.qld.core.game.Constants;
-import com.marshall.benjy.qld.core.game.tile.Tile;
-import com.marshall.benjy.qld.core.game.tile.renderer.TileRenderer;
+import com.marshall.benjy.qld.core.game.render.tile.TileRenderer;
+import com.marshall.benjy.qld.core.game.state.Level;
+import com.marshall.benjy.qld.core.game.state.tile.Tile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,9 +17,7 @@ import java.util.List;
 public class LevelRenderer {
 
 	private static final Logger logger = LogManager.getLogger(LevelRenderer.class);
-
 	private Level level;
-
 	public List<ModelInstance> instances = new ArrayList<>();
 	private TileRenderer tileRenderer;
 
@@ -48,7 +46,6 @@ public class LevelRenderer {
 	}
 
 	public List<ModelInstance> getInstances() {
-		
 		if (!instances.isEmpty()) {
 			return instances;
 		}

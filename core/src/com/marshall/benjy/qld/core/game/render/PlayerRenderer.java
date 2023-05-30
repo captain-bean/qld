@@ -1,13 +1,12 @@
-package com.marshall.benjy.qld.core.game.player;
+package com.marshall.benjy.qld.core.game.render;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.marshall.benjy.qld.core.game.Constants;
+import com.marshall.benjy.qld.core.game.state.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.function.Consumer;
 
 public class PlayerRenderer {
 
@@ -45,7 +44,7 @@ public class PlayerRenderer {
 
         playerModelInstance.transform.translate(player.getPosition().getX() * Constants.SCALE,
                 Constants.SCALE * .8f,
-                player.getPosition().getY() * Constants.SCALE);
+                player.getPosition().getZ() * Constants.SCALE);
         playerModelInstance.transform.scale(Constants.SCALE * .1f,
                 Constants.SCALE * .1f,
                 Constants.SCALE * .1f);

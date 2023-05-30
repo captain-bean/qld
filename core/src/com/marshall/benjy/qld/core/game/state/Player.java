@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.player;
+package com.marshall.benjy.qld.core.game.state;
 
 
 import com.marshall.benjy.qld.core.datatype.Position;

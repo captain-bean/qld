@@ -1,8 +1,8 @@
-package com.marshall.benjy.qld.core.game.tile.renderer;
+package com.marshall.benjy.qld.core.game.render.tile;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.marshall.benjy.qld.core.game.tile.TileTypes;
+import com.marshall.benjy.qld.core.game.state.tile.TileTypes;
 
 public class TileTypeRenderer {
 

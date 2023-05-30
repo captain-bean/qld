@@ -1,18 +1,14 @@
-package com.marshall.benjy.qld;
+package com.marshall.benjy.qld.core;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.marshall.benjy.qld.core.game.ControlManager;
-import com.marshall.benjy.qld.core.game.GameState;
-import com.marshall.benjy.qld.core.game.RenderManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.marshall.benjy.qld.core.game.Application;
 
 public class Driver extends ApplicationAdapter {
-	private Game game;
+	private Application game;
 	@Override
 	public void create () {
 		System.setProperty("log4j.configurationFactory", LogConfigurator.class.getName());
-		game = new Game();
+		game = new Application();
 	}
 
 	@Override

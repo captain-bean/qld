@@ -1,7 +1,8 @@
-package com.marshall.benjy.qld.core.game.level;
+package com.marshall.benjy.qld.core.game.state.generator;
 
-import com.marshall.benjy.qld.core.game.tile.Tile;
-import com.marshall.benjy.qld.core.game.tile.TileTypes;
+import com.marshall.benjy.qld.core.game.state.Level;
+import com.marshall.benjy.qld.core.game.state.tile.Tile;
+import com.marshall.benjy.qld.core.game.state.tile.TileTypes;
 
 public class LevelGenerator {
 
