@@ -25,7 +25,7 @@ public class ScreenRenderer {
         assetManager = new AssetManager();
 
         levelRenderer = new LevelRenderer(state.getLevel(), assetManager);
-        playerRenderer = new PlayerRenderer(state.getPlayer(), "bomb.g3db", assetManager);
+        playerRenderer = new PlayerRenderer(state.getPlayer(), "Survival_BackPack_2/backpack.g3dj", assetManager);
 
         modelBatch = new ModelBatch();
 

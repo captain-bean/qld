@@ -12,8 +12,8 @@ public class DevCamera {
     private static void createCam() {
         camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        camera.position.set(Constants.SCALE * 3.25f, Constants.SCALE * 3, Constants.SCALE * 8);
-        camera.lookAt(Constants.SCALE * 3, Constants.SCALE * -2, Constants.SCALE * 3);
+        camera.position.set(Constants.SCALE * 6.25f, Constants.SCALE * 5, Constants.SCALE * 6.25f);
+        camera.lookAt(Constants.SCALE * 3, Constants.SCALE * 0, Constants.SCALE * 3);
         camera.near = Constants.SCALE * .001f;
         camera.far = Constants.SCALE * 50f;
         camera.update();
