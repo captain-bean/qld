@@ -32,6 +32,7 @@ public class DefaultShader implements Shader {
 
 	Texture noTexture;
 
+	public static boolean wireFrame = false;
     private static final Logger logger = LogManager.getLogger(DefaultShader.class);
     
 	@Override
@@ -79,6 +80,9 @@ public class DefaultShader implements Shader {
 	@Override
 	public void render(Renderable renderable) {
 		bindUniforms(renderable);
+		if(wireFrame) {
+			renderable.meshPart.mesh.render(program, GL20.GL_LINES);
+		}
 		renderable.meshPart.render(program);
 
 	}

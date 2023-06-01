@@ -1,4 +1,5 @@
-#ifdef GL_ES 
+#version 330 core
+#ifdef GL_ES
 precision mediump float;
 #endif
 
@@ -35,9 +36,9 @@ struct DirLight {
 
 };
 
-varying vec3 v_normal;
-varying vec3 v_fragPos;
-varying vec2 texCoords;
+in vec3 v_normal;
+in vec3 v_fragPos;
+in vec2 texCoords;
 
 uniform vec3 viewPos;
 

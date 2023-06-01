@@ -1,15 +1,17 @@
-attribute vec3 a_position;
-attribute vec3 a_normal;
-attribute vec2 a_texCoord0;
+#version 330 core
+
+in vec3 a_position;
+in vec3 a_normal;
+in vec2 a_texCoord0;
 
 uniform mat4 worldMatrix;
 uniform mat4 projectionMatrix;
 
 //to fragment shader
-varying vec3 v_normal;
-varying vec3 v_fragPos;
-varying vec4 v_color;
-varying vec2 texCoords;
+out vec3 v_normal;
+out vec3 v_fragPos;
+out vec4 v_color;
+out vec2 texCoords;
 
 void main() {
 	gl_Position = projectionMatrix * worldMatrix * vec4(a_position, 1.0);

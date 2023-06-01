@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Quantum Loot Dungeon");
+		config.setOpenGLEmulation(Lwjgl3ApplicationConfiguration.GLEmulation.GL30,4,2);
 		new Lwjgl3Application(new Driver(), config);
 	}
 }

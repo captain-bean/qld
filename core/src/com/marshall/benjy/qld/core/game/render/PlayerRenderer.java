@@ -43,7 +43,6 @@ public class PlayerRenderer {
         logger.info("Updating player model");
         playerModelInstance = new ModelInstance(
                 assetManager.get(texturePath, Model.class));
-       // ModelTexturer.addTexture(playerModelInstance, "Textures/testImage.jpg", TextureAttribute.Diffuse);
         playerModelInstance.transform.translate(player.getPosition().getX() * Constants.SCALE,
                 Constants.SCALE * .8f,
                 player.getPosition().getZ() * Constants.SCALE);
