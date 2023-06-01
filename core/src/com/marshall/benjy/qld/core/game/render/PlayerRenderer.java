@@ -3,6 +3,8 @@ package com.marshall.benjy.qld.core.game.render;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.graphics.g3d.model.data.ModelTexture;
 import com.marshall.benjy.qld.core.game.Constants;
 import com.marshall.benjy.qld.core.game.state.Player;
 import org.apache.logging.log4j.LogManager;
@@ -41,7 +43,7 @@ public class PlayerRenderer {
         logger.info("Updating player model");
         playerModelInstance = new ModelInstance(
                 assetManager.get(texturePath, Model.class));
-
+       // ModelTexturer.addTexture(playerModelInstance, "Textures/testImage.jpg", TextureAttribute.Diffuse);
         playerModelInstance.transform.translate(player.getPosition().getX() * Constants.SCALE,
                 Constants.SCALE * .8f,
                 player.getPosition().getZ() * Constants.SCALE);

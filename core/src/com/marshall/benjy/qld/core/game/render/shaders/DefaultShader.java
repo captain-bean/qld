@@ -73,7 +73,7 @@ public class DefaultShader implements Shader {
 		program.setUniformf(viewPosition, camera.position);
 		context.setDepthTest(GL20.GL_LESS);
 		context.setCullFace(GL20.GL_BACK);
-		
+
 	}
 
 	@Override
