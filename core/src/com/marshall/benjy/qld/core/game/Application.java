@@ -28,4 +28,8 @@ public class Application {
     public void dispose() {
         renderer.dispose();
     }
+
+    public void resize(int height, int width){
+        renderer.resize(height,width);
+    }
 }

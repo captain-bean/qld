@@ -27,4 +27,10 @@ public class Driver extends ApplicationAdapter {
 	public void dispose () {
 		game.dispose();
 	}
+
+	@Override
+	public void resize (int width, int height) {
+		game.resize(width, height);
+	}
+
 }

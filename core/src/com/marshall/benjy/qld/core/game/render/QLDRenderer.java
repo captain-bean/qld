@@ -59,6 +59,9 @@ public class QLDRenderer {
         return camera;
     }
 
+    public void resize(int height, int width){
+        camera.projection.setToProjection(.01f,1000f,70,width/height);
+    }
 }
 
 
