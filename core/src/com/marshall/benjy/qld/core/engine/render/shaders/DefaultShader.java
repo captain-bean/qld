@@ -1,7 +1,6 @@
-package com.marshall.benjy.qld.core.game.render.shaders;
+package com.marshall.benjy.qld.core.engine.render.shaders;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.attributes.*;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +20,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import static com.badlogic.gdx.Gdx.gl;
-import static com.badlogic.gdx.graphics.GL20.GL_TEXTURE_2D;
 
 public class DefaultShader implements Shader {
 	ShaderProgram program;

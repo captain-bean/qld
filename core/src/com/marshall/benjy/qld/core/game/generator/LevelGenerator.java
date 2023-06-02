@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.state.generator;
+package com.marshall.benjy.qld.core.game.generator;
 
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.tile.Tile;
@@ -30,7 +30,7 @@ public class LevelGenerator {
                 {pave(), pave(), pave(), wood(), pave()}
         };
 
-        return new Level("Test Level", tiles);
+        return new Level(tiles);
     }
 
     private static Tile pave() {

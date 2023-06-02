@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.control.commands;
+package com.marshall.benjy.qld.core.engine.command;
 
 public abstract class Command {
 

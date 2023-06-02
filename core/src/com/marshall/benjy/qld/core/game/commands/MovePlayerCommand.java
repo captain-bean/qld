@@ -1,17 +1,18 @@
-package com.marshall.benjy.qld.core.game.control.commands;
+package com.marshall.benjy.qld.core.game.commands;
 
-import com.marshall.benjy.qld.core.datatype.Position;
-import com.marshall.benjy.qld.core.game.state.GameState;
+import com.marshall.benjy.qld.core.engine.command.Command;
+import com.marshall.benjy.qld.core.engine.datatype.Position;
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.Player;
+import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
 public class MovePlayerCommand extends Command {
 
-    private GameState state;
+    private QLDGameState state;
     private int deltaX;
     private int deltaY;
 
-    public MovePlayerCommand(GameState state, int deltaX, int deltaY){
+    public MovePlayerCommand(QLDGameState state, int deltaX, int deltaY){
         this.state = state;
         this.deltaX = deltaX;
         this.deltaY = deltaY;

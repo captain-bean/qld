@@ -1,7 +1,7 @@
 package com.marshall.benjy.qld.core.game.state;
 
 
-import com.marshall.benjy.qld.core.datatype.Position;
+import com.marshall.benjy.qld.core.engine.datatype.Position;
 
 import java.util.ArrayList;
 import java.util.List;

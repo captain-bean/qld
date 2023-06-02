@@ -1,10 +1,9 @@
-package com.marshall.benjy.qld.core.game.render;
+package com.marshall.benjy.qld.core.engine.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.marshall.benjy.qld.core.game.Constants;
+import com.marshall.benjy.qld.core.engine.datatype.Constants;
 
 public class DevCamera {
 
@@ -17,7 +16,6 @@ public class DevCamera {
         camera.near = Constants.SCALE * .001f;
         camera.far = Constants.SCALE * 50f;
         camera.update();
-
     }
 
     public static Camera instance() {

@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.render;
+package com.marshall.benjy.qld.core.engine.render;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Material;

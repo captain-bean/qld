@@ -6,28 +6,23 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.math.Vector3;
-import com.marshall.benjy.qld.core.game.Constants;
-import com.marshall.benjy.qld.core.game.render.shaders.DefaultShader;
-import com.marshall.benjy.qld.core.game.state.GameState;
+import com.marshall.benjy.qld.core.engine.datatype.Constants;
+import com.marshall.benjy.qld.core.engine.render.DevCamera;
+import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
+import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
+import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
-public class ScreenRenderer {
+public class QLDRenderer {
     private AssetManager assetManager;
-
     private LevelRenderer levelRenderer;
     private PlayerRenderer playerRenderer;
-
     private ModelBatch modelBatch;
     private Shader shader;
     private Camera camera;
     private Environment environment;
 
-
-    public ScreenRenderer(GameState state) {
-
+    public QLDRenderer(QLDGameState state) {
         assetManager = new AssetManager();
 
         levelRenderer = new LevelRenderer(state.getLevel(), assetManager);

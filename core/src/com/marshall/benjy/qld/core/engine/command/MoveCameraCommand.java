@@ -1,14 +1,10 @@
-package com.marshall.benjy.qld.core.game.control.commands;
+package com.marshall.benjy.qld.core.engine.command;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
-import com.marshall.benjy.qld.core.datatype.Position;
-import com.marshall.benjy.qld.core.game.state.GameState;
-import com.marshall.benjy.qld.core.game.state.Level;
-import com.marshall.benjy.qld.core.game.state.Player;
+import com.marshall.benjy.qld.core.engine.command.Command;
 
 public class MoveCameraCommand extends Command {
-
     private Camera camera;
     private Vector3 delta;
 
