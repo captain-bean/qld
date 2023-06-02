@@ -54,6 +54,8 @@ uniform int dirLightsSize;
 
 const float screenGamma = 2.2; // Assume the monitor is calibrated to the sRGB color space  
 
+out vec4 fragColor;
+
 
 
 vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -76,8 +78,8 @@ void main()
      result += CalcPointLight(pointLights[i], norm, v_fragPos, viewDir);
     }
 
-    //gl_FragColor = vec4(CalcPointLight(pointLights[0],norm, v_fragPos, viewDir),1);
-    gl_FragColor = result;
+    //fragColor = vec4(CalcPointLight(pointLights[0],norm, v_fragPos, viewDir),1);
+    fragColor = result;
 }
 
 vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
