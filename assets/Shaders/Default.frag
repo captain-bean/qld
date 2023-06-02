@@ -79,7 +79,11 @@ void main()
     }
 
     //fragColor = vec4(CalcPointLight(pointLights[0],norm, v_fragPos, viewDir),1);
+    if(result.a == 0){
+    discard;
+    }else{
     fragColor = result;
+    }
 }
 
 vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
@@ -100,7 +104,7 @@ vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
     vec3 specular;
 
     if(hasTexture){
-        ambient  = light.ambient  * vec3(texture(material.diffuseMap,texCoords));
+        ambient  = light.ambient * vec3(texture(material.diffuseMap,texCoords));
         diffuse  = vec4((light.diffuse  * diff),1) * texture(material.diffuseMap,texCoords);
         specular = light.specular * spec * material.specular;
     }else{
@@ -130,7 +134,7 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
        vec3 specular;
 
        if(hasTexture){
-           ambient  = light.ambient  * vec3(texture(material.diffuseMap,texCoords));
+           ambient  = light.ambient * vec3(texture(material.diffuseMap,texCoords));
            diffuse  = vec4((light.diffuse  * diff),1) * texture(material.diffuseMap,texCoords);
            specular = light.specular * spec * material.specular;
        }else{

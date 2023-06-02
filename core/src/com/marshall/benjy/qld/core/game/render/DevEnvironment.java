@@ -13,14 +13,14 @@ public class DevEnvironment {
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.2f, 0.2f, 0.2f, 1f));
 
-		PointLight pointLight = new PointLight().set(0f, 0f, 1.0f, 25f, 15f, 25f, 1000f);
+		PointLight pointLight = new PointLight().set(1f, .5f, 0f, 25f, 15f, 25f, 5000f);
 		environment.add(pointLight);
 
 
 
-		DirectionalLight directionalLight = new DirectionalLight().set(.1f,.1f,.1f,0f,-1f,0f);
+		DirectionalLight directionalLight = new DirectionalLight().set(.1f,.1f,.1f,0f,-1f,-1f);
 		environment.add(directionalLight);
-		 directionalLight = new DirectionalLight().set(1f,.5f,.2f,1f,-.5f,0f);
+		directionalLight = new DirectionalLight().set(.5f,.5f,.5f,-1f,-1f,-1f);
 		environment.add(directionalLight);
 
 	}

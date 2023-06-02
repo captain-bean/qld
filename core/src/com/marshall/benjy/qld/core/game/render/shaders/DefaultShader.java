@@ -95,16 +95,20 @@ public class DefaultShader implements Shader {
 		Material material = renderable.material;
 
 		ColorAttribute diffColorAttribute = (ColorAttribute) material.get(ColorAttribute.Diffuse);
+		if(diffColorAttribute != null)
 		program.setUniformf(materialDiffuse, diffColorAttribute.color.r, diffColorAttribute.color.g, diffColorAttribute.color.b,
 				diffColorAttribute.color.a);
 
 		ColorAttribute ambColorAttribute = (ColorAttribute) material.get(ColorAttribute.Ambient);
+		if(ambColorAttribute != null)
 		program.setUniformf(materialAmbient, ambColorAttribute.color.r, ambColorAttribute.color.g, ambColorAttribute.color.b);
 
 		ColorAttribute specColorAttribute = (ColorAttribute) material.get(ColorAttribute.Specular);
+		if(specColorAttribute != null)
 		program.setUniformf(materialSpecular, specColorAttribute.color.r, specColorAttribute.color.g, specColorAttribute.color.b);
 
 		FloatAttribute floatAttribute = ((FloatAttribute)material.get(FloatAttribute.Shininess));
+		if(floatAttribute != null)
 		program.setUniformf(materialShiny, floatAttribute.value);
 
 
@@ -128,8 +132,11 @@ public class DefaultShader implements Shader {
 	}
 
 	private void bindLights(Renderable renderable){
-		Color colorLightAmb = ((ColorAttribute) (renderable.environment.get(ColorAttribute.AmbientLight))).color;
+		Color colorLightAmb = new Color(0,0,0,0);
 
+		if(renderable.environment.has(ColorAttribute.AmbientLight)) {
+			colorLightAmb = ((ColorAttribute) (renderable.environment.get(ColorAttribute.AmbientLight))).color;
+		}
 		if(renderable.environment.has(PointLightsAttribute.Type)) {
 			Array<PointLight> lights = ((PointLightsAttribute) renderable.environment
 					.get(PointLightsAttribute.Type)).lights;

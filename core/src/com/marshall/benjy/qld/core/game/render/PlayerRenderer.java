@@ -4,11 +4,12 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.graphics.g3d.model.data.ModelTexture;
+import com.badlogic.gdx.math.Vector3;
 import com.marshall.benjy.qld.core.game.Constants;
 import com.marshall.benjy.qld.core.game.state.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 public class PlayerRenderer {
 
@@ -42,12 +43,17 @@ public class PlayerRenderer {
     public void updateModelInstance(Player player) {
         logger.info("Updating player model");
         playerModelInstance = new ModelInstance(
-                assetManager.get(texturePath, Model.class));
+                 assetManager.get(texturePath, Model.class));
+        ModelTexturer.addTexture(playerModelInstance,"Textures/walk_1.png",TextureAttribute.Diffuse);
+
         playerModelInstance.transform.translate(player.getPosition().getX() * Constants.SCALE,
-                Constants.SCALE * .8f,
+                Constants.SCALE * 1f,
                 player.getPosition().getZ() * Constants.SCALE);
-        playerModelInstance.transform.scale(Constants.SCALE * .1f,
-                Constants.SCALE * .1f,
-                Constants.SCALE * .1f);
+
+        playerModelInstance.transform.scale(Constants.SCALE * 1f,
+                Constants.SCALE * 1f,
+                Constants.SCALE * 1f);
+
+        playerModelInstance.transform.rotateTowardDirection(DevCamera.instance().direction,DevCamera.instance().up);
     }
 }
