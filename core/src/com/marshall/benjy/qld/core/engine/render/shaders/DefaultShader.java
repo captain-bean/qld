@@ -21,14 +21,17 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import static com.badlogic.gdx.Gdx.gl;
 
-public class DefaultShader implements Shader {
-	ShaderProgram program;
-	RenderContext context;
+public class DefaultShader extends QLDShader {
 
-	int materialAmbient, materialDiffuse, materialSpecular, materialShiny,materialTextureDiffuse;
-	int projectionMatrix, worldMatrix,viewPosition;
+	public static final DefaultShader STATIC_SHADER = new DefaultShader();
 
-	Texture noTexture;
+	private ShaderProgram program;
+	private RenderContext context;
+
+	private int materialAmbient, materialDiffuse, materialSpecular, materialShiny,materialTextureDiffuse;
+	private int projectionMatrix, worldMatrix,viewPosition;
+
+	private Texture noTexture;
 
 	public static boolean wireFrame = false;
     private static final Logger logger = LogManager.getLogger(DefaultShader.class);
@@ -44,7 +47,7 @@ public class DefaultShader implements Shader {
 		program = new ShaderProgram(vert, frag);
 		if (!program.isCompiled())
 			throw new GdxRuntimeException(program.getLog());
-
+		SHADER_ID = program.getHandle();
 
 		materialTextureDiffuse = program.getUniformLocation("material.diffuseMap");
 		program.setUniformi(materialTextureDiffuse,0);

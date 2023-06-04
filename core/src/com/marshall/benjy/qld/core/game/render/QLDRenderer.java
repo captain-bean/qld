@@ -22,6 +22,7 @@ public class QLDRenderer {
     private Camera camera;
     private Environment environment;
 
+
     public QLDRenderer(QLDGameState state) {
         assetManager = new AssetManager();
 
@@ -36,6 +37,7 @@ public class QLDRenderer {
         camera = DevCamera.instance();
 
         environment = DevEnvironment.instance();
+
 
         assetManager.finishLoading();
     }

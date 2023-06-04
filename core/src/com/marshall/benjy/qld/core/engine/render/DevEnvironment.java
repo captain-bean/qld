@@ -23,6 +23,7 @@ public class DevEnvironment {
 		directionalLight = new DirectionalLight().set(.5f,.5f,.5f,-1f,-1f,-1f);
 		environment.add(directionalLight);
 
+
 	}
 
 	public static Environment instance() {
