@@ -17,10 +17,10 @@ public class DevCamera {
         camera = new PerspectiveCamera(70, 600, 480);
         viewport = new ScreenViewport(camera);
 
-        camera.position.set(Constants.SCALE * 6.25f, Constants.SCALE * 5, Constants.SCALE * 6.25f);
+        camera.position.set(Constants.SCALE * 25f, Constants.SCALE * 25, Constants.SCALE * 25f);
         camera.lookAt(Constants.SCALE * 3, Constants.SCALE * 0, Constants.SCALE * 3);
         camera.near = Constants.SCALE * .001f;
-        camera.far = Constants.SCALE * 50f;
+        camera.far = Constants.SCALE * 500f;
         camera.update();
     }
 
