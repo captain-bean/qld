@@ -16,7 +16,11 @@ public class Player {
     private Position position;
 
     public Player() {
-        this.position = new Position(0,0);
+        this(new Position(0,0));
+    }
+
+    public Player(Position position) {
+        this.position = position;
     }
 
     public void addMovementListener(Consumer<Player> eventConsumer) {

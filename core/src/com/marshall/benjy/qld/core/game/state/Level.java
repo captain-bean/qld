@@ -12,14 +12,23 @@ public class Level {
 
     private Tile[][] tiles;
 
+    private Position startPosition;
+    private Position endPosition;
+
     private List<Consumer<Tile>> tileDestroyedListeners = new ArrayList<>();
 
-    public Level(Tile[][] tiles) {
+    public Level(Tile[][] tiles, Position startPosition, Position endPosition) {
         this.tiles = tiles;
+        this.startPosition = startPosition;
+        this.endPosition = endPosition;
     }
 
     public Tile[][] getTiles() {
         return tiles;
+    }
+
+    public Position getStartPosition() {
+        return startPosition;
     }
 
     private void setTile(Position position, Tile newTile) {
