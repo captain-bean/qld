@@ -1,11 +1,8 @@
-package com.marshall.benjy.qld.core.engine.datatype;
+package com.marshall.benjy.qld.core.engine.render;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ModelLoader {
 

@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.engine.datatype;
+package com.marshall.benjy.qld.core.engine.generator;
 
 
 import java.util.UUID;

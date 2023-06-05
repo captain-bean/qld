@@ -3,8 +3,7 @@ package com.marshall.benjy.qld.core.engine.render.ecs.component;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.marshall.benjy.qld.core.engine.datatype.ModelLoader;
-import com.marshall.benjy.qld.core.engine.render.ModelRenderer;
+import com.marshall.benjy.qld.core.engine.render.ModelLoader;
 
 public class ModelComponent implements Component {
     private String modelPath = "";

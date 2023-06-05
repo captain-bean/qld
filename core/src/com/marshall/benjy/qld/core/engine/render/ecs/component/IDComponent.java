@@ -1,7 +1,7 @@
 package com.marshall.benjy.qld.core.engine.render.ecs.component;
 
 import com.badlogic.ashley.core.Component;
-import com.marshall.benjy.qld.core.engine.datatype.UUIDGenerator;
+import com.marshall.benjy.qld.core.engine.generator.UUIDGenerator;
 
 import java.util.UUID;
 
