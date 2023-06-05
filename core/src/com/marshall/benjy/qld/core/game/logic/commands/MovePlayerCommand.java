@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.commands;
+package com.marshall.benjy.qld.core.game.logic.commands;
 
 import com.marshall.benjy.qld.core.engine.command.Command;
 import com.marshall.benjy.qld.core.engine.datatype.Position;

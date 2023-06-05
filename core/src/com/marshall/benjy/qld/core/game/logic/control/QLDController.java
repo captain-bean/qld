@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.control;
+package com.marshall.benjy.qld.core.game.logic.control;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.marshall.benjy.qld.core.engine.command.ExitAppCommand;
 import com.marshall.benjy.qld.core.engine.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.input.KeyboardInputReceiver;
-import com.marshall.benjy.qld.core.game.commands.MovePlayerCommand;
+import com.marshall.benjy.qld.core.game.logic.commands.MovePlayerCommand;
 import com.marshall.benjy.qld.core.game.render.QLDRenderer;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
 

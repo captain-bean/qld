@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.generator;
+package com.marshall.benjy.qld.core.game.logic.generator;
 
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;

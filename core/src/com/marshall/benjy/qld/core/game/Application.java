@@ -1,7 +1,7 @@
 package com.marshall.benjy.qld.core.game;
 
-import com.marshall.benjy.qld.core.game.control.QLDController;
-import com.marshall.benjy.qld.core.game.generator.QLDGameStateFactory;
+import com.marshall.benjy.qld.core.game.logic.control.QLDController;
+import com.marshall.benjy.qld.core.game.logic.generator.QLDGameStateFactory;
 import com.marshall.benjy.qld.core.game.render.QLDRenderer;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
 import org.apache.logging.log4j.LogManager;
