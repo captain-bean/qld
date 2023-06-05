@@ -1,8 +1,8 @@
-package com.marshall.benjy.qld.core.engine.ecs.entity;
+package com.marshall.benjy.qld.core.engine.render.ecs.entity;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
-import com.marshall.benjy.qld.core.engine.ecs.component.IDComponent;
+import com.marshall.benjy.qld.core.engine.render.ecs.component.IDComponent;
 
 import java.util.Comparator;
 import java.util.UUID;

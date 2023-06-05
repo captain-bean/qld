@@ -1,15 +1,13 @@
-package com.marshall.benjy.qld.core.engine.ecs;
+package com.marshall.benjy.qld.core.engine.render.ecs;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.marshall.benjy.qld.core.engine.ecs.system.RenderQueueSystem;
-import com.marshall.benjy.qld.core.engine.ecs.system.UpdateSystem;
+import com.marshall.benjy.qld.core.engine.render.ecs.system.RenderQueueSystem;
+import com.marshall.benjy.qld.core.engine.render.ecs.system.UpdateSystem;
 import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Timer;
 
 public class Scene {
 

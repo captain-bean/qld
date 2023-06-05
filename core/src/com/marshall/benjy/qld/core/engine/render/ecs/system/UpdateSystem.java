@@ -1,13 +1,11 @@
-package com.marshall.benjy.qld.core.engine.ecs.system;
+package com.marshall.benjy.qld.core.engine.render.ecs.system;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.SortedIteratingSystem;
-import com.marshall.benjy.qld.core.engine.ecs.component.UpdateComponent;
-import com.marshall.benjy.qld.core.engine.ecs.entity.IDComparator;
-
-import java.util.Comparator;
+import com.marshall.benjy.qld.core.engine.render.ecs.component.UpdateComponent;
+import com.marshall.benjy.qld.core.engine.render.ecs.entity.IDComparator;
 
 public class UpdateSystem extends SortedIteratingSystem {
 
