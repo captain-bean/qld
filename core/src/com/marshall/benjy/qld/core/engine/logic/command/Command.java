@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.engine.command;
+package com.marshall.benjy.qld.core.engine.logic.command;
 
 public abstract class Command {
 

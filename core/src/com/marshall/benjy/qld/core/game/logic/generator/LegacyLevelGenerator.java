@@ -1,6 +1,6 @@
 package com.marshall.benjy.qld.core.game.logic.generator;
 
-import com.marshall.benjy.qld.core.engine.datatype.Position;
+import com.marshall.benjy.qld.core.engine.state.Position;
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.tile.Tile;
 import com.marshall.benjy.qld.core.game.state.tile.TileTypes;

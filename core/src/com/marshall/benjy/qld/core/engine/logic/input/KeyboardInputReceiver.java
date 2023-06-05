@@ -1,7 +1,7 @@
-package com.marshall.benjy.qld.core.engine.input;
+package com.marshall.benjy.qld.core.engine.logic.input;
 
 import com.badlogic.gdx.InputProcessor;
-import com.marshall.benjy.qld.core.engine.command.Command;
+import com.marshall.benjy.qld.core.engine.logic.command.Command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

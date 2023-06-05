@@ -1,12 +1,10 @@
 package com.marshall.benjy.qld.core.engine.render;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.marshall.benjy.qld.core.engine.datatype.Constants;
+import com.marshall.benjy.qld.core.engine.state.Constants;
 
 public class DevCamera {
 

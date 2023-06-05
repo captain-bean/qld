@@ -1,7 +1,6 @@
-package com.marshall.benjy.qld.core.engine.command;
+package com.marshall.benjy.qld.core.engine.logic.command;
 
 import com.badlogic.gdx.Gdx;
-import com.marshall.benjy.qld.core.engine.command.Command;
 
 public class ExitAppCommand extends Command {
     @Override

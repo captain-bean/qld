@@ -1,8 +1,7 @@
-package com.marshall.benjy.qld.core.engine.command;
+package com.marshall.benjy.qld.core.engine.logic.command;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
-import com.marshall.benjy.qld.core.engine.command.Command;
 
 public class MoveCameraCommand extends Command {
     private Camera camera;

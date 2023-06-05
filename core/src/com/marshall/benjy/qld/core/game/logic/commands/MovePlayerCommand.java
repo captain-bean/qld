@@ -1,7 +1,7 @@
 package com.marshall.benjy.qld.core.game.logic.commands;
 
-import com.marshall.benjy.qld.core.engine.command.Command;
-import com.marshall.benjy.qld.core.engine.datatype.Position;
+import com.marshall.benjy.qld.core.engine.logic.command.Command;
+import com.marshall.benjy.qld.core.engine.state.Position;
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.Player;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;

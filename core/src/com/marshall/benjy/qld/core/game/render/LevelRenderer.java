@@ -3,7 +3,7 @@ package com.marshall.benjy.qld.core.game.render;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.marshall.benjy.qld.core.engine.datatype.Constants;
+import com.marshall.benjy.qld.core.engine.state.Constants;
 import com.marshall.benjy.qld.core.game.render.tile.TileRenderer;
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.tile.Tile;
