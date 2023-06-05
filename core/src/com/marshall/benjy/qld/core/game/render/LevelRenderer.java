@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.marshall.benjy.qld.core.engine.state.Constants;
+import com.marshall.benjy.qld.core.game.logic.control.LevelController;
 import com.marshall.benjy.qld.core.game.render.tile.TileRenderer;
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.tile.Tile;
@@ -24,8 +25,6 @@ public class LevelRenderer {
 	public LevelRenderer(Level level, AssetManager assetManager) {
 		this.level = level;
 		this.tileRenderer = new TileRenderer(assetManager);
-
-		this.level.addTileDestroyedListener((tile) -> updateInstances());
 	}
 
 	public void updateInstances() {

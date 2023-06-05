@@ -11,8 +11,6 @@ import org.apache.logging.log4j.Logger;
 
 public class Player {
 
-    private static final Logger logger = LogManager.getLogger(Player.class);
-    private List<Consumer<Player>> playerMovedListeners = new ArrayList<>();
     private Position position;
 
     public Player() {
@@ -23,18 +21,12 @@ public class Player {
         this.position = position;
     }
 
-    public void addMovementListener(Consumer<Player> eventConsumer) {
-        this.playerMovedListeners.add(eventConsumer);
-    }
+
     public Position getPosition(){
         return position;
     }
 
     public void setPosition(Position position) {
         this.position = position;
-        logger.info("Updating player's position: " + position);
-        playerMovedListeners.forEach(listener -> {
-            listener.accept(this);
-        });
     }
 }

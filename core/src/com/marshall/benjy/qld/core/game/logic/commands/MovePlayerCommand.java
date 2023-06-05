@@ -2,32 +2,31 @@ package com.marshall.benjy.qld.core.game.logic.commands;
 
 import com.marshall.benjy.qld.core.engine.logic.command.Command;
 import com.marshall.benjy.qld.core.engine.state.Position;
+import com.marshall.benjy.qld.core.game.logic.control.LevelController;
+import com.marshall.benjy.qld.core.game.logic.control.PlayerController;
 import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.Player;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
 public class MovePlayerCommand extends Command {
 
-    private QLDGameState state;
+    public static final String TYPE = "move-player";
     private int deltaX;
-    private int deltaY;
+    private int deltaZ;
 
-    public MovePlayerCommand(QLDGameState state, int deltaX, int deltaY){
-        this.state = state;
+    public MovePlayerCommand(int deltaX, int deltaZ){
+        super(TYPE);
         this.deltaX = deltaX;
-        this.deltaY = deltaY;
+        this.deltaZ = deltaZ;
     }
 
-    public void execute() {
-        Player player = state.getPlayer();
-        Level level = state.getLevel();
-
-        Position oldPosition = player.getPosition();
-        Position newPosition = new Position(oldPosition.getX() + deltaX, oldPosition.getZ() + deltaY);
-
-        if(level.validPlayerPosition(newPosition)) {
-            player.setPosition(newPosition);
-            level.blowUp(newPosition);
-        }
+    public int getDeltaX() {
+        return deltaX;
     }
+
+    public int getDeltaZ() {
+        return deltaZ;
+    }
+
+
 }

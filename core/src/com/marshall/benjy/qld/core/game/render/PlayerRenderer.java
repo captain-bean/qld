@@ -26,10 +26,6 @@ public class PlayerRenderer {
         this.assetManager = assetManager;
         this.orientingCamera = camera;
 
-        this.player.addMovementListener((p) -> {
-            updateModelInstance();
-        });
-
         assetManager.load(texturePath, Model.class);
     }
 

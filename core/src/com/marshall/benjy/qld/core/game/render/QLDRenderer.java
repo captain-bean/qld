@@ -61,6 +61,14 @@ public class QLDRenderer {
     public void resize(int width, int height){
         camera.resize(width, height);
     }
+
+    public void updateLevelInstances() {
+        this.levelRenderer.updateInstances();
+    }
+
+    public void updatePlayerInstance() {
+        this.playerRenderer.updateModelInstance();
+    }
 }
 
 

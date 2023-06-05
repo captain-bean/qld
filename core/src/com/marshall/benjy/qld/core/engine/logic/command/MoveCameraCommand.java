@@ -4,16 +4,17 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
 
 public class MoveCameraCommand extends Command {
-    private Camera camera;
+
+    public static final String TYPE = "move-camera";
     private Vector3 delta;
 
-    public MoveCameraCommand(Camera camera, Vector3 delta){
-        this.camera = camera;
+    public MoveCameraCommand(Vector3 delta){
+        super(TYPE);
         this.delta = delta;
     }
 
-    public void execute() {
-        camera.position.add(delta);
-        camera.update();
+    public Vector3 getDelta() {
+        return delta;
     }
+
 }
