@@ -1,6 +1,7 @@
 package com.marshall.benjy.qld.core.game.render;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
@@ -16,15 +17,19 @@ public class PlayerRenderer {
 
     private static final Logger logger = LogManager.getLogger(PlayerRenderer.class);
     private Player player;
+    private Camera orientingCamera;
     private String texturePath;
     private AssetManager assetManager;
     private ModelInstance playerModelInstance;
-    public PlayerRenderer(Player player, String textureName, AssetManager assetManager) {
+    public PlayerRenderer(Player player, Camera camera, String textureName, AssetManager assetManager) {
         this.player = player;
         this.texturePath = "Models/" + textureName;
         this.assetManager = assetManager;
+        this.orientingCamera = camera;
 
-        this.player.addMovementListener(this::updateModelInstance);
+        this.player.addMovementListener((p) -> {
+            updateModelInstance();
+        });
 
         assetManager.load(texturePath, Model.class);
     }
@@ -35,13 +40,13 @@ public class PlayerRenderer {
         }
 
         if (assetManager.isLoaded(texturePath)) {
-            updateModelInstance(player);
+            updateModelInstance();
         }
 
         return playerModelInstance;
     }
 
-    public void updateModelInstance(Player player) {
+    public void updateModelInstance() {
         logger.info("Updating player model");
         playerModelInstance = new ModelInstance(
                  assetManager.get(texturePath, Model.class));
@@ -55,6 +60,6 @@ public class PlayerRenderer {
                 Constants.SCALE * 1f,
                 Constants.SCALE * 1f);
 
-        playerModelInstance.transform.rotateTowardDirection(DevCamera.instance().direction,DevCamera.instance().up);
+        playerModelInstance.transform.rotateTowardDirection(orientingCamera.direction, orientingCamera.up);
     }
 }

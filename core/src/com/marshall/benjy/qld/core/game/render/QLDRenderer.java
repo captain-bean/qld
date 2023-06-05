@@ -19,33 +19,31 @@ public class QLDRenderer {
     private PlayerRenderer playerRenderer;
     private ModelBatch modelBatch;
     private Shader shader;
-    private Camera camera;
+    private DevCamera camera;
     private Environment environment;
 
 
     public QLDRenderer(QLDGameState state) {
         assetManager = new AssetManager();
 
+        camera = new DevCamera();
+
         levelRenderer = new LevelRenderer(state.getLevel(), assetManager);
-        playerRenderer = new PlayerRenderer(state.getPlayer(), "rectangle.obj", assetManager);
+        playerRenderer = new PlayerRenderer(state.getPlayer(), camera.getCamera(), "rectangle.obj", assetManager);
 
         modelBatch = new ModelBatch();
 
         shader = new DefaultShader();
         shader.init();
 
-        camera = DevCamera.instance();
-
         environment = DevEnvironment.instance();
-
-
         assetManager.finishLoading();
     }
     public void render() {
-        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        camera.lookAt(Constants.SCALE * 3, Constants.SCALE * 0, Constants.SCALE * 3);
-        modelBatch.begin(camera);
+
+        modelBatch.begin(camera.getCamera());
+
         modelBatch.render(levelRenderer.getInstances(), environment, shader);
         modelBatch.render(playerRenderer.getPlayerModelInstance(), environment, shader);
 
@@ -58,11 +56,11 @@ public class QLDRenderer {
     }
 
     public Camera getCamera() {
-        return camera;
+        return camera.getCamera();
     }
 
-    public void resize(int height, int width){
-        camera.projection.setToProjection(.01f,1000f,70,width/height);
+    public void resize(int width, int height){
+        camera.resize(width, height);
     }
 }
 

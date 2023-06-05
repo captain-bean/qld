@@ -30,7 +30,7 @@ public class Application {
         renderer.dispose();
     }
 
-    public void resize(int height, int width){
-        renderer.resize(height,width);
+    public void resize(int width, int height){
+        renderer.resize(width, height);
     }
 }
