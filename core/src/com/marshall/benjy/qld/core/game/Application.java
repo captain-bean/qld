@@ -1,6 +1,7 @@
 package com.marshall.benjy.qld.core.game;
 
 import com.marshall.benjy.qld.core.game.control.QLDController;
+import com.marshall.benjy.qld.core.game.generator.QLDGameStateFactory;
 import com.marshall.benjy.qld.core.game.render.QLDRenderer;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +17,7 @@ public class Application {
     public Application() {
         logger.info("Initializing app...");
 
-        state = new QLDGameState();
+        state = QLDGameStateFactory.development();
         renderer = new QLDRenderer(state);
         controller = new QLDController(state, renderer);
     }

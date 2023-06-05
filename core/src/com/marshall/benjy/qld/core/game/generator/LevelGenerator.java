@@ -33,11 +33,12 @@ public class LevelGenerator {
         return new Level(tiles);
     }
 
-    private static Tile pave() {
+
+    static Tile pave() {
         return new Tile(TileTypes.PAVEMENT);
     }
 
-    private static Tile wood() {
+    static Tile wood() {
         return new Tile(TileTypes.WOOD);
     }
 }

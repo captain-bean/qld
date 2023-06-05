@@ -7,7 +7,11 @@ public class QLDGameState {
     private Player player;
 
     public QLDGameState() {
-        this.level = LevelGenerator.testLevel();
+        this(LevelGenerator.testLevel());
+    }
+
+    public QLDGameState(Level level) {
+        this.level = level;
         this.player = new Player();
     }
 
