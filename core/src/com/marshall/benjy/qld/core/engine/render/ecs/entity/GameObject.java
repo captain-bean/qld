@@ -12,7 +12,15 @@ public class GameObject extends QLDEntity {
         add(new ShaderComponent(0));
     }
 
-    public void setModel(Model model){
+
+
+    public GameObject setModel(Model model){
         getComponent(ModelComponent.class).setModel(model);
+        return this;// builder chaining
+    }
+
+    public GameObject setModel(String model){
+        getComponent(ModelComponent.class).setModel(model);
+        return this; //for builder chaining
     }
 }

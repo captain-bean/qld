@@ -12,6 +12,8 @@ import com.marshall.benjy.qld.core.engine.render.ModelRenderer;
 
 public class RenderQueueSystem extends SortedIteratingSystem{
 
+    private int index = 0;
+
     public RenderQueueSystem(){
         super(Family.all(ModelComponent.class, ShaderComponent.class, TransformComponent.class).get(), new ZComparator());
     }
@@ -22,6 +24,18 @@ public class RenderQueueSystem extends SortedIteratingSystem{
     protected void processEntity(Entity entity, float deltaTime) {
         int shaderId = entity.getComponent(ShaderComponent.class).shaderID;
         ModelInstance modelInstance = entity.getComponent(ModelComponent.class).getInstance();
-        ModelRenderer.Static_Renderer.enqueue(shaderId, modelInstance);
+        if(modelInstance != null)
+            ModelRenderer.Static_Renderer.enqueue(shaderId, modelInstance);
+
+        index--;
+        if(index <= 0)
+            ModelRenderer.Static_Renderer.Render();
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        index = getEntities().size();
+        super.update(deltaTime);
+
     }
 }

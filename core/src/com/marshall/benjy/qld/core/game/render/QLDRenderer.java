@@ -6,10 +6,14 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.marshall.benjy.qld.core.engine.render.DevCamera;
 import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
+import com.marshall.benjy.qld.core.engine.render.ModelRenderer;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
+import com.marshall.benjy.qld.core.engine.render.shaders.QLDShader;
+import com.marshall.benjy.qld.core.engine.render.shaders.QLDShaderProvider;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
 public class QLDRenderer {
@@ -17,7 +21,7 @@ public class QLDRenderer {
     private LevelRenderer levelRenderer;
     private PlayerRenderer playerRenderer;
     private ModelBatch modelBatch;
-    private Shader shader;
+    private QLDShader shader;
     private DevCamera camera;
     private Environment environment;
 
@@ -39,14 +43,8 @@ public class QLDRenderer {
         assetManager.finishLoading();
     }
     public void render() {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-        modelBatch.begin(camera.getCamera());
-
-        modelBatch.render(levelRenderer.getInstances(), environment, shader);
-        modelBatch.render(playerRenderer.getPlayerModelInstance(), environment, shader);
-
-        modelBatch.end();
+        ModelRenderer.Static_Renderer.enqueue(shader.SHADER_ID,levelRenderer.getInstances().toArray(new ModelInstance[0]));
+        ModelRenderer.Static_Renderer.enqueue(shader.SHADER_ID,playerRenderer.getPlayerModelInstance());
     }
 
     public void dispose() {

@@ -2,6 +2,7 @@ package com.marshall.benjy.qld.core.engine.render.ecs.entity;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.math.Vector3;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.TransformComponent;
 
 import java.util.Comparator;
@@ -15,8 +16,12 @@ public class ZComparator implements Comparator<Entity> {
 
     @Override
     public int compare(Entity entityA, Entity entityB) { //Compares Z position
-        float az = cmTrans.get(entityA).position.z;
-        float bz = cmTrans.get(entityB).position.z;
+        Vector3 temp = new Vector3();
+        cmTrans.get(entityA).transform.getTranslation(temp);
+
+        float az = temp.z;
+                cmTrans.get(entityB).transform.getTranslation(temp);
+        float bz = temp.z;
         int res = 0;
         if(az > bz){
             res = 1;

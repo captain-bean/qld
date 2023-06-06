@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShaderProvider;
+import org.apache.logging.log4j.core.util.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,12 +44,18 @@ public class ModelRenderer {
     public void Render(){
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        modelBatch.begin(new DevCamera().getCamera());
+        Shader shader = new DefaultShader();
+        shader.init();
         for(RenderCall renderCall : rendererQueue){
-            Shader shader = QLDShaderProvider.getShader(renderCall.ShaderID);
-            modelBatch.render(renderCall.instances, DevEnvironment.instance(), shader); //TODO pass environment
-            rendererQueue.remove(renderCall);
-        }
+            //Shader shader = QLDShaderProvider.getShader(renderCall.ShaderID);
+            if(renderCall.instances != null) {
+                modelBatch.render(renderCall.instances, DevEnvironment.instance(), shader); //TODO pass environment
 
+            }
+        }
+        modelBatch.end();
+        rendererQueue.clear();
     }
 
     /**
@@ -59,13 +66,13 @@ public class ModelRenderer {
     public void enqueue(int shaderID, ModelInstance... instances){
         for(RenderCall call : rendererQueue){
             if(call.ShaderID == shaderID){
-                Collections.addAll(call.instances, instances);
+                call.instances.addAll(Arrays.asList(instances));
                 return;
             }
         }
         RenderCall newCall = new RenderCall();
         newCall.ShaderID = shaderID;
-        Collections.addAll(newCall.instances, instances);
+        newCall.instances.addAll(Arrays.asList(instances));
         rendererQueue.add(newCall);
     }
 

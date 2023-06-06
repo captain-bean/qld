@@ -2,6 +2,10 @@ package com.marshall.benjy.qld.core.engine.render.ecs;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.marshall.benjy.qld.core.engine.render.ModelLoader;
+import com.marshall.benjy.qld.core.engine.render.ModelRenderer;
+import com.marshall.benjy.qld.core.engine.render.ecs.entity.GameObject;
+import com.marshall.benjy.qld.core.engine.render.ecs.entity.RenderTestEntity;
 import com.marshall.benjy.qld.core.engine.render.ecs.system.RenderQueueSystem;
 import com.marshall.benjy.qld.core.engine.render.ecs.system.UpdateSystem;
 import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
@@ -17,15 +21,20 @@ public class Scene {
     private Environment environment;
 
     private float deltaTime = 0;
-    private Instant last;
+    private Instant last = Instant.now();
 
     public Scene(){
+        ModelLoader.createStaticLoader();
         ecsEngine = new Engine();
         renderQueueSystem = new RenderQueueSystem();
         updateSystem = new UpdateSystem();
         environment = DevEnvironment.instance();
         ecsEngine.addSystem(renderQueueSystem);
         ecsEngine.addSystem(updateSystem);
+
+        for(int i = 0; i <10; i++) {
+            ecsEngine.addEntity(new RenderTestEntity());
+        }
     }
 
 
