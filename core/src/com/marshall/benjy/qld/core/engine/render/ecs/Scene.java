@@ -22,19 +22,15 @@ public class Scene {
     private RenderQueueSystem renderQueueSystem;
     private UpdateSystem updateSystem;
     private Environment environment;
-
-    private DevCamera camera;
-
     private float deltaTime = 0;
     private Instant last = Instant.now();
 
-    public Scene(DevCamera camera) {
+    public Scene() {
         ModelLoader.createStaticLoader();
         ecsEngine = new Engine();
         renderQueueSystem = new RenderQueueSystem();
         updateSystem = new UpdateSystem();
         environment = DevEnvironment.instance();
-        this.camera = camera;
         ecsEngine.addSystem(renderQueueSystem);
         ecsEngine.addSystem(updateSystem);
     }

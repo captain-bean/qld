@@ -38,10 +38,8 @@ public class QLDRenderState {
     public QLDRenderState(QLDGameState state) {
         camera = new DevCamera();
 
-        scene = new Scene(camera);
+        scene = new Scene();
         modelLoader = new ModelLoader();
-
-
 
         levelRenderer = new LevelRenderer(state.getLevel());
         playerRenderer = new PlayerRenderer(state.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
