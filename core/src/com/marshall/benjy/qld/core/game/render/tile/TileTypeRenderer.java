@@ -2,6 +2,7 @@ package com.marshall.benjy.qld.core.game.render.tile;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.marshall.benjy.qld.core.game.state.tile.TileTypes;
 
 public class TileTypeRenderer {
@@ -19,15 +20,15 @@ public class TileTypeRenderer {
 		assetManager.load(texturePath, Model.class);
 	}
 
-	public Model getTileModel() {
+	public ModelInstance getTileInstance() {
 		if (tileModel != null) {
-			return tileModel;
+			return new ModelInstance(tileModel);
 		}
 
 		if (assetManager.isLoaded(texturePath)) {
 			tileModel = assetManager.get(texturePath, Model.class);
 		}
 
-		return tileModel;
+		return new ModelInstance(tileModel);
 	}
 }

@@ -10,13 +10,18 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.marshall.benjy.qld.core.engine.render.DevCamera;
 import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
+import com.marshall.benjy.qld.core.engine.render.ModelLoader;
 import com.marshall.benjy.qld.core.engine.render.ModelRenderer;
+import com.marshall.benjy.qld.core.engine.render.ecs.Scene;
+import com.marshall.benjy.qld.core.engine.render.ecs.entity.QLDEntity;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShaderProvider;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
-public class QLDRenderer {
+import java.util.List;
+
+public class QLDRenderState {
     private AssetManager assetManager;
     private LevelRenderer levelRenderer;
     private PlayerRenderer playerRenderer;
@@ -24,32 +29,44 @@ public class QLDRenderer {
     private QLDShader shader;
     private DevCamera camera;
     private Environment environment;
+    private Scene scene;
 
+    private ModelLoader modelLoader;
 
-    public QLDRenderer(QLDGameState state) {
-        assetManager = new AssetManager();
+    private boolean sceneInit;
+
+    public QLDRenderState(QLDGameState state) {
+        scene = new Scene();
+        modelLoader = new ModelLoader();
 
         camera = new DevCamera();
 
-        levelRenderer = new LevelRenderer(state.getLevel(), assetManager);
-        playerRenderer = new PlayerRenderer(state.getPlayer(), camera.getCamera(), "rectangle.obj", assetManager);
-
-        modelBatch = new ModelBatch();
+        levelRenderer = new LevelRenderer(state.getLevel());
+        playerRenderer = new PlayerRenderer(state.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
 
         shader = new DefaultShader();
         shader.init();
 
         environment = DevEnvironment.instance();
-        assetManager.finishLoading();
+        levelRenderer.updateInstances();
+
+
+        List<QLDEntity> tiles = levelRenderer.getInstances();
+        if(!tiles.isEmpty()) {
+            scene.addEntities(levelRenderer.getInstances());
+             sceneInit = true;
+        }
     }
     public void render() {
-        ModelRenderer.Static_Renderer.enqueue(shader.SHADER_ID,levelRenderer.getInstances().toArray(new ModelInstance[0]));
         ModelRenderer.Static_Renderer.enqueue(shader.SHADER_ID,playerRenderer.getPlayerModelInstance());
-    }
+        if(sceneInit){
+            scene.update();
+        }else {
+            sceneInit();
+        }
+}
 
     public void dispose() {
-        modelBatch.dispose();
-        assetManager.dispose();
     }
 
     public Camera getCamera() {
@@ -66,6 +83,18 @@ public class QLDRenderer {
 
     public void updatePlayerInstance() {
         this.playerRenderer.updateModelInstance();
+    }
+
+    public List<QLDEntity> getLevelEntities(){
+        return levelRenderer.getInstances();
+    }
+
+    public void sceneInit() {
+        List<QLDEntity> tiles = levelRenderer.getInstances();
+        if(!tiles.isEmpty()) {
+            scene.addEntities(levelRenderer.getInstances());
+            sceneInit = true;
+        }
     }
 }
 

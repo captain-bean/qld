@@ -1,6 +1,7 @@
 package com.marshall.benjy.qld.core.engine.render.ecs;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.marshall.benjy.qld.core.engine.render.ModelLoader;
 import com.marshall.benjy.qld.core.engine.render.ModelRenderer;
@@ -12,6 +13,7 @@ import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 
 public class Scene {
 
@@ -23,7 +25,7 @@ public class Scene {
     private float deltaTime = 0;
     private Instant last = Instant.now();
 
-    public Scene(){
+    public Scene() {
         ModelLoader.createStaticLoader();
         ecsEngine = new Engine();
         renderQueueSystem = new RenderQueueSystem();
@@ -32,17 +34,21 @@ public class Scene {
         ecsEngine.addSystem(renderQueueSystem);
         ecsEngine.addSystem(updateSystem);
 
-        for(int i = 0; i <10; i++) {
-            ecsEngine.addEntity(new RenderTestEntity());
-        }
+
     }
 
 
-    public void update(){
+    public void update() {
         ecsEngine.update(deltaTime);
         Instant end = Instant.now();
-        deltaTime = Duration.between(last,end).toMillis() / 1000.0f;
+        deltaTime = Duration.between(last, end).toMillis() / 1000.0f;
         last = Instant.now();
+    }
+
+    public <T extends Entity> void addEntities(List<T> entities) {
+        for (T entity : entities) {
+            ecsEngine.addEntity(entity);
+        }
     }
 
 

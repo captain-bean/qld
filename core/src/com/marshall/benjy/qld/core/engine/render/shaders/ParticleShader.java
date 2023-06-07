@@ -1,18 +1,17 @@
 package com.marshall.benjy.qld.core.engine.render.shaders;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g3d.attributes.*;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.DirectionalLightsAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.PointLightsAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -21,25 +20,19 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import static com.badlogic.gdx.Gdx.gl;
 
-public class DefaultShader extends QLDShader {
-
-    public static final DefaultShader STATIC_SHADER = new DefaultShader();
+public class ParticleShader extends QLDShader{
 
     private ShaderProgram program;
-    private RenderContext context;
-
-    private int materialAmbient, materialDiffuse, materialSpecular, materialShiny, materialTextureDiffuse;
-    private int projectionMatrix, worldMatrix, viewPosition;
-
     private Texture noTexture;
 
-    public static boolean wireFrame = false;
-    private static final Logger logger = LogManager.getLogger(DefaultShader.class);
+    private int worldMatrix,projectionMatrix,viewPosition;
+
+    private RenderContext context;
 
     @Override
-    public void init() {
-        String vert = Gdx.files.internal("Shaders/Default.vert").readString();
-        String frag = Gdx.files.internal("Shaders/Default.frag").readString();
+    public void init() { //TODO write shader
+        String vert = Gdx.files.internal("Shaders/particle.vert").readString();
+        String frag = Gdx.files.internal("Shaders/particle.frag").readString();
         noTexture = new Texture("Textures/default.png");
 
 
@@ -48,22 +41,10 @@ public class DefaultShader extends QLDShader {
             throw new GdxRuntimeException(program.getLog());
         SHADER_ID = program.getHandle();
 
-        materialTextureDiffuse = program.getUniformLocation("material.diffuseMap");
-        program.setUniformi(materialTextureDiffuse, 0);
-        materialAmbient = program.getUniformLocation("material.ambient");
-        materialDiffuse = program.getUniformLocation("material.diffuse");
-        materialSpecular = program.getUniformLocation("material.specular");
-        materialShiny = program.getUniformLocation("material.shininess");
-
 
         worldMatrix = program.getUniformLocation("worldMatrix");
         projectionMatrix = program.getUniformLocation("projectionMatrix");
         viewPosition = program.getUniformLocation("viewPos");
-    }
-
-    @Override
-    public void dispose() {
-        program.dispose();
     }
 
     @Override
@@ -74,61 +55,42 @@ public class DefaultShader extends QLDShader {
         program.setUniformf(viewPosition, camera.position);
         context.setDepthTest(GL20.GL_LESS);
         context.setCullFace(GL20.GL_BACK);
-
     }
 
     @Override
     public void render(Renderable renderable) {
-        bindUniforms(renderable);
-        if (wireFrame) {
-            renderable.meshPart.mesh.render(program, GL20.GL_LINES);
-        }
-        renderable.meshPart.render(program);
+        program.setUniformMatrix(worldMatrix, renderable.worldTransform);
+
+        TextureAttribute diffuseTex = (TextureAttribute) renderable.material.get(TextureAttribute.Diffuse);
+        Texture texture = diffuseTex.textureDescription.texture;
+        gl.glActiveTexture(GL20.GL_TEXTURE1);
+        texture.bind();
+        program.setUniformi("hasTexture", 1);
+
+
+        //bindLights(renderable);
+
 
     }
 
-    private void bindUniforms(Renderable renderable) {
+    @Override
+    public void end() {
 
-        program.setUniformMatrix(worldMatrix, renderable.worldTransform);
+    }
 
+    @Override
+    public void dispose() {
+        program.dispose();
+    }
 
-        Material material = renderable.material;
+    @Override
+    public int compareTo(Shader other) {
+        return 0;
+    }
 
-        ColorAttribute diffColorAttribute = (ColorAttribute) material.get(ColorAttribute.Diffuse);
-        if (diffColorAttribute != null)
-            program.setUniformf(materialDiffuse, diffColorAttribute.color.r, diffColorAttribute.color.g, diffColorAttribute.color.b,
-                    diffColorAttribute.color.a);
-
-        ColorAttribute ambColorAttribute = (ColorAttribute) material.get(ColorAttribute.Ambient);
-        if (ambColorAttribute != null)
-            program.setUniformf(materialAmbient, ambColorAttribute.color.r, ambColorAttribute.color.g, ambColorAttribute.color.b);
-
-        ColorAttribute specColorAttribute = (ColorAttribute) material.get(ColorAttribute.Specular);
-        if (specColorAttribute != null)
-            program.setUniformf(materialSpecular, specColorAttribute.color.r, specColorAttribute.color.g, specColorAttribute.color.b);
-
-        FloatAttribute floatAttribute = ((FloatAttribute) material.get(FloatAttribute.Shininess));
-        if (floatAttribute != null)
-            program.setUniformf(materialShiny, floatAttribute.value);
-
-
-        //Bind Texture if available otherwise use default texture
-        if (material.has(TextureAttribute.Diffuse)) {
-            TextureAttribute diffuseTex = (TextureAttribute) material.get(TextureAttribute.Diffuse);
-            Texture texture = diffuseTex.textureDescription.texture;
-            gl.glActiveTexture(GL20.GL_TEXTURE0);
-            texture.bind();
-            program.setUniformi("hasTexture", 1);
-        } else {
-
-            gl.glActiveTexture(GL20.GL_TEXTURE0);
-            noTexture.bind();
-
-            program.setUniformi("hasTexture", 0);
-        }
-
-        bindLights(renderable);
-
+    @Override
+    public boolean canRender(Renderable instance) {
+        return true;
     }
 
     private void bindLights(Renderable renderable) {
@@ -176,18 +138,4 @@ public class DefaultShader extends QLDShader {
         }
     }
 
-    @Override
-    public void end() {
-
-    }
-
-    @Override
-    public int compareTo(Shader other) {
-        return 0;
-    }
-
-    @Override
-    public boolean canRender(Renderable instance) {
-        return true;
-    }
 }

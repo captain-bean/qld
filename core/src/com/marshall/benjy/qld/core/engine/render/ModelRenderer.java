@@ -49,7 +49,7 @@ public class ModelRenderer {
         shader.init();
         for(RenderCall renderCall : rendererQueue){
             //Shader shader = QLDShaderProvider.getShader(renderCall.ShaderID);
-            if(renderCall.instances != null) {
+            if(!(renderCall.instances.indexOf(null) > -1)) {
                 modelBatch.render(renderCall.instances, DevEnvironment.instance(), shader); //TODO pass environment
 
             }

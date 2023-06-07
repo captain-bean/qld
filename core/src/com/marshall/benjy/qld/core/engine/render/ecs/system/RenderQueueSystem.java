@@ -24,9 +24,10 @@ public class RenderQueueSystem extends SortedIteratingSystem{
     protected void processEntity(Entity entity, float deltaTime) {
         int shaderId = entity.getComponent(ShaderComponent.class).shaderID;
         ModelInstance modelInstance = entity.getComponent(ModelComponent.class).getInstance();
-        if(modelInstance != null)
+        if(modelInstance != null) {
             ModelRenderer.Static_Renderer.enqueue(shaderId, modelInstance);
-
+            modelInstance.transform = entity.getComponent(TransformComponent.class).transform;
+        }
         index--;
         if(index <= 0)
             ModelRenderer.Static_Renderer.Render();

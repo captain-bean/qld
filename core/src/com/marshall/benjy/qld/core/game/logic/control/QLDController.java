@@ -10,18 +10,18 @@ import com.marshall.benjy.qld.core.engine.logic.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.logic.input.KeyboardInputReceiver;
 import com.marshall.benjy.qld.core.engine.state.Position;
 import com.marshall.benjy.qld.core.game.logic.commands.MovePlayerCommand;
-import com.marshall.benjy.qld.core.game.render.QLDRenderer;
+import com.marshall.benjy.qld.core.game.render.QLDRenderState;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
 public class QLDController {
 
     private QLDGameState state;
-    private QLDRenderer renderer;
+    private QLDRenderState renderer; //Todo Rename
 
     private PlayerController playerController;
     private LevelController levelController;
 
-    public QLDController(QLDGameState state, QLDRenderer renderer) {
+    public QLDController(QLDGameState state, QLDRenderState renderer) {
         this.state = state;
         this.renderer = renderer;
 

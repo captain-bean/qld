@@ -20,6 +20,7 @@ public class ModelComponent implements Component {
     public void setModel(String modelPath){
         this.modelPath = modelPath;
         ModelLoader.staticLoader.loadModel(modelPath);
+
     }
 
     public ModelInstance getInstance(){
@@ -31,6 +32,8 @@ public class ModelComponent implements Component {
         }
         return model;
     }
+
+
 
     public void setTexturePath(String path){
         texturePath = path;

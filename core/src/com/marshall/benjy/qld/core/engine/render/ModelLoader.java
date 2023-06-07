@@ -16,6 +16,9 @@ public class ModelLoader {
 
     public ModelLoader(){
             this.assetManager = new AssetManager();
+            if(staticLoader == null){
+                staticLoader = this;
+            }
     }
 
     public static void createStaticLoader(){
@@ -32,7 +35,7 @@ public class ModelLoader {
            return;
 
         assetManager.load(filename, Model.class);
-
+        update();
     }
 
     /**
@@ -49,8 +52,10 @@ public class ModelLoader {
      @return null if model isnt loaded yet
      */
     public ModelInstance getModelInstance(String filename){
+        update();
         if(assetManager.isLoaded(filename,Model.class))
             return new ModelInstance(assetManager.get(filename,Model.class));
+
 
         return null;
     }
@@ -66,10 +71,10 @@ public class ModelLoader {
      */
     public Model getModelNow(String filename){
 
-        if(assetManager.isLoaded(filename,Model.class))
-            return assetManager.get(filename,Model.class);
+        if(!assetManager.isLoaded(filename,Model.class))
+            assetManager.finishLoadingAsset(filename);
 
-        assetManager.finishLoadingAsset(filename);
+
         return assetManager.get(filename,Model.class);
     }
 
@@ -94,6 +99,12 @@ public class ModelLoader {
 
     public void finishLoadingAsset(String filename){
         assetManager.finishLoadingAsset(filename);
+    }
+
+    public void update(){
+        if (!assetManager.isFinished()) {
+            assetManager.update(2);
+        }
     }
 
     public AssetManager getAssetManager(){
