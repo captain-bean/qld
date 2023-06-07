@@ -1,6 +1,7 @@
 package com.marshall.benjy.qld.core.engine.render;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -23,8 +24,14 @@ public class ModelRenderer {
     private List<RenderCall> rendererQueue = new ArrayList<>();
 
     private ModelBatch modelBatch;
+
+    private DevCamera camera;
     public ModelRenderer(){
         modelBatch = new ModelBatch();
+    }
+
+    public void setCamera(DevCamera camera) {
+        this.camera = camera;
     }
 
 
@@ -42,9 +49,8 @@ public class ModelRenderer {
      * only capable of rendering objects that have been Queued
      */
     public void Render(){
-        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        modelBatch.begin(new DevCamera().getCamera());
+        modelBatch.begin(camera.getCamera());
         Shader shader = new DefaultShader();
         shader.init();
         for(RenderCall renderCall : rendererQueue){

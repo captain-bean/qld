@@ -69,7 +69,6 @@ public class LegacyLevelGenerator {
             }
         } while(checkEmpty(layout, width, height) < (int) (width * height * .4));
 
-        layout[startX - 1][startY] = new Tile(TileTypes.BLOWED_UP);
         return new Level(layout, new Position(startX, startY), new Position(currentX, currentY));
     }
 

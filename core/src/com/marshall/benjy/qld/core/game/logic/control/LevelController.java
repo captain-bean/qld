@@ -33,6 +33,10 @@ public class LevelController {
         if(position.getX() < 0 || position.getZ() < 0 || position.getX() >= tiles.length || position.getZ() >= tiles[0].length) {
             return false;
         }
+        TileTypes tileType = tiles[position.getX()][position.getZ()].getType();
+        if(tileType == TileTypes.BLOWED_UP || tileType == TileTypes.WOOD) {
+            return false;
+        }
         return true;
     }
 }

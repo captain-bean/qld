@@ -36,10 +36,12 @@ public class QLDRenderState {
     private boolean sceneInit;
 
     public QLDRenderState(QLDGameState state) {
-        scene = new Scene();
+        camera = new DevCamera();
+
+        scene = new Scene(camera);
         modelLoader = new ModelLoader();
 
-        camera = new DevCamera();
+
 
         levelRenderer = new LevelRenderer(state.getLevel());
         playerRenderer = new PlayerRenderer(state.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
@@ -56,6 +58,8 @@ public class QLDRenderState {
             scene.addEntities(levelRenderer.getInstances());
              sceneInit = true;
         }
+
+        ModelRenderer.Static_Renderer.setCamera(camera);
     }
     public void render() {
         ModelRenderer.Static_Renderer.enqueue(shader.SHADER_ID,playerRenderer.getPlayerModelInstance());

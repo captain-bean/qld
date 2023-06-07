@@ -30,6 +30,9 @@ public class PlayerRenderer extends GameObject {
         this.orientingCamera = camera;
 
         getComponent(ModelComponent.class).setModel(textureName);
+
+        playerModelInstance = getPlayerModelInstance();
+        ModelTexturer.addTexture(playerModelInstance,"Textures/walk_1.png",TextureAttribute.Diffuse);
     }
 
     public ModelInstance getPlayerModelInstance() {
@@ -38,8 +41,6 @@ public class PlayerRenderer extends GameObject {
 
     public void updateModelInstance() {
         logger.info("Updating player model");
-        playerModelInstance = getPlayerModelInstance();
-        ModelTexturer.addTexture(playerModelInstance,"Textures/walk_1.png",TextureAttribute.Diffuse);
 
         playerModelInstance.transform.translate(player.getPosition().getX() * Constants.SCALE,
                 Constants.SCALE * 1f,

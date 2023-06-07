@@ -3,6 +3,7 @@ package com.marshall.benjy.qld.core.engine.render.ecs;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.marshall.benjy.qld.core.engine.render.DevCamera;
 import com.marshall.benjy.qld.core.engine.render.ModelLoader;
 import com.marshall.benjy.qld.core.engine.render.ModelRenderer;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.GameObject;
@@ -22,19 +23,20 @@ public class Scene {
     private UpdateSystem updateSystem;
     private Environment environment;
 
+    private DevCamera camera;
+
     private float deltaTime = 0;
     private Instant last = Instant.now();
 
-    public Scene() {
+    public Scene(DevCamera camera) {
         ModelLoader.createStaticLoader();
         ecsEngine = new Engine();
         renderQueueSystem = new RenderQueueSystem();
         updateSystem = new UpdateSystem();
         environment = DevEnvironment.instance();
+        this.camera = camera;
         ecsEngine.addSystem(renderQueueSystem);
         ecsEngine.addSystem(updateSystem);
-
-
     }
 
 
