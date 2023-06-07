@@ -25,11 +25,17 @@ public class TextRenderer implements QLDRenderer{
     @Override
     public void render() {
         if(dirty) {
-            for(char[] textLine : textRepresentation) {
-                logger.info(new String(textLine));
-            }
+            output();
             dirty = false;
         }
+    }
+
+    public void output() {
+        logger.info("---");
+        for(char[] textLine : textRepresentation) {
+            logger.info(new String(textLine));
+        }
+        logger.info("---");
     }
 
     public void refresh() {
