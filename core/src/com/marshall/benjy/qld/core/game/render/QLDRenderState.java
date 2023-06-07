@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
+import com.marshall.benjy.qld.core.engine.logic.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.render.DevCamera;
 import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
 import com.marshall.benjy.qld.core.engine.render.ModelLoader;
@@ -21,7 +22,7 @@ import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
 import java.util.List;
 
-public class QLDRenderState {
+public class QLDRenderState implements QLDRenderer {
     private AssetManager assetManager;
     private LevelRenderer levelRenderer;
     private PlayerRenderer playerRenderer;
@@ -71,8 +72,8 @@ public class QLDRenderState {
     public void dispose() {
     }
 
-    public Camera getCamera() {
-        return camera.getCamera();
+    public void moveCamera(MoveCameraCommand command) {
+        camera.moveCamera(command);
     }
 
     public void resize(int width, int height){

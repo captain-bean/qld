@@ -69,7 +69,7 @@ public class LegacyLevelGenerator {
             }
         } while(checkEmpty(layout, width, height) < (int) (width * height * .4));
 
-        return new Level(layout, new Position(startX, startY), new Position(currentX, currentY));
+        return new Level(layout, new Position(startX - 1, startY), new Position(currentX, currentY));
     }
 
     public static boolean checkOutOfBoundsLeft(Tile[][] level, int fx, int fy){

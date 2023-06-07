@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.marshall.benjy.qld.core.engine.logic.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.state.Constants;
 
 public class DevCamera {
@@ -25,6 +26,11 @@ public class DevCamera {
     public void resize(int width, int height) {
         //viewport.update(width, height, true);
         //viewport.getCamera().update();
+    }
+
+    public void moveCamera(MoveCameraCommand command) {
+        camera.position.add(command.getDelta());
+        camera.update();
     }
 
     public Camera getCamera() {
