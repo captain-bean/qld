@@ -15,6 +15,8 @@ public class TextRenderer implements QLDRenderer{
     private QLDGameState state;
     private char[][] textRepresentation;
 
+    private boolean dirty;
+
     public TextRenderer(QLDGameState state) {
         this.state = state;
         refresh();
@@ -22,8 +24,11 @@ public class TextRenderer implements QLDRenderer{
 
     @Override
     public void render() {
-        for(char[] textLine : textRepresentation) {
-            logger.info(new String(textLine));
+        if(dirty) {
+            for(char[] textLine : textRepresentation) {
+                logger.info(new String(textLine));
+            }
+            dirty = false;
         }
     }
 
@@ -42,6 +47,8 @@ public class TextRenderer implements QLDRenderer{
 
         Position playerPosition = state.getPlayer().getPosition();
         textRepresentation[playerPosition.getX()][playerPosition.getZ()] = 'P';
+
+        dirty = true;
     }
 
     private char tileToChar(Tile tile) {
