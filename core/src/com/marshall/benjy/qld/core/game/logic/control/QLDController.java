@@ -27,7 +27,7 @@ public class QLDController {
         this.renderer = renderer;
 
         this.levelController = new LevelController(state.getLevel());
-        this.levelController.addTileDestroyedListener((position) -> renderer.onTileUpdated(position));
+        this.levelController.addTileDestroyedListener((tile) -> renderer.updateLevelInstances());
 
         this.playerController = new PlayerController(state.getPlayer());
         this.playerController.addMovementListener((p) -> {
@@ -71,7 +71,6 @@ public class QLDController {
     }
 
     public void executeMoveCamera(MoveCameraCommand command) {
-
-
+        renderer.moveCamera(command);
     }
 }

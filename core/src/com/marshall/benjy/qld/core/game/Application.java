@@ -22,7 +22,6 @@ public class Application {
 
         state = QLDGameStateFactory.development();
         renderer = new QLDRenderState(state);
-        // new TextRenderer(state);
         controller = new QLDController(state, renderer);
     }
 
