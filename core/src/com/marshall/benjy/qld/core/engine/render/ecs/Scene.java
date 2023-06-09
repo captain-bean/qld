@@ -14,6 +14,7 @@ import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.List;
 
 public class Scene {
@@ -43,11 +44,14 @@ public class Scene {
         last = Instant.now();
     }
 
-    public <T extends Entity> void addEntities(List<T> entities) {
+    public <T extends Entity> void addEntities(Collection<T> entities) {
         for (T entity : entities) {
             ecsEngine.addEntity(entity);
         }
     }
 
+    public void addEntity(Entity entity) {
+            ecsEngine.addEntity(entity);
+    }
 
 }

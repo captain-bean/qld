@@ -21,7 +21,8 @@ public class Application {
         logger.info("Initializing app...");
 
         state = QLDGameStateFactory.development();
-        renderer = new TextRenderer(state);
+        renderer = new QLDRenderState(state);
+        // new TextRenderer(state);
         controller = new QLDController(state, renderer);
     }
 

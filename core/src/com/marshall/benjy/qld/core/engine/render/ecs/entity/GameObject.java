@@ -23,4 +23,11 @@ public class GameObject extends QLDEntity {
         getComponent(ModelComponent.class).setModel(model);
         return this; //for builder chaining
     }
+
+    public GameObject setShader(int shader){
+        getComponent(ShaderComponent.class).setShaderID(shader);
+        return this;// builder chaining
+    }
+
+
 }

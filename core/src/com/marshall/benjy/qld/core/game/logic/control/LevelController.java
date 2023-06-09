@@ -12,19 +12,19 @@ import java.util.function.Consumer;
 public class LevelController {
 
     private Level level;
-    private List<Consumer<Tile>> tileDestroyedListeners = new ArrayList<>();
+    private List<Consumer<Position>> tileDestroyedListeners = new ArrayList<>();
     public LevelController(Level level) {
         this.level = level;
     }
 
     public void blowUp(Position position) {
         level.setTile(position, new Tile(TileTypes.BLOWED_UP));
-        for(Consumer<Tile> listener : tileDestroyedListeners) {
-            listener.accept(null);
+        for(Consumer<Position> listener : tileDestroyedListeners) {
+            listener.accept(position);
         }
     }
 
-    public void addTileDestroyedListener(Consumer<Tile> destroyedListener) {
+    public void addTileDestroyedListener(Consumer<Position> destroyedListener) {
         this.tileDestroyedListeners.add(destroyedListener);
     }
 

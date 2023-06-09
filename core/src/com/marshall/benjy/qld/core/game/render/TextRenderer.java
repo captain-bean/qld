@@ -72,6 +72,11 @@ public class TextRenderer implements QLDRenderer{
     }
 
     @Override
+    public void onTileUpdated(Position position) {
+
+    }
+
+    @Override
     public void updatePlayerInstance() {
         refresh();
     }

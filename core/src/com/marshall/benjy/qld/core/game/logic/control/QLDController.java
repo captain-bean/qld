@@ -27,7 +27,7 @@ public class QLDController {
         this.renderer = renderer;
 
         this.levelController = new LevelController(state.getLevel());
-        this.levelController.addTileDestroyedListener((tile) -> renderer.updateLevelInstances());
+        this.levelController.addTileDestroyedListener((position) -> renderer.onTileUpdated(position));
 
         this.playerController = new PlayerController(state.getPlayer());
         this.playerController.addMovementListener((p) -> {
