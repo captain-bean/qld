@@ -56,7 +56,9 @@ public class QLDController {
         keyboardReceiver.addKeyCommand(Input.Keys.U, new MoveCameraCommand(new Vector3(0, 0, -10)));
         keyboardReceiver.addKeyCommand(Input.Keys.O, new MoveCameraCommand(new Vector3(0, 0, 10)));
 
-        Gdx.input.setInputProcessor(keyboardReceiver);
+        if(Gdx.input != null) {
+            Gdx.input.setInputProcessor(keyboardReceiver);
+        }
     }
 
     public void executeMovePlayer(MovePlayerCommand command) {
