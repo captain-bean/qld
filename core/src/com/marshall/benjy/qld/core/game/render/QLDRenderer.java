@@ -5,8 +5,6 @@ import com.marshall.benjy.qld.core.engine.state.Position;
 
 public interface QLDRenderer {
 
-    void updateLevelInstances();
-
     void onTileUpdated(Position position);
 
     void updatePlayerInstance();

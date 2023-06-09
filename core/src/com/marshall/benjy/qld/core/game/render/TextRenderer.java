@@ -67,13 +67,8 @@ public class TextRenderer implements QLDRenderer{
     }
 
     @Override
-    public void updateLevelInstances() {
-        refresh();
-    }
-
-    @Override
     public void onTileUpdated(Position position) {
-
+        refresh();
     }
 
     @Override
