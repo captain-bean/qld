@@ -25,7 +25,7 @@ public class DevCamera {
 
         camera.position.set(Constants.SCALE * 25, Constants.SCALE * 15, Constants.SCALE * 25);
         camera.lookAt(Constants.SCALE * 0, Constants.SCALE * 0, Constants.SCALE * 0);
-        camera.near = Constants.SCALE * .001f;
+        camera.near = Constants.SCALE * .1f;
         camera.far = Constants.SCALE * 500f;
         camera.update();
     }

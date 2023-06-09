@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.math.Vector3;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.ModelComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.TransformComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.GameObject;
@@ -42,7 +43,6 @@ public class PlayerEntity extends GameObject {
         getComponent(TransformComponent.class).transform.scale(Constants.SCALE * 1f,
                 Constants.SCALE * 1f,
                 Constants.SCALE * 1f);
-
-        getComponent(TransformComponent.class).transform.rotateTowardDirection(orientingCamera.direction, orientingCamera.up);
+        getComponent(TransformComponent.class).transform.rotateTowardDirection(orientingCamera.direction.cpy().nor(), orientingCamera.up);
     }
 }

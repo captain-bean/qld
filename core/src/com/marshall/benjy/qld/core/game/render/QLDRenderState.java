@@ -9,6 +9,9 @@ import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
 import com.marshall.benjy.qld.core.engine.render.ModelLoader;
 import com.marshall.benjy.qld.core.engine.render.ModelRenderer;
 import com.marshall.benjy.qld.core.engine.render.ecs.Scene;
+import com.marshall.benjy.qld.core.engine.render.ecs.component.ModelComponent;
+import com.marshall.benjy.qld.core.engine.render.ecs.component.TransformComponent;
+import com.marshall.benjy.qld.core.engine.render.ecs.entity.GameObject;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.QLDEntity;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShader;
@@ -47,6 +50,11 @@ public class QLDRenderState implements QLDRenderer {
         environment = DevEnvironment.instance();
         levelRenderer.updateInstances();
 
+        GameObject skybox = new GameObject();
+        skybox.setModel("Models/skybox.obj");
+        skybox.setShader(shader.SHADER_ID);
+        skybox.getComponent(ModelComponent.class).setTexturePath("Textures/skybox.jpg");
+        skybox.getComponent(TransformComponent.class).transform.translate(0,-200f,0).scale(1000,-1000,1000);
 
         Collection<QLDEntity> tiles = levelRenderer.getInstances();
         if(!tiles.isEmpty()) {
@@ -55,6 +63,7 @@ public class QLDRenderState implements QLDRenderer {
         }
         playerRenderer.setShader(shader.SHADER_ID);
         scene.addEntity(playerRenderer);
+        scene.addEntity(skybox);
         ModelRenderer.Static_Renderer.setCamera(camera);
     }
     public void render() {
