@@ -40,18 +40,19 @@ public class MasterRenderer {
     private Skin skin;
     private Stage stage;
 
-    
+
     public MasterRenderer(ModelRenderer renderer){
         spriteBatch = new SpriteBatch();
         modelRenderer = renderer;
         skin = new Skin(Gdx.files.internal("Skins/vhs/skin/vhs-ui.json"));
+        frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), true,true);
     }
 
     public void render(){
 
         if(writeToFrameBuffer){
             HdpiUtils.setMode(HdpiMode.Pixels);
-            frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), true,true);
+
             frameBuffer.begin();
         }
 
