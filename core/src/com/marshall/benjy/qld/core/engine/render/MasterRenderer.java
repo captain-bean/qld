@@ -42,9 +42,13 @@ public class MasterRenderer {
 
     private Label fpsLabel;
 
+    private static final int MAX_SPRITES = 1000;
     public MasterRenderer(ModelRenderer renderer){
-        spriteBatch = new SpriteBatch();
-        spriteBatch.setShader(new ShaderProgram(Gdx.files.internal("Shaders/sprite.vert"),Gdx.files.internal("Shaders/sprite.frag")));
+        spriteBatch = new SpriteBatch(MAX_SPRITES,
+                new ShaderProgram(
+                        Gdx.files.internal("Shaders/sprite.vert"),
+                        Gdx.files.internal("Shaders/sprite.frag"))
+        );
         modelRenderer = renderer;
         skin = new Skin(Gdx.files.internal("Skins/vhs/skin/vhs-ui.json"));
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), true,true);
