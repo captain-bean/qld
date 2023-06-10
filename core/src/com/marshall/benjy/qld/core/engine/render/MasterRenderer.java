@@ -45,13 +45,7 @@ public class MasterRenderer {
     private ShaderProgram program;
     private static final int MAX_SPRITES = 100;
     public MasterRenderer(ModelRenderer renderer){
-        String vert = Gdx.files.internal("Shaders/sprite.vert").readString();
-        String frag = Gdx.files.internal("Shaders/sprite.frag").readString();
-        program = new ShaderProgram(vert, frag);
-        if (!program.isCompiled())
-            throw new GdxRuntimeException(program.getLog());
-
-        spriteBatch = new SpriteBatch(MAX_SPRITES, program);
+        spriteBatch = new SpriteBatch();
 
         modelRenderer = renderer;
         skin = new Skin(Gdx.files.internal("Skins/vhs/skin/vhs-ui.json"));
