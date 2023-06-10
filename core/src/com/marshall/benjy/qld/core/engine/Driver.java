@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.marshall.benjy.qld.core.game.Application;
+import com.marshall.benjy.qld.core.game.QLDConfig;
 
 public class Driver extends ApplicationAdapter {
 	private Application game;
@@ -15,7 +16,7 @@ public class Driver extends ApplicationAdapter {
 		Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
 		Gdx.graphics.setWindowedMode(displayMode.width, displayMode.height);
 
-		game = new Application();
+		game = new Application(new QLDConfig(false));
 	}
 
 	@Override
