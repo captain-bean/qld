@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.nio.FloatBuffer;
@@ -41,14 +42,17 @@ public class MasterRenderer {
     private Stage stage;
 
     private Label fpsLabel;
-
-    private static final int MAX_SPRITES = 1000;
+    private ShaderProgram program;
+    private static final int MAX_SPRITES = 100;
     public MasterRenderer(ModelRenderer renderer){
-        spriteBatch = new SpriteBatch(MAX_SPRITES,
-                new ShaderProgram(
-                        Gdx.files.internal("Shaders/sprite.vert"),
-                        Gdx.files.internal("Shaders/sprite.frag"))
-        );
+        String vert = Gdx.files.internal("Shaders/sprite.vert").readString();
+        String frag = Gdx.files.internal("Shaders/sprite.frag").readString();
+        program = new ShaderProgram(vert, frag);
+        if (!program.isCompiled())
+            throw new GdxRuntimeException(program.getLog());
+
+        spriteBatch = new SpriteBatch(MAX_SPRITES, program);
+
         modelRenderer = renderer;
         skin = new Skin(Gdx.files.internal("Skins/vhs/skin/vhs-ui.json"));
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), true,true);
