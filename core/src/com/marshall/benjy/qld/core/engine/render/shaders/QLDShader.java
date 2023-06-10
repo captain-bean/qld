@@ -10,4 +10,5 @@ public abstract class QLDShader implements Shader {
         QLDShaderProvider.COMPILED_SHADERS.put(SHADER_ID,this);
     }
 
+
 }

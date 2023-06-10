@@ -1,15 +1,16 @@
 package com.marshall.benjy.qld.core.engine.render.shaders;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.*;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.BufferUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
@@ -19,10 +20,13 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import static com.badlogic.gdx.Gdx.gl;
 import static com.badlogic.gdx.graphics.GL20.*;
+import static com.badlogic.gdx.graphics.GL30.GL_RED;
+import static com.badlogic.gdx.graphics.GL30.GL_RGBA16F;
 
 public class DefaultShader extends QLDShader {
     private ShaderProgram program;
@@ -35,6 +39,9 @@ public class DefaultShader extends QLDShader {
 
     public static boolean wireFrame = false;
     private static final Logger logger = LogManager.getLogger(DefaultShader.class);
+
+    private FrameBuffer frameBuffer;
+    private int fbHandle = 0;
 
     @Override
     public void init() {
@@ -74,8 +81,14 @@ public class DefaultShader extends QLDShader {
         program.setUniformf(viewPosition, camera.position);
         context.setDepthTest(GL20.GL_LESS);
         context.setCullFace(GL20.GL_BACK);
-        context.setBlending(true,GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+        context.setBlending(true, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
+        //  setupSSAO();
+
+       // frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+       // frameBuffer.bind();
+       // frameBuffer.begin();
 
 
     }
@@ -191,7 +204,12 @@ public class DefaultShader extends QLDShader {
 
     @Override
     public void end() {
+        //frameBuffer.end();
 
+        //SpriteBatch batch = new SpriteBatch();
+        //batch.begin();
+        //batch.draw(frameBuffer.getColorBufferTexture(),0,0);
+        //batch.end();
     }
 
     @Override
@@ -203,4 +221,7 @@ public class DefaultShader extends QLDShader {
     public boolean canRender(Renderable instance) {
         return true;
     }
+
+
+
 }

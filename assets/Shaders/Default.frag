@@ -40,6 +40,11 @@ in vec3 v_normal;
 in vec3 v_fragPos;
 in vec2 texCoords;
 
+layout (location = 0) out vec4 fragColor;   //Final Color buffer
+layout (location = 1) out vec4 gPosition;   //Position coordinates buffer
+layout (location = 2) out vec3 gNormal;     //Normal buffer
+layout (location = 3) out vec4 gAlbedoSpec; //Diffuse color buffer
+
 uniform vec3 viewPos;
 
 uniform Material material;
@@ -54,7 +59,6 @@ uniform int dirLightsSize;
 
 const float screenGamma = 2.2; // Assume the monitor is calibrated to the sRGB color space  
 
-out vec4 fragColor;
 
 
 
@@ -62,13 +66,16 @@ vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 
+
 void main()
 {    
-   
+
     vec3 norm = normalize(v_normal);
     vec3 viewDir = normalize(viewPos - v_fragPos);
 
     vec4 result = vec4(0,0,0,0);
+
+
 
     for(int i = 0; i < dirLightsSize; i++){
              result += CalcDirLight(dirLights[i], norm, viewDir);
@@ -80,9 +87,17 @@ void main()
 
     //fragColor = vec4(CalcPointLight(pointLights[0],norm, v_fragPos, viewDir),1);
 
+    // store the fragment position vector in the first gbuffer texture
+    gPosition = vec4(v_fragPos,1);
+    // also store the per-fragment normals into the gbuffer
+    gNormal = normalize(v_normal);
+    // and the diffuse per-fragment color, ignore specular (oops)
+    gAlbedoSpec.rgb = vec3(result);
+
     if(result.a == 0){
         discard;
     }else{
+        //fragColor = vec4(gNormal,1.0);//show normals
         fragColor = result;
     }
 }

@@ -53,7 +53,9 @@ public class ShadowComponent implements Component {
                 updated = false;
             }
         }
-        ModelTexturer.addTexture(model,"Textures/shadow.png",TextureAttribute.Diffuse);
+        if (model != null) {
+            ModelTexturer.addTexture(model,"Textures/shadow.png",TextureAttribute.Diffuse);
+        }
         return model;
     }
 

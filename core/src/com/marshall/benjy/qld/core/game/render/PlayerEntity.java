@@ -49,7 +49,7 @@ public class PlayerEntity extends GameObject {
         getComponent(TransformComponent.class).transform.scale(Constants.SCALE * 1f,
                 Constants.SCALE * .8f,
                 Constants.SCALE * .8f);
-        getComponent(TransformComponent.class).transform.rotateTowardDirection(orientingCamera.direction.cpy().nor(), orientingCamera.up);
+        getComponent(TransformComponent.class).transform.rotateTowardDirection(orientingCamera.direction.cpy(), orientingCamera.up);
 
         Vector3 position = new Vector3();
         getComponent(TransformComponent.class).transform.getTranslation(position);

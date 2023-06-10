@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ModelRenderer {
 
-    public static ModelRenderer Static_Renderer = new ModelRenderer();
+    public static ModelRenderer Static_Renderer;
 
     private List<RenderCall> rendererQueue = new ArrayList<>();
 
@@ -29,6 +29,7 @@ public class ModelRenderer {
     private DevCamera camera;
     public ModelRenderer(){
         modelBatch = new ModelBatch();
+        Static_Renderer = this;
     }
 
     public void setCamera(DevCamera camera) {

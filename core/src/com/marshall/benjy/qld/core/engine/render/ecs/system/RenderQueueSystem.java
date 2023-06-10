@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.marshall.benjy.qld.core.engine.render.MasterRenderer;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.ModelComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.ShaderComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.ShadowComponent;
@@ -17,9 +18,10 @@ import com.marshall.benjy.qld.core.engine.render.shaders.SpriteShader;
 public class RenderQueueSystem extends SortedIteratingSystem{
 
     private int index = 0;
-
+    private MasterRenderer masterRenderer;
     public RenderQueueSystem(){
         super(Family.all(ModelComponent.class, ShaderComponent.class, TransformComponent.class).get(), new ZComparator());
+        masterRenderer = new MasterRenderer(new ModelRenderer());
     }
 
 
@@ -29,17 +31,17 @@ public class RenderQueueSystem extends SortedIteratingSystem{
         int shaderId = entity.getComponent(ShaderComponent.class).shaderID;
         ModelInstance modelInstance = entity.getComponent(ModelComponent.class).getInstance();
         if(modelInstance != null) {
-            ModelRenderer.Static_Renderer.enqueue(shaderId, modelInstance);
+            masterRenderer.enqueue(shaderId, modelInstance);
             modelInstance.transform = entity.getComponent(TransformComponent.class).transform;
             if(entity.getComponent(ShadowComponent.class) != null){
                 ModelInstance shadowModel = entity.getComponent(ShadowComponent.class).getInstance();
-                ModelRenderer.Static_Renderer.enqueue(shaderId, shadowModel);
+                masterRenderer.enqueue(shaderId, shadowModel);
                 shadowModel.transform = entity.getComponent(ShadowComponent.class).transform;
             }
         }
         index--;
         if(index <= 0)
-            ModelRenderer.Static_Renderer.Render();
+            masterRenderer.render();
     }
 
     @Override
