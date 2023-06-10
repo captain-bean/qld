@@ -46,7 +46,7 @@ public class QLDRenderState implements QLDRenderer {
         playerRenderer = new PlayerEntity(state.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
 
         shader = new DefaultShader();
-        spriteShader = new SpriteShader();
+        //spriteShader = new SpriteShader();
         shader.init();
 
 
