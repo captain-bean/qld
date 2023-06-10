@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,11 +12,10 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.HdpiMode;
 import com.badlogic.gdx.graphics.glutils.HdpiUtils;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -40,27 +40,30 @@ public class MasterRenderer {
     private Skin skin;
     private Stage stage;
 
+    private Label fpsLabel;
 
     public MasterRenderer(ModelRenderer renderer){
         spriteBatch = new SpriteBatch();
+        spriteBatch.setShader(new ShaderProgram(Gdx.files.internal("Shaders/sprite.vert"),Gdx.files.internal("Shaders/sprite.frag")));
         modelRenderer = renderer;
         skin = new Skin(Gdx.files.internal("Skins/vhs/skin/vhs-ui.json"));
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), true,true);
+
+        fpsLabel = new Label(Gdx.graphics.getFramesPerSecond() + "", skin);
     }
 
     public void render(){
 
         if(writeToFrameBuffer){
             HdpiUtils.setMode(HdpiMode.Pixels);
-
             frameBuffer.begin();
         }
-
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         modelRenderer.Render();
         stage = new Stage();
-        Label textArea = new Label(Gdx.graphics.getFramesPerSecond() + "", skin);
-        textArea.setPosition(0,Gdx.graphics.getHeight() - textArea.getHeight());
-        stage.addActor(textArea);
+        fpsLabel.setText(Gdx.graphics.getFramesPerSecond());
+        fpsLabel.setPosition(0,Gdx.graphics.getHeight() - fpsLabel.getHeight());
+        stage.addActor(fpsLabel);
         stage.act();
         stage.draw();
 

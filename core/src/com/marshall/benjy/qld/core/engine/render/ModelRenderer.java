@@ -51,7 +51,7 @@ public class ModelRenderer {
      * only capable of rendering objects that have been Queued
      */
     public void Render(){
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
         
         modelBatch.begin(camera.getCamera());
         Shader shader = new DefaultShader();
