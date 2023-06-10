@@ -18,7 +18,7 @@ public class DevCamera {
     private Camera camera;
 
     public DevCamera() {
-        camera = new PerspectiveCamera(70, 600, 480);
+        camera = new PerspectiveCamera(50, 600, 480);
         viewport = new ScreenViewport(camera);
 
         camera = viewport.getCamera();

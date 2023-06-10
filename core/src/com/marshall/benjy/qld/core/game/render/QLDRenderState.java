@@ -15,6 +15,7 @@ import com.marshall.benjy.qld.core.engine.render.ecs.entity.GameObject;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.QLDEntity;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShader;
+import com.marshall.benjy.qld.core.engine.render.shaders.SpriteShader;
 import com.marshall.benjy.qld.core.engine.state.Position;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
@@ -26,7 +27,7 @@ public class QLDRenderState implements QLDRenderer {
     private LevelRenderer levelRenderer;
     private PlayerEntity playerRenderer;
     private ModelBatch modelBatch;
-    private QLDShader shader;
+    private QLDShader shader, spriteShader;
     private DevCamera camera;
     private Environment environment;
     private Scene scene;
@@ -45,7 +46,10 @@ public class QLDRenderState implements QLDRenderer {
         playerRenderer = new PlayerEntity(state.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
 
         shader = new DefaultShader();
+        spriteShader = new SpriteShader();
         shader.init();
+
+
 
         environment = DevEnvironment.instance();
         levelRenderer.updateInstances();

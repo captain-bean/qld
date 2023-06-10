@@ -14,9 +14,6 @@ public class QLDShaderProvider {
     public static Map<Integer,QLDShader> COMPILED_SHADERS = new HashMap<>();
 
     public static QLDShader getShader(int id) {
-        if(COMPILED_SHADERS.containsKey(id)) {
-            return COMPILED_SHADERS.get(id);
-        }
-        return null;
+        return COMPILED_SHADERS.get(id);
     }
 }

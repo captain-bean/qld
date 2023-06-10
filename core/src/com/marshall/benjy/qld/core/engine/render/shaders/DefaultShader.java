@@ -19,12 +19,12 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+import java.nio.IntBuffer;
+
 import static com.badlogic.gdx.Gdx.gl;
+import static com.badlogic.gdx.graphics.GL20.*;
 
 public class DefaultShader extends QLDShader {
-
-    public static final DefaultShader STATIC_SHADER = new DefaultShader();
-
     private ShaderProgram program;
     private RenderContext context;
 
@@ -74,8 +74,12 @@ public class DefaultShader extends QLDShader {
         program.setUniformf(viewPosition, camera.position);
         context.setDepthTest(GL20.GL_LESS);
         context.setCullFace(GL20.GL_BACK);
+        context.setBlending(true,GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+
+
 
     }
+
 
     @Override
     public void render(Renderable renderable) {
@@ -96,16 +100,18 @@ public class DefaultShader extends QLDShader {
 
         ColorAttribute diffColorAttribute = (ColorAttribute) material.get(ColorAttribute.Diffuse);
         if (diffColorAttribute != null)
-            program.setUniformf(materialDiffuse, diffColorAttribute.color.r, diffColorAttribute.color.g, diffColorAttribute.color.b,
-                    diffColorAttribute.color.a);
+            program.setUniformf(materialDiffuse, diffColorAttribute.color.r, diffColorAttribute.color.g,
+                    diffColorAttribute.color.b, diffColorAttribute.color.a);
 
         ColorAttribute ambColorAttribute = (ColorAttribute) material.get(ColorAttribute.Ambient);
         if (ambColorAttribute != null)
-            program.setUniformf(materialAmbient, ambColorAttribute.color.r, ambColorAttribute.color.g, ambColorAttribute.color.b);
+            program.setUniformf(materialAmbient, ambColorAttribute.color.r, ambColorAttribute.color.g,
+                    ambColorAttribute.color.b);
 
         ColorAttribute specColorAttribute = (ColorAttribute) material.get(ColorAttribute.Specular);
         if (specColorAttribute != null)
-            program.setUniformf(materialSpecular, specColorAttribute.color.r, specColorAttribute.color.g, specColorAttribute.color.b);
+            program.setUniformf(materialSpecular, specColorAttribute.color.r, specColorAttribute.color.g,
+                    specColorAttribute.color.b);
 
         FloatAttribute floatAttribute = ((FloatAttribute) material.get(FloatAttribute.Shininess));
         if (floatAttribute != null)
@@ -123,7 +129,6 @@ public class DefaultShader extends QLDShader {
 
             gl.glActiveTexture(GL20.GL_TEXTURE0);
             noTexture.bind();
-
             program.setUniformi("hasTexture", 0);
         }
 
@@ -149,10 +154,15 @@ public class DefaultShader extends QLDShader {
                 float linear = 4.7f / lights.get(i).intensity;
                 float quadratic = 3.5f * linear + .02f * linear;
                 program.setUniformf("pointLights[" + i + "].position", lights.get(i).position);
-                program.setUniformf("pointLights[" + i + "].diffuse", lights.get(i).color.r, lights.get(i).color.g, lights.get(i).color.b);
+                program.setUniformf("pointLights[" + i + "].diffuse", lights.get(i).color.r,
+                        lights.get(i).color.g, lights.get(i).color.b);
 
-                program.setUniformf("pointLights[" + i + "].ambient", lights.get(i).color.r * .2f, lights.get(i).color.g * .2f, lights.get(i).color.b * .2f);
-                program.setUniformf("pointLights[" + i + "].specular", lights.get(i).color.r, lights.get(i).color.g, lights.get(i).color.b);
+                program.setUniformf("pointLights[" + i + "].ambient", lights.get(i).color.r * .2f,
+                        lights.get(i).color.g * .2f, lights.get(i).color.b * .2f);
+
+                program.setUniformf("pointLights[" + i + "].specular", lights.get(i).color.r,
+                        lights.get(i).color.g, lights.get(i).color.b);
+
                 program.setUniformf("pointLights[" + i + "].constant", 1f);
                 program.setUniformf("pointLights[" + i + "].linear", linear);
                 program.setUniformf("pointLights[" + i + "].quadratic", quadratic);
@@ -166,11 +176,14 @@ public class DefaultShader extends QLDShader {
 
             program.setUniformi("dirLightsSize", dirlights.size);
             for (int i = 0; i < dirlights.size; i++) {
-                program.setUniformf("dirLights[" + i + "].direction", dirlights.get(i).direction.x, dirlights.get(i).direction.y, dirlights.get(i).direction.z);
-                program.setUniformf("dirLights[" + i + "].diffuse", dirlights.get(i).color.r, dirlights.get(i).color.g, dirlights.get(i).color.b);
-
-                program.setUniformf("dirLights[" + i + "].ambient", colorLightAmb.r, colorLightAmb.g, colorLightAmb.b);
-                program.setUniformf("dirLights[" + i + "].specular", dirlights.get(i).color.r, dirlights.get(i).color.g, dirlights.get(i).color.b);
+                program.setUniformf("dirLights[" + i + "].direction", dirlights.get(i).direction.x,
+                        dirlights.get(i).direction.y, dirlights.get(i).direction.z);
+                program.setUniformf("dirLights[" + i + "].diffuse", dirlights.get(i).color.r,
+                        dirlights.get(i).color.g, dirlights.get(i).color.b);
+                program.setUniformf("dirLights[" + i + "].ambient", colorLightAmb.r, colorLightAmb.g,
+                        colorLightAmb.b);
+                program.setUniformf("dirLights[" + i + "].specular", dirlights.get(i).color.r,
+                        dirlights.get(i).color.g, dirlights.get(i).color.b);
 
             }
         }

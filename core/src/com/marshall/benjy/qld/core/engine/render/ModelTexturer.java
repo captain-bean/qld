@@ -1,8 +1,10 @@
 package com.marshall.benjy.qld.core.engine.render;
 
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 
 public class ModelTexturer {
@@ -17,6 +19,7 @@ public class ModelTexturer {
             }
             Material material = instance.materials.get(0);
             material.set(textureAttribute);
+            material.set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
             return true;
         }
         return false;

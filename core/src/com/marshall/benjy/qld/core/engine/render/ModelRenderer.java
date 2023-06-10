@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShaderProvider;
+import com.marshall.benjy.qld.core.engine.render.shaders.SpriteShader;
 import org.apache.logging.log4j.core.util.ArrayUtils;
 
 import java.util.ArrayList;
@@ -50,13 +51,17 @@ public class ModelRenderer {
      */
     public void Render(){
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        
         modelBatch.begin(camera.getCamera());
         Shader shader = new DefaultShader();
-        shader.init();
+
         for(RenderCall renderCall : rendererQueue){
             //Shader shader = QLDShaderProvider.getShader(renderCall.ShaderID);
             if(!(renderCall.instances.indexOf(null) > -1)) {
-                modelBatch.render(renderCall.instances, DevEnvironment.instance(), shader); //TODO pass environment
+                if (shader != null) {
+
+                    modelBatch.render(renderCall.instances, DevEnvironment.instance(),shader); //TODO pass environment
+                }
 
             }
         }

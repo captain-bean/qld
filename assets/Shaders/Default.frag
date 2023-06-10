@@ -79,10 +79,11 @@ void main()
     }
 
     //fragColor = vec4(CalcPointLight(pointLights[0],norm, v_fragPos, viewDir),1);
+
     if(result.a == 0){
-    discard;
+        discard;
     }else{
-    fragColor = result;
+        fragColor = result;
     }
 }
 

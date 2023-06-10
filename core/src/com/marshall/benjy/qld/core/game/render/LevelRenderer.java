@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.GameObject;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.QLDEntity;
+import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.state.Constants;
 import com.marshall.benjy.qld.core.engine.state.Position;
 import com.marshall.benjy.qld.core.game.logic.control.LevelController;
@@ -31,7 +32,6 @@ public class LevelRenderer {
 	}
 
 	public void updateInstances() {
-		instances.clear();
 		for (int x = 0; x < level.getTiles().length; x++) {
 			for (int z = 0; z < level.getTiles()[x].length; z++) {
 				Tile workingTile = level.getTiles()[x][z];
@@ -40,8 +40,18 @@ public class LevelRenderer {
 					logger.warn("Tile model not loaded, aborting draw");
 					return;
 				}
-				TileEntity tileInstance = new TileEntity(modelPath);
-				tileInstance.translate(x * Constants.SCALE, 0, z * Constants.SCALE);
+				TileEntity tileInstance;
+				if(instances.containsKey(new Position(x,z))){
+					tileInstance = (TileEntity) instances.get(new Position(x,z));
+					tileInstance.setTileModel(modelPath);
+					instances.remove(new Position(x,z));
+				}else{
+					tileInstance = new TileEntity(modelPath);
+					tileInstance.translate(x * Constants.SCALE, 0, z * Constants.SCALE);
+					tileInstance.setShader(DefaultShader.SHADER_ID);
+				}
+
+
 				instances.put(new Position(x,z),tileInstance);
 			}
 		}
