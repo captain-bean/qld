@@ -39,10 +39,12 @@ public class MasterRenderer {
     private ModelRenderer modelRenderer;
     private Skin skin;
     private Stage stage;
+
+    
     public MasterRenderer(ModelRenderer renderer){
         spriteBatch = new SpriteBatch();
         modelRenderer = renderer;
-        skin = new Skin(Gdx.files.internal("Skins/arcade/skin/arcade-ui.json"));
+        skin = new Skin(Gdx.files.internal("Skins/vhs/skin/vhs-ui.json"));
     }
 
     public void render(){
