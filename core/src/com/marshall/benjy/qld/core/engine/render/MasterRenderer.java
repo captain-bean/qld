@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -43,8 +45,60 @@ public class MasterRenderer {
 
     private Label fpsLabel;
     private ShaderProgram program;
+
     private static final int MAX_SPRITES = 100;
     public MasterRenderer(ModelRenderer renderer){
+        setSpriteBatch();
+
+        modelRenderer = renderer;
+        skin = new Skin(Gdx.files.internal("Skins/vhs/skin/vhs-ui.json"));
+        frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), true,true);
+
+        fpsLabel = new Label(Gdx.graphics.getFramesPerSecond() + "", skin);
+        stage = new Stage(new ScreenViewport(),spriteBatch);
+
+    }
+
+    public void render(){
+
+        if(writeToFrameBuffer){
+            HdpiUtils.setMode(HdpiMode.Pixels);
+            frameBuffer.begin();
+        }
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        modelRenderer.Render();
+
+
+
+        fpsLabel.setText(Gdx.graphics.getFramesPerSecond());
+        fpsLabel.setPosition(0,Gdx.graphics.getHeight() - fpsLabel.getHeight());
+        stage.addActor(fpsLabel);
+        stage.act();
+        stage.draw();
+
+
+        if(writeToFrameBuffer){
+            frameBuffer.end();
+
+
+            spriteBatch.begin();
+            spriteBatch.draw(frameBuffer.getColorBufferTexture(),0,0,frameBuffer.getWidth(),frameBuffer.getHeight(),0,0,1,1);
+            spriteBatch.end();
+            HdpiUtils.setMode(HdpiMode.Logical);
+        }
+
+    }
+
+    public void enqueue(int shader, ModelInstance... instances){
+        modelRenderer.enqueue(shader,instances);
+    }
+    public void enqueue(int shader, ModelInstance instance){
+        modelRenderer.enqueue(shader,instance);
+    }
+
+    //TODO add 2D renderer implementation
+
+    private void setSpriteBatch(){
         String vertexShader = "#version 330 core\n"
                 + "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
                 + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
@@ -78,51 +132,20 @@ public class MasterRenderer {
         program = new ShaderProgram(vertexShader, fragmentShader);
         spriteBatch = new SpriteBatch(500, program);
 
-        modelRenderer = renderer;
-        skin = new Skin(Gdx.files.internal("Skins/vhs/skin/vhs-ui.json"));
-        frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), true,true);
-
-        fpsLabel = new Label(Gdx.graphics.getFramesPerSecond() + "", skin);
-    }
-
-    public void render(){
-
-        if(writeToFrameBuffer){
-            HdpiUtils.setMode(HdpiMode.Pixels);
-            frameBuffer.begin();
-        }
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        modelRenderer.Render();
-        stage = new Stage();
-        fpsLabel.setText(Gdx.graphics.getFramesPerSecond());
-        fpsLabel.setPosition(0,Gdx.graphics.getHeight() - fpsLabel.getHeight());
-        stage.addActor(fpsLabel);
-        stage.act();
-        stage.draw();
-
-
-        if(writeToFrameBuffer){
-            frameBuffer.end();
-
-
-            spriteBatch.begin();
-            spriteBatch.draw(frameBuffer.getColorBufferTexture(),0,0,frameBuffer.getWidth(),frameBuffer.getHeight(),0,0,1,1);
-            spriteBatch.end();
-            HdpiUtils.setMode(HdpiMode.Logical);
-        }
+        // //Possible work around for undefined version number
+        //ShaderProgram.prependVertexCode = "#version 330 core";
+        //ShaderProgram.prependFragmentCode = "#version 330 core";
+        //spriteBatch = new SpriteBatch();
+        //ShaderProgram.prependVertexCode = "";
+        //ShaderProgram.prependFragmentCode = "";
 
     }
 
-    public void enqueue(int shader, ModelInstance... instances){
-        modelRenderer.enqueue(shader,instances);
+    public void setCamera(DevCamera camera){
+
+        modelRenderer.setCamera(camera);
+
     }
-    public void enqueue(int shader, ModelInstance instance){
-        modelRenderer.enqueue(shader,instance);
-    }
-
-    //TODO add 2D renderer implementation
-
-
 
 
 

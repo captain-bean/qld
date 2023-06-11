@@ -19,6 +19,7 @@ import java.util.List;
 
 public class Scene {
 
+    public DevCamera camera;
     private Engine ecsEngine;
     private RenderQueueSystem renderQueueSystem;
     private UpdateSystem updateSystem;
@@ -54,4 +55,8 @@ public class Scene {
             ecsEngine.addEntity(entity);
     }
 
+
+    public void setCamera(DevCamera camera) {
+        renderQueueSystem.setCamera(camera);
+    }
 }

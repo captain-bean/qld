@@ -67,7 +67,8 @@ public class QLDRenderState implements QLDRenderer {
         playerRenderer.setShader(shader.SHADER_ID);
         scene.addEntity(playerRenderer);
         scene.addEntity(skybox);
-        ModelRenderer.Static_Renderer.setCamera(camera);
+        scene.setCamera(camera);
+
     }
     public void render() {
         if(sceneInit){
