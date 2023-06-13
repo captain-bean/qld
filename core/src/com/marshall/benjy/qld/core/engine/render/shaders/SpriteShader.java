@@ -49,6 +49,7 @@ public class SpriteShader extends QLDShader {
             throw new GdxRuntimeException(program.getLog());
         SHADER_ID = program.getHandle();
 
+        QLDShaderProvider.COMPILED_SHADERS.put(SHADER_ID,this);
         materialTextureDiffuse = program.getUniformLocation("spriteTexture");
         program.setUniformi(materialTextureDiffuse, 0);
         worldMatrix = program.getUniformLocation("worldMatrix");

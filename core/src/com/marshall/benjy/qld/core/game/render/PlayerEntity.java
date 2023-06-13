@@ -56,7 +56,7 @@ public class PlayerEntity extends GameObject {
 
         getComponent(ShadowComponent.class).transform.setToTranslation(position)
                 .translate(0,-5.5f,0)
-                .scale(5,1,5)
+                .scale(3,1,5)
                 .rotate(1,0,0,-90);
 
 

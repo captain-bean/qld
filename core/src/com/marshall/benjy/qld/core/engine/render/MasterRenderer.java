@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -27,6 +24,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import static com.badlogic.gdx.Gdx.gl;
+import static com.badlogic.gdx.Gdx.gl30;
 import static com.badlogic.gdx.graphics.GL20.*;
 import static com.badlogic.gdx.graphics.GL20.GL_TEXTURE_2D;
 import static com.badlogic.gdx.graphics.GL30.GL_RED;
@@ -46,6 +44,9 @@ public class MasterRenderer {
     private Label fpsLabel;
     private ShaderProgram program;
 
+    private IntBuffer noiseTexture,ssaoFBO,ssaoColorBuffer,gPosition;
+    private FloatBuffer ssaoKernel;
+
     private static final int MAX_SPRITES = 100;
     public MasterRenderer(ModelRenderer renderer){
         setSpriteBatch();
@@ -57,19 +58,26 @@ public class MasterRenderer {
         fpsLabel = new Label(Gdx.graphics.getFramesPerSecond() + "", skin);
         stage = new Stage(new ScreenViewport(),spriteBatch);
 
+        setupSSAO();
     }
 
     public void render(){
 
         if(writeToFrameBuffer){
             HdpiUtils.setMode(HdpiMode.Pixels);
+
             frameBuffer.begin();
+//            IntBuffer intBuffer = BufferUtils.newIntBuffer(2);
+//            intBuffer.put(GL30.GL_COLOR_ATTACHMENT0);
+//            intBuffer.put(GL30.GL_COLOR_ATTACHMENT1);
+//            intBuffer.rewind();
+//            Gdx.gl30.glDrawBuffers(2, intBuffer);
+//            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+//            modelRenderer.Render(false);
+//            frameBuffer.end();
         }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         modelRenderer.Render();
-
-
-
         fpsLabel.setText(Gdx.graphics.getFramesPerSecond());
         fpsLabel.setPosition(0,Gdx.graphics.getHeight() - fpsLabel.getHeight());
         stage.addActor(fpsLabel);
@@ -161,7 +169,7 @@ public class MasterRenderer {
     private void setupSSAO() {
 
 
-        IntBuffer gPosition = BufferUtils.newIntBuffer(1);
+         gPosition = BufferUtils.newIntBuffer(1);
 
         gl.glGenTextures(1, gPosition);
         gl.glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),
@@ -170,7 +178,7 @@ public class MasterRenderer {
         gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        FloatBuffer ssaoKernel = BufferUtils.newFloatBuffer(64 * 3);
+         ssaoKernel = BufferUtils.newFloatBuffer(64 * 3);
         for (int i = 0; i < 64; ++i) {
             Vector3 sample = new Vector3(
                     (float) Math.random() * 2.0f - 1.0f,
@@ -190,7 +198,7 @@ public class MasterRenderer {
             ssaoKernel.put(sample.z);
         }
 
-        IntBuffer noiseTexture = BufferUtils.newIntBuffer(1);
+         noiseTexture = BufferUtils.newIntBuffer(1);
         gl.glGenTextures(1, noiseTexture);
         gl.glBindTexture(GL_TEXTURE_2D, noiseTexture.get(0));
         gl.glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 4, 4, 0, GL_RGB, GL_FLOAT, ssaoKernel);
@@ -199,11 +207,11 @@ public class MasterRenderer {
         gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-        IntBuffer ssaoFBO = BufferUtils.newIntBuffer(1);
+         ssaoFBO = BufferUtils.newIntBuffer(1);
         gl.glGenFramebuffers(1, ssaoFBO);
         gl.glBindFramebuffer(GL_FRAMEBUFFER, ssaoFBO.get(0));
 
-        IntBuffer ssaoColorBuffer = BufferUtils.newIntBuffer(1);
+         ssaoColorBuffer = BufferUtils.newIntBuffer(1);
         gl.glGenTextures(1, ssaoColorBuffer);
         gl.glBindTexture(GL_TEXTURE_2D, ssaoColorBuffer.get(0));
         gl.glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),

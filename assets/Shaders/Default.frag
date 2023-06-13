@@ -119,6 +119,7 @@ vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
     vec4 diffuse;
     vec3 specular;
 
+
     if(hasTexture){
         ambient  = light.ambient * vec3(texture(material.diffuseMap,texCoords));
         diffuse  = vec4((light.diffuse  * diff),1) * texture(material.diffuseMap,texCoords);

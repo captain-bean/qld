@@ -54,10 +54,32 @@ public class ModelRenderer {
 
         
         modelBatch.begin(camera.getCamera());
-        Shader shader = new DefaultShader();
+
 
         for(RenderCall renderCall : rendererQueue){
-            //Shader shader = QLDShaderProvider.getShader(renderCall.ShaderID);
+            Shader shader = QLDShaderProvider.getShader(renderCall.ShaderID);
+            if(!(renderCall.instances.indexOf(null) > -1)) {
+                if (shader != null) {
+
+                    modelBatch.render(renderCall.instances, DevEnvironment.instance(), shader); //TODO pass environment
+                }
+
+            }
+        }
+        modelBatch.end();
+        rendererQueue.clear();
+    }
+    /**
+     * Renders one frame all at once
+     * only capable of rendering objects that have been Queued
+     */
+    public void Render(boolean clearqueue){
+
+
+        modelBatch.begin(camera.getCamera());
+
+        for(RenderCall renderCall : rendererQueue){
+            Shader shader = QLDShaderProvider.getShader(renderCall.ShaderID);
             if(!(renderCall.instances.indexOf(null) > -1)) {
                 if (shader != null) {
 
@@ -67,8 +89,10 @@ public class ModelRenderer {
             }
         }
         modelBatch.end();
-        rendererQueue.clear();
+        if(clearqueue)
+            rendererQueue.clear();
     }
+
 
     /**
      *  Queues all instances to be rendered

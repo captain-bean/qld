@@ -43,6 +43,7 @@ public class DefaultShader extends QLDShader {
     private FrameBuffer frameBuffer;
     private int fbHandle = 0;
 
+
     @Override
     public void init() {
         String vert = Gdx.files.internal("Shaders/Default.vert").readString();
@@ -54,7 +55,7 @@ public class DefaultShader extends QLDShader {
         if (!program.isCompiled())
             throw new GdxRuntimeException(program.getLog());
         SHADER_ID = program.getHandle();
-
+        QLDShaderProvider.COMPILED_SHADERS.put(SHADER_ID,this);
         materialTextureDiffuse = program.getUniformLocation("material.diffuseMap");
         program.setUniformi(materialTextureDiffuse, 0);
         materialAmbient = program.getUniformLocation("material.ambient");
