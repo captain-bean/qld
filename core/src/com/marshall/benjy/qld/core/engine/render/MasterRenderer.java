@@ -118,7 +118,7 @@ public class MasterRenderer {
         String frag = Gdx.files.internal("Shaders/sprite.frag").readString();
 
         program = new ShaderProgram(vert, frag);
-        if(program.isCompiled()) {
+        if(!program.isCompiled()) {
             logger.warn("Sprite batch shader failed compilation, log: {}", program.getLog());
         }
 
