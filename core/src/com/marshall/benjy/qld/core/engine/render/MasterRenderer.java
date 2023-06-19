@@ -19,6 +19,11 @@ import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
+import com.marshall.benjy.qld.core.engine.render.shaders.QLDShaderProvider;
+import com.marshall.benjy.qld.core.game.Application;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -32,9 +37,11 @@ import static com.badlogic.gdx.graphics.GL30.GL_RGBA16F;
 
 public class MasterRenderer {
 
+    private static final Logger logger = LogManager.getLogger(MasterRenderer.class);
+
     long postprocessingEffects = 0;
 
-    private boolean writeToFrameBuffer = true;
+    private boolean writeToFrameBuffer = false;
     private FrameBuffer frameBuffer;
     private SpriteBatch spriteBatch;
     private ModelRenderer modelRenderer;
@@ -107,37 +114,15 @@ public class MasterRenderer {
     //TODO add 2D renderer implementation
 
     private void setSpriteBatch(){
-        String vertexShader = "#version 330 core\n"
-                + "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
-                + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
-                + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
-                + "uniform mat4 u_projTrans;\n" //
-                + "varying vec4 v_color;\n" //
-                + "varying vec2 v_texCoords;\n" //
-                + "\n" //
-                + "void main()\n" //
-                + "{\n" //
-                + "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
-                + "   v_color.a = v_color.a * (255.0/254.0);\n" //
-                + "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
-                + "   gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
-                + "}\n";
-        String fragmentShader = "#version 330 core\n"
-                + "#ifdef GL_ES\n" //
-                + "#define LOWP lowp\n" //
-                + "precision mediump float;\n" //
-                + "#else\n" //
-                + "#define LOWP \n" //
-                + "#endif\n" //
-                + "varying LOWP vec4 v_color;\n" //
-                + "varying vec2 v_texCoords;\n" //
-                + "uniform sampler2D u_texture;\n" //
-                + "void main()\n"//
-                + "{\n" //
-                + "  gl_FragColor = v_color * texture2D(u_texture, v_texCoords);\n" //
-                + "}";
+        String vert = Gdx.files.internal("Shaders/sprite.vert").readString();
+        String frag = Gdx.files.internal("Shaders/sprite.frag").readString();
 
-        program = new ShaderProgram(vertexShader, fragmentShader);
+        program = new ShaderProgram(vert, frag);
+        if(program.isCompiled()) {
+            logger.warn("Sprite batch shader failed compilation, log: {}", program.getLog());
+        }
+
+
         spriteBatch = new SpriteBatch(500, program);
 
         // //Possible work around for undefined version number

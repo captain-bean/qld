@@ -60,8 +60,8 @@ public class ModelRenderer {
             Shader shader = QLDShaderProvider.getShader(renderCall.ShaderID);
             if(!(renderCall.instances.indexOf(null) > -1)) {
                 if (shader != null) {
-
-                    modelBatch.render(renderCall.instances, DevEnvironment.instance(), shader); //TODO pass environment
+                    modelBatch.render(renderCall.instances, DevEnvironment.instance(), shader);
+                    //modelBatch.render(renderCall.instances, DevEnvironment.instance(), shader); //TODO pass environment
                 }
 
             }

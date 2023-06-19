@@ -48,8 +48,6 @@ public class QLDRenderState implements QLDRenderer {
         shader = new DefaultShader();
         shader.init();
 
-
-
         environment = DevEnvironment.instance();
         levelRenderer.updateInstances();
 
@@ -62,7 +60,7 @@ public class QLDRenderState implements QLDRenderer {
         Collection<QLDEntity> tiles = levelRenderer.getInstances();
         if(!tiles.isEmpty()) {
             scene.addEntities(levelRenderer.getInstances());
-             sceneInit = true;
+            sceneInit = true;
         }
         playerRenderer.setShader(shader.SHADER_ID);
         scene.addEntity(playerRenderer);
