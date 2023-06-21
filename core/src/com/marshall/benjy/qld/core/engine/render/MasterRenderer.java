@@ -1,6 +1,7 @@
 package com.marshall.benjy.qld.core.engine.render;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.files.FileHandle;
@@ -19,9 +20,23 @@ import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.marshall.benjy.qld.core.engine.logic.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShaderProvider;
+import com.marshall.benjy.qld.core.engine.state.Constants;
 import com.marshall.benjy.qld.core.game.Application;
+import com.marshall.benjy.qld.core.game.QLDConfig;
+import net.mgsx.gltf.loaders.glb.GLBAssetLoader;
+import net.mgsx.gltf.loaders.glb.GLBLoader;
+import net.mgsx.gltf.loaders.gltf.GLTFLoader;
+import net.mgsx.gltf.scene3d.attributes.PBRCubemapAttribute;
+import net.mgsx.gltf.scene3d.attributes.PBRTextureAttribute;
+import net.mgsx.gltf.scene3d.lights.DirectionalLightEx;
+import net.mgsx.gltf.scene3d.scene.Scene;
+import net.mgsx.gltf.scene3d.scene.SceneAsset;
+import net.mgsx.gltf.scene3d.scene.SceneManager;
+import net.mgsx.gltf.scene3d.scene.SceneSkybox;
+import net.mgsx.gltf.scene3d.utils.IBLBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,10 +53,11 @@ import static com.badlogic.gdx.graphics.GL30.GL_RGBA16F;
 public class MasterRenderer {
 
     private static final Logger logger = LogManager.getLogger(MasterRenderer.class);
+    private static final boolean USE_GLTF_RENDERER = true;
 
     long postprocessingEffects = 0;
 
-    private boolean writeToFrameBuffer = false;
+    private boolean writeToFrameBuffer = true;
     private FrameBuffer frameBuffer;
     private SpriteBatch spriteBatch;
     private ModelRenderer modelRenderer;
@@ -54,34 +70,91 @@ public class MasterRenderer {
     private IntBuffer noiseTexture,ssaoFBO,ssaoColorBuffer,gPosition;
     private FloatBuffer ssaoKernel;
 
+
+
+    //GLTF RENDERER
+    private SceneManager sceneManager;
+    private SceneAsset sceneAsset;
+    private Scene scene;
+    private PerspectiveCamera camera;
+    private Cubemap diffuseCubemap;
+    private Cubemap environmentCubemap;
+    private Cubemap specularCubemap;
+    private Texture brdfLUT;
+    private float time;
+    private SceneSkybox skybox;
+    private DirectionalLightEx light;
+
+
+
+
     private static final int MAX_SPRITES = 100;
+
     public MasterRenderer(ModelRenderer renderer){
-        setSpriteBatch();
+        if(USE_GLTF_RENDERER){
 
-        modelRenderer = renderer;
-        skin = new Skin(Gdx.files.internal("Skins/vhs/skin/vhs-ui.json"));
-        frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), true,true);
+            sceneManager = new SceneManager();
+            sceneAsset = new GLBLoader().load(Gdx.files.internal("Models/GLTF format/Alien Slime.glb"));
+            //sceneAsset = new GLTFLoader().load(Gdx.files.internal("Models/GLTF format/blockDirt.gltf"));
 
-        fpsLabel = new Label(Gdx.graphics.getFramesPerSecond() + "", skin);
-        stage = new Stage(new ScreenViewport(),spriteBatch);
 
-        setupSSAO();
+            scene = new Scene(sceneAsset.scene);
+            scene.modelInstance.transform.scale(Constants.SCALE,Constants.SCALE,Constants.SCALE);
+            sceneManager.addScene(scene);
+            sceneManager.environment = DevEnvironment.instance();
+
+            //TODO find way to remove? - possibly unneeded
+            light = new DirectionalLightEx();
+            light.direction.set(1, -3, 1).nor();
+            light.color.set(Color.WHITE);
+            sceneManager.environment.add(light);
+
+
+            // setup quick IBL (image based lighting)
+            IBLBuilder iblBuilder = IBLBuilder.createOutdoor(light);
+            environmentCubemap = iblBuilder.buildEnvMap(1024);
+            diffuseCubemap = iblBuilder.buildIrradianceMap(256);
+            specularCubemap = iblBuilder.buildRadianceMap(10);
+            iblBuilder.dispose();
+
+            // This texture is provided by the library, no need to have it in your assets.
+            Texture brdfLUT = new Texture(Gdx.files.classpath("net/mgsx/gltf/shaders/brdfLUT.png"));
+
+            sceneManager.setAmbientLight(0f);
+            sceneManager.environment.set(new PBRTextureAttribute(PBRTextureAttribute.BRDFLUTTexture, brdfLUT));
+            sceneManager.environment.set(PBRCubemapAttribute.createSpecularEnv(specularCubemap));
+            sceneManager.environment.set(PBRCubemapAttribute.createDiffuseEnv(diffuseCubemap));
+
+            // setup skybox
+            skybox = new SceneSkybox(environmentCubemap);
+            sceneManager.setSkyBox(skybox);
+        }else {
+            setSpriteBatch();
+
+            modelRenderer = renderer;
+            skin = new Skin(Gdx.files.internal("Skins/vhs/skin/vhs-ui.json"));
+            frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
+
+            fpsLabel = new Label(Gdx.graphics.getFramesPerSecond() + "", skin);
+            stage = new Stage(new ScreenViewport(), spriteBatch);
+
+            //setupSSAO();
+
+        }
+
     }
 
     public void render(){
+        if(USE_GLTF_RENDERER){
+            renderGLTF();
+            return;
+        }
+
 
         if(writeToFrameBuffer){
             HdpiUtils.setMode(HdpiMode.Pixels);
 
             frameBuffer.begin();
-//            IntBuffer intBuffer = BufferUtils.newIntBuffer(2);
-//            intBuffer.put(GL30.GL_COLOR_ATTACHMENT0);
-//            intBuffer.put(GL30.GL_COLOR_ATTACHMENT1);
-//            intBuffer.rewind();
-//            Gdx.gl30.glDrawBuffers(2, intBuffer);
-//            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-//            modelRenderer.Render(false);
-//            frameBuffer.end();
         }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         modelRenderer.Render();
@@ -104,38 +177,41 @@ public class MasterRenderer {
 
     }
 
+    private void renderGLTF() {
+
+
+
+        scene.modelInstance.transform.rotate(0,1,0,1);
+
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        sceneManager.update(Gdx.graphics.getDeltaTime());
+        sceneManager.render();
+    }
+
     public void enqueue(int shader, ModelInstance... instances){
         modelRenderer.enqueue(shader,instances);
     }
     public void enqueue(int shader, ModelInstance instance){
+        if(!USE_GLTF_RENDERER)
         modelRenderer.enqueue(shader,instance);
     }
 
     //TODO add 2D renderer implementation
 
     private void setSpriteBatch(){
-        String vert = Gdx.files.internal("Shaders/sprite.vert").readString();
-        String frag = Gdx.files.internal("Shaders/sprite.frag").readString();
-
-        program = new ShaderProgram(vert, frag);
-        if(!program.isCompiled()) {
-            logger.warn("Sprite batch shader failed compilation, log: {}", program.getLog());
-        }
-
-
-        spriteBatch = new SpriteBatch(500, program);
-
-        // //Possible work around for undefined version number
-        //ShaderProgram.prependVertexCode = "#version 330 core";
-        //ShaderProgram.prependFragmentCode = "#version 330 core";
-        //spriteBatch = new SpriteBatch();
-        //ShaderProgram.prependVertexCode = "";
-        //ShaderProgram.prependFragmentCode = "";
+        ShaderProgram.prependVertexCode = "#version 330 core\n";
+        ShaderProgram.prependFragmentCode = "#version 330 core\n";
+        spriteBatch = new SpriteBatch();
+        ShaderProgram.prependVertexCode = "";
+        ShaderProgram.prependFragmentCode = "";
 
     }
 
     public void setCamera(DevCamera camera){
-
+        if(USE_GLTF_RENDERER){
+            sceneManager.setCamera(camera.getCamera());
+            return;
+        }
         modelRenderer.setCamera(camera);
 
     }
@@ -151,7 +227,7 @@ public class MasterRenderer {
 
 
 
-    private void setupSSAO() {
+    private void setupSSAO() { //TODO get SSAO working
 
 
          gPosition = BufferUtils.newIntBuffer(1);

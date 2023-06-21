@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShaderProvider;
 import com.marshall.benjy.qld.core.engine.render.shaders.SpriteShader;
+import net.mgsx.gltf.data.GLTF;
 import org.apache.logging.log4j.core.util.ArrayUtils;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class ModelRenderer {
 
         for(RenderCall renderCall : rendererQueue){
             Shader shader = QLDShaderProvider.getShader(renderCall.ShaderID);
+
             if(!(renderCall.instances.indexOf(null) > -1)) {
                 if (shader != null) {
                     modelBatch.render(renderCall.instances, DevEnvironment.instance(), shader);

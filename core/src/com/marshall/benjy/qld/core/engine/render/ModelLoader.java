@@ -1,14 +1,21 @@
 package com.marshall.benjy.qld.core.engine.render;
 
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import net.mgsx.gltf.loaders.gltf.GLTFAssetLoader;
+import net.mgsx.gltf.loaders.shared.SceneAssetLoaderParameters;
 
 public class ModelLoader {
 
     private AssetManager assetManager;
 
+
     public static ModelLoader staticLoader;
+
 
     public ModelLoader(AssetManager assetManager){
             this.assetManager = assetManager;
@@ -19,6 +26,7 @@ public class ModelLoader {
             if(staticLoader == null){
                 staticLoader = this;
             }
+
     }
 
     public static void createStaticLoader(){
@@ -33,7 +41,6 @@ public class ModelLoader {
 
         if(assetManager.isLoaded(filename,Model.class))
            return;
-
         assetManager.load(filename, Model.class);
         update();
     }
