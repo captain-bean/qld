@@ -92,8 +92,12 @@ public class MasterRenderer {
 
     public MasterRenderer(ModelRenderer renderer){
         if(USE_GLTF_RENDERER){
-
+            ShaderProgram.prependVertexCode = "#version 330 core\n";
+            ShaderProgram.prependFragmentCode = "#version 330 core\n";
             sceneManager = new SceneManager();
+            ShaderProgram.prependVertexCode = "";
+            ShaderProgram.prependFragmentCode = "";
+
             sceneAsset = new GLBLoader().load(Gdx.files.internal("Models/GLTF format/Alien Slime.glb"));
             //sceneAsset = new GLTFLoader().load(Gdx.files.internal("Models/GLTF format/blockDirt.gltf"));
 
@@ -124,6 +128,7 @@ public class MasterRenderer {
             sceneManager.environment.set(new PBRTextureAttribute(PBRTextureAttribute.BRDFLUTTexture, brdfLUT));
             sceneManager.environment.set(PBRCubemapAttribute.createSpecularEnv(specularCubemap));
             sceneManager.environment.set(PBRCubemapAttribute.createDiffuseEnv(diffuseCubemap));
+
 
             // setup skybox
             skybox = new SceneSkybox(environmentCubemap);
@@ -193,7 +198,7 @@ public class MasterRenderer {
     }
     public void enqueue(int shader, ModelInstance instance){
         if(!USE_GLTF_RENDERER)
-        modelRenderer.enqueue(shader,instance);
+            modelRenderer.enqueue(shader,instance);
     }
 
     //TODO add 2D renderer implementation
