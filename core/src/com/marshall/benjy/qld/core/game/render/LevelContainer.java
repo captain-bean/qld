@@ -13,14 +13,14 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
-public class LevelRenderer {
+public class LevelContainer {
 
-	private static final Logger logger = LogManager.getLogger(LevelRenderer.class);
+	private static final Logger logger = LogManager.getLogger(LevelContainer.class);
 	private Level level;
 	public Map<Position,QLDEntity> instances = new HashMap<>();
 	private TileTypePaths tileTypes;
 
-	public LevelRenderer(Level level) {
+	public LevelContainer(Level level) {
 		this.level = level;
 		this.tileTypes = new TileTypePaths();
 	}

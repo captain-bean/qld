@@ -21,7 +21,7 @@ import java.util.Collection;
 
 public class OpenGLRenderer implements QLDRenderer {
     private AssetManager assetManager;
-    private LevelRenderer levelRenderer;
+    private LevelContainer levelContainer;
     private PlayerEntity playerRenderer;
     private ModelBatch modelBatch;
     private QLDShader shader, spriteShader;
@@ -39,14 +39,14 @@ public class OpenGLRenderer implements QLDRenderer {
         scene = new Scene();
         modelLoader = new ModelLoader();
 
-        levelRenderer = new LevelRenderer(state.getLevel());
+        levelContainer = new LevelContainer(state.getLevel());
         playerRenderer = new PlayerEntity(state.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
 
         shader = new DefaultShader();
         shader.init();
 
         environment = DevEnvironment.instance();
-        levelRenderer.updateInstances();
+        levelContainer.updateInstances();
 
         GameObject skybox = new GameObject();
         skybox.setModel("Models/skybox.obj");
@@ -54,9 +54,9 @@ public class OpenGLRenderer implements QLDRenderer {
         skybox.getComponent(ModelComponent.class).setTexturePath("Textures/skybox.jpg");
         skybox.getComponent(TransformComponent.class).transform.translate(0,-200f,0).scale(1000,-1000,1000);
 
-        Collection<QLDEntity> tiles = levelRenderer.getInstances();
+        Collection<QLDEntity> tiles = levelContainer.getInstances();
         if(!tiles.isEmpty()) {
-            scene.addEntities(levelRenderer.getInstances());
+            scene.addEntities(levelContainer.getInstances());
             sceneInit = true;
         }
         playerRenderer.setShader(shader.SHADER_ID);
@@ -85,12 +85,12 @@ public class OpenGLRenderer implements QLDRenderer {
     }
 
     public void updateLevelInstances() {
-        this.levelRenderer.updateInstances();
+        this.levelContainer.updateInstances();
     }
 
     @Override
     public void onTileUpdated(Position position) {
-        levelRenderer.onTileUpdated(position);
+        levelContainer.onTileUpdated(position);
     }
 
 
@@ -104,13 +104,13 @@ public class OpenGLRenderer implements QLDRenderer {
     }
 
     public Collection<QLDEntity> getLevelEntities(){
-        return levelRenderer.getInstances();
+        return levelContainer.getInstances();
     }
 
     public void sceneInit() {
-        Collection<QLDEntity> tiles = levelRenderer.getInstances();
+        Collection<QLDEntity> tiles = levelContainer.getInstances();
         if(!tiles.isEmpty()) {
-            scene.addEntities(levelRenderer.getInstances());
+            scene.addEntities(levelContainer.getInstances());
             sceneInit = true;
         }
     }
