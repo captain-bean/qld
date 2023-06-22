@@ -21,7 +21,7 @@ public class LevelController {
         this.level = state.getLevel();
     }
 
-    public void blowUp(Position position) {
+    public void playerMoved(Position position) {
         level.setTile(position, new Tile(TileTypes.BLOWED_UP));
         for(Consumer<Position> listener : tileDestroyedListeners) {
             listener.accept(position);

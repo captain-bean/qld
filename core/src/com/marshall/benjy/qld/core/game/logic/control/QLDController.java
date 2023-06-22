@@ -18,21 +18,14 @@ import com.marshall.benjy.qld.core.game.state.QLDGameState;
 public class QLDController {
 
     private QLDGameState state;
-    private QLDRenderer renderer;
     private PlayerController playerController;
     private LevelController levelController;
 
-    public QLDController(QLDGameState state, QLDRenderer renderer) {
+    public QLDController(QLDGameState state) {
         this.state = state;
-        this.renderer = renderer;
 
         this.levelController = new LevelController(state);
-        this.levelController.addTileDestroyedListener((tile) -> renderer.onTileUpdated(tile));
-
         this.playerController = new PlayerController(state.getPlayer());
-        this.playerController.addMovementListener((p) -> {
-            renderer.updatePlayerInstance();
-        });
     }
 
     public PlayerController getPlayerController() {

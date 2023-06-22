@@ -19,7 +19,12 @@ public class QLDLogic {
         this.state = state;
         this.renderer = renderer;
 
-        this.qldController = new QLDController(state, renderer);
+        this.qldController = new QLDController(state);
+
+        qldController.getLevelController().addTileDestroyedListener((tile) -> renderer.onTileUpdated(tile));
+        qldController.getPlayerController().addMovementListener((p) -> {
+            renderer.updatePlayerInstance();
+        });
 
         QLDCommandExecutor commandExecutor = new QLDCommandExecutor(state, renderer, qldController);
         inputController = new InputController(commandExecutor.getExecutor());

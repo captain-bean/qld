@@ -41,16 +41,18 @@ public class QLDCommandExecutor {
                 oldPosition.getZ() + command.getDeltaZ());
 
         LevelController levelController = qldController.getLevelController();
+
+        if(!levelController.validPlayerPosition(newPosition)) {
+            return;
+        }
+
         PlayerController playerController = qldController.getPlayerController();
+        playerController.movePlayer(newPosition);
+        levelController.playerMoved(newPosition);
 
-        if(levelController.validPlayerPosition(newPosition)) {
-            playerController.movePlayer(newPosition);
-            levelController.blowUp(newPosition);
-
-            if(newPosition.equals(state.getLevel().getEndPosition())) {
-                Level newLevel = LegacyLevelGenerator.generateLegacyLevel(15, 15);
-                levelController.changeLevel(newLevel);
-            }
+        if(newPosition.equals(state.getLevel().getEndPosition())) {
+            Level newLevel = LegacyLevelGenerator.generateLegacyLevel(15, 15);
+            levelController.changeLevel(newLevel);
         }
     }
 
