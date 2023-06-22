@@ -9,6 +9,7 @@ import com.marshall.benjy.qld.core.engine.logic.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.logic.input.KeyboardInputReceiver;
 import com.marshall.benjy.qld.core.engine.state.Position;
 import com.marshall.benjy.qld.core.game.logic.commands.MovePlayerCommand;
+import com.marshall.benjy.qld.core.game.logic.commands.QLDCommandExecutor;
 import com.marshall.benjy.qld.core.game.logic.generator.LegacyLevelGenerator;
 import com.marshall.benjy.qld.core.game.render.QLDRenderer;
 import com.marshall.benjy.qld.core.game.state.Level;
@@ -17,8 +18,7 @@ import com.marshall.benjy.qld.core.game.state.QLDGameState;
 public class QLDController {
 
     private QLDGameState state;
-    private QLDRenderer renderer; //Todo Rename
-
+    private QLDRenderer renderer;
     private PlayerController playerController;
     private LevelController levelController;
 
@@ -33,52 +33,14 @@ public class QLDController {
         this.playerController.addMovementListener((p) -> {
             renderer.updatePlayerInstance();
         });
-
-        CommandExecutor commandExecutor = new CommandExecutor();
-
-        commandExecutor.addCommandTypeHandler(ExitAppCommand.TYPE, (command) -> Gdx.app.exit());
-        commandExecutor.addCommandTypeHandler(MoveCameraCommand.TYPE, (command) -> executeMoveCamera((MoveCameraCommand) command));
-        commandExecutor.addCommandTypeHandler(MovePlayerCommand.TYPE, (command) -> executeMovePlayer((MovePlayerCommand) command));
-
-        KeyboardInputReceiver keyboardReceiver = new KeyboardInputReceiver(commandExecutor);
-
-        keyboardReceiver.addKeyCommand(Input.Keys.ESCAPE, new ExitAppCommand());
-
-        keyboardReceiver.addKeyCommand(Input.Keys.W, new MovePlayerCommand(0, -1));
-        keyboardReceiver.addKeyCommand(Input.Keys.A, new MovePlayerCommand(-1, 0));
-        keyboardReceiver.addKeyCommand(Input.Keys.S, new MovePlayerCommand(0, 1));
-        keyboardReceiver.addKeyCommand(Input.Keys.D, new MovePlayerCommand(1, 0));
-
-        keyboardReceiver.addKeyCommand(Input.Keys.I, new MoveCameraCommand(new Vector3(0, 10, 0)));
-        keyboardReceiver.addKeyCommand(Input.Keys.K, new MoveCameraCommand(new Vector3(0, -10, 0)));
-        keyboardReceiver.addKeyCommand(Input.Keys.J, new MoveCameraCommand(new Vector3(-10, 0, 0)));
-        keyboardReceiver.addKeyCommand(Input.Keys.L, new MoveCameraCommand(new Vector3(10, 0, 0)));
-        keyboardReceiver.addKeyCommand(Input.Keys.U, new MoveCameraCommand(new Vector3(0, 0, -10)));
-        keyboardReceiver.addKeyCommand(Input.Keys.O, new MoveCameraCommand(new Vector3(0, 0, 10)));
-
-        if(Gdx.input != null) {
-            Gdx.input.setInputProcessor(keyboardReceiver);
-        }
     }
 
-    public void executeMovePlayer(MovePlayerCommand command) {
-        Position oldPosition = state.getPlayer().getPosition();
-        Position newPosition = new Position(oldPosition.getX() + command.getDeltaX(),
-                oldPosition.getZ() + command.getDeltaZ());
-
-        if(levelController.validPlayerPosition(newPosition)) {
-            playerController.movePlayer(newPosition);
-            levelController.blowUp(newPosition);
-
-            if(newPosition.equals(state.getLevel().getEndPosition())) {
-                Level newLevel = LegacyLevelGenerator.generateLegacyLevel(15, 15);
-                levelController.changeLevel(newLevel);
-
-            }
-        }
+    public PlayerController getPlayerController() {
+        return playerController;
     }
 
-    public void executeMoveCamera(MoveCameraCommand command) {
-        renderer.moveCamera(command);
+    public LevelController getLevelController() {
+        return levelController;
     }
+
 }

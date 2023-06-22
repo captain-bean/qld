@@ -1,5 +1,6 @@
 package com.marshall.benjy.qld.core.game;
 
+import com.marshall.benjy.qld.core.game.logic.QLDLogic;
 import com.marshall.benjy.qld.core.game.logic.control.QLDController;
 import com.marshall.benjy.qld.core.game.logic.generator.QLDGameStateFactory;
 import com.marshall.benjy.qld.core.game.render.OpenGLRenderer;
@@ -14,7 +15,7 @@ public class Application {
 
     private QLDGameState state;
     private QLDRenderer renderer;
-    private QLDController controller;
+    private QLDLogic logic;
 
     public Application(QLDConfig config) {
         logger.info("Initializing app...");
@@ -26,7 +27,7 @@ public class Application {
             renderer = new TextRenderer(state);
         }
 
-        controller = new QLDController(state, renderer);
+        logic = new QLDLogic(state, renderer);
     }
 
     public void render() {
