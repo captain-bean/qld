@@ -7,7 +7,6 @@ import com.marshall.benjy.qld.core.engine.logic.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.render.DevCamera;
 import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
 import com.marshall.benjy.qld.core.engine.render.ModelLoader;
-import com.marshall.benjy.qld.core.engine.render.ModelRenderer;
 import com.marshall.benjy.qld.core.engine.render.ecs.Scene;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.ModelComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.TransformComponent;
@@ -15,14 +14,12 @@ import com.marshall.benjy.qld.core.engine.render.ecs.entity.GameObject;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.QLDEntity;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShader;
-import com.marshall.benjy.qld.core.engine.render.shaders.SpriteShader;
 import com.marshall.benjy.qld.core.engine.state.Position;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
 import java.util.Collection;
-import java.util.List;
 
-public class QLDRenderState implements QLDRenderer {
+public class OpenGLRenderer implements QLDRenderer {
     private AssetManager assetManager;
     private LevelRenderer levelRenderer;
     private PlayerEntity playerRenderer;
@@ -36,7 +33,7 @@ public class QLDRenderState implements QLDRenderer {
 
     private boolean sceneInit;
 
-    public QLDRenderState(QLDGameState state) {
+    public OpenGLRenderer(QLDGameState state) {
         camera = new DevCamera();
 
         scene = new Scene();

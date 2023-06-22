@@ -2,9 +2,7 @@ package com.marshall.benjy.qld.core.game;
 
 import com.marshall.benjy.qld.core.game.logic.control.QLDController;
 import com.marshall.benjy.qld.core.game.logic.generator.QLDGameStateFactory;
-import com.marshall.benjy.qld.core.engine.render.ecs.Scene;
-import com.marshall.benjy.qld.core.game.render.NoopRenderer;
-import com.marshall.benjy.qld.core.game.render.QLDRenderState;
+import com.marshall.benjy.qld.core.game.render.OpenGLRenderer;
 import com.marshall.benjy.qld.core.game.render.QLDRenderer;
 import com.marshall.benjy.qld.core.game.render.TextRenderer;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
@@ -23,7 +21,7 @@ public class Application {
 
         state = QLDGameStateFactory.development();
         if(!config.isHeadless()) {
-            renderer = new QLDRenderState(state);
+            renderer = new OpenGLRenderer(state);
         } else {
             renderer = new TextRenderer(state);
         }
