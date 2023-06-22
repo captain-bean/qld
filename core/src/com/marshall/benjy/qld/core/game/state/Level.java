@@ -27,6 +27,8 @@ public class Level {
     public Position getStartPosition() {
         return startPosition;
     }
+
+    public Position getEndPosition() { return endPosition; }
     public void setTile(Position position, Tile newTile) {
         tiles[position.getX()][position.getZ()] = newTile;
     }

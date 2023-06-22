@@ -9,6 +9,8 @@ public interface QLDRenderer {
 
     void updatePlayerInstance();
 
+    void onLevelChanged();
+
     void render();
 
     void moveCamera(MoveCameraCommand command);

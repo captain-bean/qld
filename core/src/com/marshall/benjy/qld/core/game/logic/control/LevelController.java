@@ -2,6 +2,7 @@ package com.marshall.benjy.qld.core.game.logic.control;
 
 import com.marshall.benjy.qld.core.engine.state.Position;
 import com.marshall.benjy.qld.core.game.state.Level;
+import com.marshall.benjy.qld.core.game.state.QLDGameState;
 import com.marshall.benjy.qld.core.game.state.tile.Tile;
 import com.marshall.benjy.qld.core.game.state.tile.TileTypes;
 
@@ -12,9 +13,12 @@ import java.util.function.Consumer;
 public class LevelController {
 
     private Level level;
+
+    private QLDGameState state;
     private List<Consumer<Position>> tileDestroyedListeners = new ArrayList<>();
-    public LevelController(Level level) {
-        this.level = level;
+    public LevelController(QLDGameState state) {
+        this.state = state;
+        this.level = state.getLevel();
     }
 
     public void blowUp(Position position) {
@@ -38,5 +42,10 @@ public class LevelController {
             return false;
         }
         return true;
+    }
+
+    public void changeLevel(Level level) {
+        this.state.changeLevel(level);
+        this.level = level;
     }
 }

@@ -32,7 +32,8 @@ public class TextRenderer implements QLDRenderer{
 
     public void output() {
         logger.info("---");
-        for(char[] textLine : textRepresentation) {
+        for(int i = textRepresentation.length - 1; i >= 0; i--) {
+            char[] textLine = textRepresentation[i];
             logger.info(new String(textLine));
         }
         logger.info("---");
@@ -74,6 +75,12 @@ public class TextRenderer implements QLDRenderer{
     @Override
     public void updatePlayerInstance() {
         refresh();
+    }
+
+    @Override
+    public void onLevelChanged() {
+        refresh();
+        output();
     }
 
     @Override

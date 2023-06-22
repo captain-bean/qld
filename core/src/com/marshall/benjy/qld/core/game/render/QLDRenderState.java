@@ -101,6 +101,11 @@ public class QLDRenderState implements QLDRenderer {
         this.playerRenderer.updateModelInstance();
     }
 
+    @Override
+    public void onLevelChanged() {
+        // TODO implement
+    }
+
     public Collection<QLDEntity> getLevelEntities(){
         return levelRenderer.getInstances();
     }

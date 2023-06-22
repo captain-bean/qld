@@ -15,6 +15,11 @@ public class NoopRenderer implements QLDRenderer {
     }
 
     @Override
+    public void onLevelChanged() {
+
+    }
+
+    @Override
     public void render() {
 
     }

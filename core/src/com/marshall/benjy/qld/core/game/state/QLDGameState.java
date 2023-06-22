@@ -18,6 +18,12 @@ public class QLDGameState {
     public Level getLevel() {
         return level;
     }
+
+    public void changeLevel(Level level) {
+        this.level = level;
+        player.setPosition(level.getStartPosition());
+    }
+
     public Player getPlayer() {
         return player;
     }

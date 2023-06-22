@@ -25,7 +25,7 @@ public class Application {
         if(!config.isHeadless()) {
             renderer = new QLDRenderState(state);
         } else {
-            renderer = new NoopRenderer();
+            renderer = new TextRenderer(state);
         }
 
         controller = new QLDController(state, renderer);

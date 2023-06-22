@@ -10,8 +10,10 @@ import com.marshall.benjy.qld.core.engine.logic.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.logic.input.KeyboardInputReceiver;
 import com.marshall.benjy.qld.core.engine.state.Position;
 import com.marshall.benjy.qld.core.game.logic.commands.MovePlayerCommand;
+import com.marshall.benjy.qld.core.game.logic.generator.LegacyLevelGenerator;
 import com.marshall.benjy.qld.core.game.render.QLDRenderState;
 import com.marshall.benjy.qld.core.game.render.QLDRenderer;
+import com.marshall.benjy.qld.core.game.state.Level;
 import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
 public class QLDController {
@@ -26,7 +28,7 @@ public class QLDController {
         this.state = state;
         this.renderer = renderer;
 
-        this.levelController = new LevelController(state.getLevel());
+        this.levelController = new LevelController(state);
         this.levelController.addTileDestroyedListener((tile) -> renderer.onTileUpdated(tile));
 
         this.playerController = new PlayerController(state.getPlayer());
@@ -69,6 +71,12 @@ public class QLDController {
         if(levelController.validPlayerPosition(newPosition)) {
             playerController.movePlayer(newPosition);
             levelController.blowUp(newPosition);
+
+            if(newPosition.equals(state.getLevel().getEndPosition())) {
+                Level newLevel = LegacyLevelGenerator.generateLegacyLevel(15, 15);
+                levelController.changeLevel(newLevel);
+
+            }
         }
     }
 
