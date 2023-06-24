@@ -1,9 +1,9 @@
-package com.marshall.benjy.qld.core.game.logic.generator;
+package com.marshall.benjy.qld.core.game.state.generator;
 
 import com.marshall.benjy.qld.core.engine.state.Position;
-import com.marshall.benjy.qld.core.game.state.Level;
-import com.marshall.benjy.qld.core.game.state.tile.Tile;
-import com.marshall.benjy.qld.core.game.state.tile.TileTypes;
+import com.marshall.benjy.qld.core.game.state.datatype.Level;
+import com.marshall.benjy.qld.core.game.state.datatype.tile.Tile;
+import com.marshall.benjy.qld.core.game.state.datatype.tile.TileTypes;
 
 
 public class LegacyLevelGenerator {
@@ -69,7 +69,7 @@ public class LegacyLevelGenerator {
             }
         } while(checkEmpty(layout, width, height) < (int) (width * height * .4));
 
-        return new Level(layout, new Position(startX - 1, startY), new Position(currentX, currentY));
+        return new Level(layout, new Position(startX - 1, startY));
     }
 
     public static boolean checkOutOfBoundsLeft(Tile[][] level, int fx, int fy){

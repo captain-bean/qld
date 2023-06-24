@@ -1,13 +1,13 @@
-package com.marshall.benjy.qld.core.game.render;
+package com.marshall.benjy.qld.core.game.render.opengl;
 
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.QLDEntity;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.state.Constants;
 import com.marshall.benjy.qld.core.engine.state.Position;
-import com.marshall.benjy.qld.core.game.render.tile.TileEntity;
-import com.marshall.benjy.qld.core.game.render.tile.TileTypePaths;
-import com.marshall.benjy.qld.core.game.state.Level;
-import com.marshall.benjy.qld.core.game.state.tile.Tile;
+import com.marshall.benjy.qld.core.game.render.opengl.tile.TileEntity;
+import com.marshall.benjy.qld.core.game.render.opengl.tile.TileTypePaths;
+import com.marshall.benjy.qld.core.game.state.datatype.Level;
+import com.marshall.benjy.qld.core.game.state.datatype.tile.Tile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

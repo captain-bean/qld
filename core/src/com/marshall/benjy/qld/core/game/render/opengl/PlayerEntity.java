@@ -1,9 +1,6 @@
-package com.marshall.benjy.qld.core.game.render;
+package com.marshall.benjy.qld.core.game.render.opengl;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.math.Vector3;
 import com.marshall.benjy.qld.core.engine.render.ModelTexturer;
@@ -12,7 +9,7 @@ import com.marshall.benjy.qld.core.engine.render.ecs.component.ShadowComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.TransformComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.GameObject;
 import com.marshall.benjy.qld.core.engine.state.Constants;
-import com.marshall.benjy.qld.core.game.state.Player;
+import com.marshall.benjy.qld.core.game.state.datatype.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

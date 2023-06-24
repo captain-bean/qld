@@ -1,14 +1,14 @@
-package com.marshall.benjy.qld.core.game.render;
+package com.marshall.benjy.qld.core.game.render.dev;
 
 import com.marshall.benjy.qld.core.engine.logic.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.state.Position;
-import com.marshall.benjy.qld.core.game.state.Level;
-import com.marshall.benjy.qld.core.game.state.QLDGameState;
-import com.marshall.benjy.qld.core.game.state.tile.Tile;
+import com.marshall.benjy.qld.core.game.render.QLDRenderer;
+import com.marshall.benjy.qld.core.game.state.api.QLDGameState;
+import com.marshall.benjy.qld.core.game.state.datatype.tile.Tile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class TextRenderer implements QLDRenderer{
+public class TextRenderer implements QLDRenderer {
 
     private static final Logger logger = LogManager.getLogger(TextRenderer.class);
 

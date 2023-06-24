@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.render;
+package com.marshall.benjy.qld.core.game.render.opengl;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Environment;
@@ -15,7 +15,8 @@ import com.marshall.benjy.qld.core.engine.render.ecs.entity.QLDEntity;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShader;
 import com.marshall.benjy.qld.core.engine.state.Position;
-import com.marshall.benjy.qld.core.game.state.QLDGameState;
+import com.marshall.benjy.qld.core.game.render.QLDRenderer;
+import com.marshall.benjy.qld.core.game.state.api.QLDGameState;
 
 import java.util.Collection;
 
@@ -33,14 +34,14 @@ public class OpenGLRenderer implements QLDRenderer {
 
     private boolean sceneInit;
 
-    public OpenGLRenderer(QLDGameState state) {
+    public OpenGLRenderer(QLDGameState initialState) {
         camera = new DevCamera();
 
         scene = new Scene();
         modelLoader = new ModelLoader();
 
-        levelContainer = new LevelContainer(state.getLevel());
-        playerRenderer = new PlayerEntity(state.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
+        levelContainer = new LevelContainer(initialState.getLevel());
+        playerRenderer = new PlayerEntity(initialState.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
 
         shader = new DefaultShader();
         shader.init();

@@ -1,12 +1,6 @@
-package com.marshall.benjy.qld.core.game.logic.commands;
+package com.marshall.benjy.qld.core.game.input.commands;
 
 import com.marshall.benjy.qld.core.engine.logic.command.Command;
-import com.marshall.benjy.qld.core.engine.state.Position;
-import com.marshall.benjy.qld.core.game.logic.control.LevelController;
-import com.marshall.benjy.qld.core.game.logic.control.PlayerController;
-import com.marshall.benjy.qld.core.game.state.Level;
-import com.marshall.benjy.qld.core.game.state.Player;
-import com.marshall.benjy.qld.core.game.state.QLDGameState;
 
 public class MovePlayerCommand extends Command {
 

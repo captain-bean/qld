@@ -1,4 +1,4 @@
-package com.marshall.benjy.qld.core.game.render.tile;
+package com.marshall.benjy.qld.core.game.render.opengl.tile;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;

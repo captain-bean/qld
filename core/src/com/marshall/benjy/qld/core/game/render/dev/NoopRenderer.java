@@ -1,7 +1,8 @@
-package com.marshall.benjy.qld.core.game.render;
+package com.marshall.benjy.qld.core.game.render.dev;
 
 import com.marshall.benjy.qld.core.engine.logic.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.state.Position;
+import com.marshall.benjy.qld.core.game.render.QLDRenderer;
 
 public class NoopRenderer implements QLDRenderer {
     @Override

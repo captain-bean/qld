@@ -1,23 +1,16 @@
-package com.marshall.benjy.qld.core.game.state;
+package com.marshall.benjy.qld.core.game.state.datatype;
 
 import com.marshall.benjy.qld.core.engine.state.Position;
-import com.marshall.benjy.qld.core.game.state.tile.Tile;
-import com.marshall.benjy.qld.core.game.state.tile.TileTypes;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
+import com.marshall.benjy.qld.core.game.state.datatype.tile.Tile;
 
 public class Level {
 
     private Tile[][] tiles;
     private Position startPosition;
-    private Position endPosition;
 
-    public Level(Tile[][] tiles, Position startPosition, Position endPosition) {
+    public Level(Tile[][] tiles, Position startPosition) {
         this.tiles = tiles;
         this.startPosition = startPosition;
-        this.endPosition = endPosition;
     }
 
     public Tile[][] getTiles() {
@@ -28,7 +21,6 @@ public class Level {
         return startPosition;
     }
 
-    public Position getEndPosition() { return endPosition; }
     public void setTile(Position position, Tile newTile) {
         tiles[position.getX()][position.getZ()] = newTile;
     }

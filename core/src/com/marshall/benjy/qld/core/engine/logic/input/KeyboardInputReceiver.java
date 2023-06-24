@@ -2,32 +2,29 @@ package com.marshall.benjy.qld.core.engine.logic.input;
 
 import com.badlogic.gdx.InputProcessor;
 import com.marshall.benjy.qld.core.engine.logic.command.Command;
-import com.marshall.benjy.qld.core.engine.logic.command.CommandExecutor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class KeyboardInputReceiver implements InputProcessor {
-    private static final Logger logger = LogManager.getLogger(KeyboardInputReceiver.class);
 
-    private Map<Integer, Command> keyCommands = new HashMap<>();
-    private CommandExecutor executor;
+    private Map<Integer, Consumer<Integer>> keyCommands = new HashMap<>();
 
-    public KeyboardInputReceiver(CommandExecutor executor) {
-        this.executor = executor;
+    public KeyboardInputReceiver() {
     }
 
-    public void addKeyCommand(Integer key, Command command) {
-        keyCommands.put(key, command);
+    public void putKeyConsumer(Integer key, Consumer<Integer> consumer) {
+        keyCommands.put(key, consumer);
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        Command command = keyCommands.get(keycode);
-        if(command != null) {
-            executor.execute(command);
+        Consumer<Integer> commandConsumer = keyCommands.get(keycode);
+        if(commandConsumer != null) {
+            commandConsumer.accept(keycode);
             return true;
         }
         return false;

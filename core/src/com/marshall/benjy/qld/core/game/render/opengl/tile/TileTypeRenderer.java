@@ -1,9 +1,9 @@
-package com.marshall.benjy.qld.core.game.render.tile;
+package com.marshall.benjy.qld.core.game.render.opengl.tile;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.marshall.benjy.qld.core.game.state.tile.TileTypes;
+import com.marshall.benjy.qld.core.game.state.datatype.tile.TileTypes;
 
 public class TileTypeRenderer {
 

@@ -1,7 +1,7 @@
-package com.marshall.benjy.qld.core.game.logic.generator;
+package com.marshall.benjy.qld.core.game.state.generator;
 
-import com.marshall.benjy.qld.core.game.state.Level;
-import com.marshall.benjy.qld.core.game.state.QLDGameState;
+import com.marshall.benjy.qld.core.game.state.datatype.Level;
+import com.marshall.benjy.qld.core.game.state.api.QLDGameState;
 
 public class QLDGameStateFactory {
 

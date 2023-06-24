@@ -15,9 +15,9 @@ public class Driver extends ApplicationAdapter {
 		Gdx.graphics.setUndecorated(true);
 		Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
 		//Gdx.graphics.setWindowedMode(displayMode.width, displayMode.height);
-		Gdx.graphics.setWindowedMode(100, 100);
+		Gdx.graphics.setWindowedMode(480, 600);
 
-		game = new Application(new QLDConfig(true));
+		game = new Application(new QLDConfig(false));
 	}
 
 	@Override

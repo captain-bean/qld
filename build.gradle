@@ -96,6 +96,11 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
         implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+        // https://mvnrepository.com/artifact/org.apache.camel/camel-core
+        implementation 'org.apache.camel:camel-core:3.20.2'
+        implementation 'org.apache.camel:camel-vm:3.20.2'
+        implementation 'org.apache.camel:camel-bean:3.20.2'
+
         api "com.badlogicgames.ashley:ashley:1.7.4"
 
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'

@@ -1,44 +1,42 @@
 package com.marshall.benjy.qld.core.game;
 
-import com.marshall.benjy.qld.core.game.logic.QLDLogic;
-import com.marshall.benjy.qld.core.game.logic.control.QLDController;
-import com.marshall.benjy.qld.core.game.logic.generator.QLDGameStateFactory;
-import com.marshall.benjy.qld.core.game.render.OpenGLRenderer;
-import com.marshall.benjy.qld.core.game.render.QLDRenderer;
-import com.marshall.benjy.qld.core.game.render.TextRenderer;
-import com.marshall.benjy.qld.core.game.state.QLDGameState;
+import com.marshall.benjy.qld.core.game.input.commands.InputPublisher;
+import com.marshall.benjy.qld.core.game.render.api.RenderManager;
+import com.marshall.benjy.qld.core.game.state.api.StateManager;
+import org.apache.camel.CamelContext;
+import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Application {
     private static final Logger logger = LogManager.getLogger(Application.class);
 
-    private QLDGameState state;
-    private QLDRenderer renderer;
-    private QLDLogic logic;
+    private StateManager stateManager;
+    private RenderManager renderManager;
+    private InputPublisher inputPublisher;
 
     public Application(QLDConfig config) {
         logger.info("Initializing app...");
 
-        state = QLDGameStateFactory.development();
-        if(!config.isHeadless()) {
-            renderer = new OpenGLRenderer(state);
-        } else {
-            renderer = new TextRenderer(state);
-        }
+        CamelContext context = new DefaultCamelContext();
+        context.start();
 
-        logic = new QLDLogic(state, renderer);
+        stateManager = new StateManager(context);
+
+        renderManager = new RenderManager(context, config, stateManager);
+
+        inputPublisher = new InputPublisher(context);
     }
 
     public void render() {
-        renderer.render();
+        renderManager.render();
     }
 
     public void dispose() {
-        renderer.dispose();
+        renderManager.dispose();
     }
 
     public void resize(int width, int height){
-        renderer.resize(width, height);
+        renderManager.resize(width, height);
     }
 }
