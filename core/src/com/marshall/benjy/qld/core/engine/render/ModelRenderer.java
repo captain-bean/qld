@@ -1,21 +1,12 @@
 package com.marshall.benjy.qld.core.engine.render;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.render.shaders.QLDShaderProvider;
-import com.marshall.benjy.qld.core.engine.render.shaders.SpriteShader;
-import org.apache.logging.log4j.core.util.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class ModelRenderer {
@@ -27,32 +18,17 @@ public class ModelRenderer {
     private ModelBatch modelBatch;
 
     private DevCamera camera;
-    public ModelRenderer(){
+    public ModelRenderer(DevCamera camera){
+        this.camera = camera;
         modelBatch = new ModelBatch();
         Static_Renderer = this;
-    }
-
-    public void setCamera(DevCamera camera) {
-        this.camera = camera;
-    }
-
-
-    /**
-     *  Instantly Renders instances to screen
-     * @param instances
-     * @param shaderID
-     */
-    public void Render(List<ModelInstance> instances, int shaderID){
-        modelBatch.render(instances, DevEnvironment.instance(), QLDShaderProvider.getShader(shaderID)); //TODO pass environment
     }
 
     /**
      * Renders one frame all at once
      * only capable of rendering objects that have been Queued
      */
-    public void Render(){
-
-        
+    public void render(){
         modelBatch.begin(camera.getCamera());
 
 
@@ -73,9 +49,7 @@ public class ModelRenderer {
      * Renders one frame all at once
      * only capable of rendering objects that have been Queued
      */
-    public void Render(boolean clearqueue){
-
-
+    public void render(boolean clearqueue){
         modelBatch.begin(camera.getCamera());
 
         for(RenderCall renderCall : rendererQueue){

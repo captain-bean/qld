@@ -7,6 +7,7 @@ import com.marshall.benjy.qld.core.engine.render.ModelTexturer;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.ModelComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.ShadowComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.component.TransformComponent;
+import com.marshall.benjy.qld.core.engine.render.ecs.component.UpdateComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.GameObject;
 import com.marshall.benjy.qld.core.engine.state.Constants;
 import com.marshall.benjy.qld.core.game.state.datatype.Player;
@@ -17,9 +18,12 @@ import org.apache.logging.log4j.Logger;
 public class PlayerEntity extends GameObject {
 
     private static final Logger logger = LogManager.getLogger(PlayerEntity.class);
+
     private Player player;
     private Camera orientingCamera;
     private String texturePath;
+
+    private boolean needsUpdate;
     public PlayerEntity(Player player, Camera camera, String textureName) {
         super();
         this.player = player;
@@ -28,12 +32,20 @@ public class PlayerEntity extends GameObject {
 
         getComponent(ModelComponent.class).setModel(textureName);
         addAndReturn(new ShadowComponent()).setShadowType(ShadowComponent.ShadowType.RECTANGLE);
+        add(new UpdateComponent((something) -> {
+            if(needsUpdate) {
+                update();
+            }
+        }));
         ModelTexturer.addTexture(getComponent(ShadowComponent.class).getInstance(),"Textures/default.png",TextureAttribute.Diffuse);
-        updateModelInstance();
-
+        update();
     }
 
-    public void updateModelInstance() {
+    public void markNeedsUpdate() {
+        needsUpdate = true;
+    }
+
+    public void update() {
         logger.info("Updating player model");
 
         ModelComponent modelComponent = getComponent(ModelComponent.class);
@@ -55,7 +67,6 @@ public class PlayerEntity extends GameObject {
                 .translate(0,-5.5f,0)
                 .scale(3,1,5)
                 .rotate(1,0,0,-90);
-
-
+        needsUpdate = false;
     }
 }

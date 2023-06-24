@@ -18,14 +18,14 @@ public class DevCamera {
     private Camera camera;
 
     public DevCamera() {
-        camera = new PerspectiveCamera(50, 600, 480);
+        camera = new PerspectiveCamera(70, 600, 480);
         viewport = new ScreenViewport(camera);
 
         camera = viewport.getCamera();
 
         camera.position.set(Constants.SCALE * 25, Constants.SCALE * 15, Constants.SCALE * 25);
         camera.lookAt(Constants.SCALE * 0, Constants.SCALE * 0, Constants.SCALE * 0);
-        camera.near = Constants.SCALE * .1f;
+        camera.near = Constants.SCALE * .01f;
         camera.far = Constants.SCALE * 500f;
         camera.update();
     }

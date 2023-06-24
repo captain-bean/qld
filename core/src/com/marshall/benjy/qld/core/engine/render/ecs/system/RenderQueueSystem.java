@@ -18,11 +18,9 @@ public class RenderQueueSystem extends SortedIteratingSystem {
     private int index = 0;
     private MasterRenderer masterRenderer;
 
-    public RenderQueueSystem() {
+    public RenderQueueSystem(DevCamera camera) {
         super(Family.all(ModelComponent.class, ShaderComponent.class, TransformComponent.class).get(), new ZComparator());
-        masterRenderer = new MasterRenderer(new ModelRenderer());
-
-
+        masterRenderer = new MasterRenderer(new ModelRenderer(camera));
     }
 
 
@@ -49,11 +47,7 @@ public class RenderQueueSystem extends SortedIteratingSystem {
     public void update(float deltaTime) {
         index = getEntities().size();
         super.update(deltaTime);
-
     }
 
-    public void setCamera(DevCamera camera) {
-        masterRenderer.setCamera(camera);
-    }
 }
 

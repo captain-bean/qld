@@ -1,8 +1,6 @@
 package com.marshall.benjy.qld.core.game.render.opengl;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.marshall.benjy.qld.core.engine.logic.command.MoveCameraCommand;
 import com.marshall.benjy.qld.core.engine.render.DevCamera;
 import com.marshall.benjy.qld.core.engine.render.DevEnvironment;
@@ -21,10 +19,8 @@ import com.marshall.benjy.qld.core.game.state.api.QLDGameState;
 import java.util.Collection;
 
 public class OpenGLRenderer implements QLDRenderer {
-    private AssetManager assetManager;
     private LevelContainer levelContainer;
-    private PlayerEntity playerRenderer;
-    private ModelBatch modelBatch;
+    private PlayerEntity playerEntity;
     private QLDShader shader, spriteShader;
     private DevCamera camera;
     private Environment environment;
@@ -37,11 +33,11 @@ public class OpenGLRenderer implements QLDRenderer {
     public OpenGLRenderer(QLDGameState initialState) {
         camera = new DevCamera();
 
-        scene = new Scene();
+        scene = new Scene(camera);
         modelLoader = new ModelLoader();
 
         levelContainer = new LevelContainer(initialState.getLevel());
-        playerRenderer = new PlayerEntity(initialState.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
+        playerEntity = new PlayerEntity(initialState.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
 
         shader = new DefaultShader();
         shader.init();
@@ -60,10 +56,9 @@ public class OpenGLRenderer implements QLDRenderer {
             scene.addEntities(levelContainer.getInstances());
             sceneInit = true;
         }
-        playerRenderer.setShader(shader.SHADER_ID);
-        scene.addEntity(playerRenderer);
+        playerEntity.setShader(shader.SHADER_ID);
+        scene.addEntity(playerEntity);
         scene.addEntity(skybox);
-        scene.setCamera(camera);
 
     }
     public void render() {
@@ -73,20 +68,17 @@ public class OpenGLRenderer implements QLDRenderer {
             sceneInit();
         }
 }
-
-    public void dispose() {
-    }
-
     public void moveCamera(MoveCameraCommand command) {
         camera.moveCamera(command);
     }
 
-    public void resize(int width, int height){
-        camera.resize(width, height);
+    @Override
+    public void dispose() {
+
     }
 
-    public void updateLevelInstances() {
-        this.levelContainer.updateInstances();
+    public void resize(int width, int height){
+        camera.resize(width, height);
     }
 
     @Override
@@ -94,18 +86,13 @@ public class OpenGLRenderer implements QLDRenderer {
         levelContainer.onTileUpdated(position);
     }
 
-
     public void updatePlayerInstance() {
-        this.playerRenderer.updateModelInstance();
+        this.playerEntity.markNeedsUpdate();
     }
 
     @Override
     public void onLevelChanged() {
         // TODO implement
-    }
-
-    public Collection<QLDEntity> getLevelEntities(){
-        return levelContainer.getInstances();
     }
 
     public void sceneInit() {

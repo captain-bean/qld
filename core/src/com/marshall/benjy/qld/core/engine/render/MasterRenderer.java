@@ -1,9 +1,6 @@
 package com.marshall.benjy.qld.core.engine.render;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -14,14 +11,8 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.BufferUtils;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
-import com.marshall.benjy.qld.core.engine.render.shaders.QLDShaderProvider;
-import com.marshall.benjy.qld.core.game.Application;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +20,6 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import static com.badlogic.gdx.Gdx.gl;
-import static com.badlogic.gdx.Gdx.gl30;
 import static com.badlogic.gdx.graphics.GL20.*;
 import static com.badlogic.gdx.graphics.GL20.GL_TEXTURE_2D;
 import static com.badlogic.gdx.graphics.GL30.GL_RED;
@@ -65,7 +55,7 @@ public class MasterRenderer {
         fpsLabel = new Label(Gdx.graphics.getFramesPerSecond() + "", skin);
         stage = new Stage(new ScreenViewport(),spriteBatch);
 
-        setupSSAO();
+        //setupSSAO();
     }
 
     public void render(){
@@ -84,7 +74,7 @@ public class MasterRenderer {
 //            frameBuffer.end();
         }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        modelRenderer.Render();
+        modelRenderer.render();
         fpsLabel.setText(Gdx.graphics.getFramesPerSecond());
         fpsLabel.setPosition(0,Gdx.graphics.getHeight() - fpsLabel.getHeight());
         stage.addActor(fpsLabel);
@@ -133,23 +123,6 @@ public class MasterRenderer {
         //ShaderProgram.prependFragmentCode = "";
 
     }
-
-    public void setCamera(DevCamera camera){
-
-        modelRenderer.setCamera(camera);
-
-    }
-
-
-
-
-
-
-
-
-
-
-
 
     private void setupSSAO() {
 

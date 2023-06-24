@@ -27,10 +27,10 @@ public class Scene {
     private float deltaTime = 0;
     private Instant last = Instant.now();
 
-    public Scene() {
+    public Scene(DevCamera camera) {
         ModelLoader.createStaticLoader();
         ecsEngine = new Engine();
-        renderQueueSystem = new RenderQueueSystem();
+        renderQueueSystem = new RenderQueueSystem(camera);
         updateSystem = new UpdateSystem();
         environment = DevEnvironment.instance();
         ecsEngine.addSystem(renderQueueSystem);
@@ -53,10 +53,5 @@ public class Scene {
 
     public void addEntity(Entity entity) {
             ecsEngine.addEntity(entity);
-    }
-
-
-    public void setCamera(DevCamera camera) {
-        renderQueueSystem.setCamera(camera);
     }
 }
