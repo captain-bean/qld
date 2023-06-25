@@ -8,7 +8,7 @@ import org.apache.camel.CamelContext;
 
 public class StateBridge {
 
-    public StateBridge(CamelContext context, StateManager stateManager) {
+    protected StateBridge(CamelContext context, StateManager stateManager) {
 
         Subscriber<Position> movePlayerCommandConsumer
                 = new Subscriber<>(context, Topics.MOVE_PLAYER, stateManager::movePlayer);

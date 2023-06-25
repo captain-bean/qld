@@ -51,24 +51,15 @@ public class OpenGLRenderer implements QLDRenderer {
         skybox.getComponent(ModelComponent.class).setTexturePath("Textures/skybox.jpg");
         skybox.getComponent(TransformComponent.class).transform.translate(0,-200f,0).scale(1000,-1000,1000);
 
-        Collection<QLDEntity> tiles = levelContainer.getInstances();
-        if(!tiles.isEmpty()) {
-            scene.addEntities(levelContainer.getInstances());
-            sceneInit = true;
-        }
         playerEntity.setShader(shader.SHADER_ID);
         scene.addEntity(playerEntity);
         scene.addEntity(levelContainer);
         scene.addEntity(skybox);
-
     }
     public void render() {
-        if(sceneInit){
-            scene.update();
-        }else {
-            sceneInit();
-        }
-}
+        scene.update();
+    }
+
     public void moveCamera(MoveCameraCommand command) {
         camera.moveCamera(command);
     }
@@ -93,15 +84,7 @@ public class OpenGLRenderer implements QLDRenderer {
 
     @Override
     public void onLevelChanged() {
-        // TODO implement
-    }
-
-    public void sceneInit() {
-        Collection<QLDEntity> tiles = levelContainer.getInstances();
-        if(!tiles.isEmpty()) {
-            scene.addEntities(levelContainer.getInstances());
-            sceneInit = true;
-        }
+        levelContainer.markDirty();
     }
 }
 

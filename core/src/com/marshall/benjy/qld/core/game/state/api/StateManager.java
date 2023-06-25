@@ -21,12 +21,16 @@ public class StateManager {
     private Publisher<String> levelChangedPublisher;
     private StateBridge stateBridge;
 
-    public StateManager(CamelContext context) {
-        state = QLDGameStateFactory.development();
+    public StateManager(CamelContext context, QLDGameState initialState) {
+        state = initialState;
         playerMovedPublisher = new Publisher<>(context);
         tileChangedPublisher = new Publisher<>(context);
         levelChangedPublisher = new Publisher<>(context);
         stateBridge = new StateBridge(context, this);
+
+        // Fix for first level not blowing up the first tile
+        // Once there is a hub world, this probably won't be necessary
+        changeTile(state.getPlayer().getPosition(), TileTypes.BLOWED_UP);
     }
 
     public QLDGameState getState() {
@@ -45,9 +49,8 @@ public class StateManager {
         tileChangedPublisher.sendMessage(Topics.TILE_UPDATED, position);
     }
 
-    protected void changeLevel(Level level) {
+    public void changeLevel(Level level) {
         state.setLevel(level);
-        state.getPlayer().setPosition(state.getLevel().getStartPosition());
     }
 
 

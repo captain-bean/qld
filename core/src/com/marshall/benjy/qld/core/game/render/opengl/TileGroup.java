@@ -18,8 +18,9 @@ public class TileGroup extends QLDEntity {
 
 	private static final Logger logger = LogManager.getLogger(TileGroup.class);
 	private Level level;
-	public Map<Position, QLDEntity> instances = new HashMap<>();
-	public List<Position> dirtyList = new ArrayList<>();
+	private Map<Position, QLDEntity> tileEntities = new HashMap<>();
+	private List<Position> dirtyList = new ArrayList<>();
+	private boolean masterDirty = true;
 	private TileTypePaths tileTypes;
 
 	public TileGroup(Level level) {
@@ -36,47 +37,54 @@ public class TileGroup extends QLDEntity {
 				Tile workingTile = level.getTiles()[x][z];
 				String modelPath = "Models/" + tileTypes.getTilePaths(workingTile);
 				TileEntity tileInstance;
-				if (instances.containsKey(new Position(x,z))) {
-					tileInstance = (TileEntity) instances.get(new Position(x,z));
+				if (tileEntities.containsKey(new Position(x,z))) {
+					tileInstance = (TileEntity) tileEntities.get(new Position(x,z));
 					tileInstance.setTileModel(modelPath);
-					instances.remove(new Position(x,z));
+					tileEntities.remove(new Position(x,z));
 				} else {
 					tileInstance = new TileEntity(modelPath);
 					tileInstance.translate(x * Constants.SCALE, 0, z * Constants.SCALE);
 					tileInstance.setShader(DefaultShader.SHADER_ID);
 				}
 
-				instances.put(new Position(x,z),tileInstance);
+				tileEntities.put(new Position(x,z),tileInstance);
 			}
 		}
 	}
 
 	public void update() {
-		if (!instances.isEmpty()) {
-			for(Position p : dirtyList) {
-				updateTileInstance(p);
+		if(masterDirty) {
+			try {
+				updateAllTiles();
+				masterDirty = false;
+			} catch (Exception ex) {
+				logger.error("Error while initializing level instances: ", ex);
+				tileEntities.clear();
 			}
-			return;
 		}
 
-		try {
-			updateAllTiles();
-		} catch (Exception ex) {
-			logger.error("Error while initializing level instances: ", ex);
-			instances.clear();
+		if (!tileEntities.isEmpty()) {
+			for(Position p : dirtyList) {
+				updateTileEntity(p);
+			}
+			dirtyList.clear();
 		}
 	}
 
-	public Collection<QLDEntity> getInstances() {
-		return instances.values();
+	private Collection<QLDEntity> getTileEntities() {
+		return tileEntities.values();
 	}
 
 	public void markPositionDirty(Position position) {
 		dirtyList.add(position);
 	}
 
-	public void updateTileInstance(Position position){
-		TileEntity tileInstance = (TileEntity) instances.get(position);
+	public void markDirty() {
+		masterDirty = true;
+	}
+
+	private void updateTileEntity(Position position){
+		TileEntity tileInstance = (TileEntity) tileEntities.get(position);
 		int x = position.getX();
 		int z = position.getZ();
 		Tile workingTile = level.getTiles()[x][z];

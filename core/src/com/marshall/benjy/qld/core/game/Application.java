@@ -3,7 +3,9 @@ package com.marshall.benjy.qld.core.game;
 import com.marshall.benjy.qld.core.game.director.Director;
 import com.marshall.benjy.qld.core.game.input.InputPublisher;
 import com.marshall.benjy.qld.core.game.render.api.RenderManager;
+import com.marshall.benjy.qld.core.game.state.api.QLDGameState;
 import com.marshall.benjy.qld.core.game.state.api.StateManager;
+import com.marshall.benjy.qld.core.game.state.generator.QLDGameStateFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +24,9 @@ public class Application {
         CamelContext context = new DefaultCamelContext();
         context.start();
 
-        stateManager = new StateManager(context);
+        QLDGameState initialState = QLDGameStateFactory.development();
+
+        stateManager = new StateManager(context, initialState);
 
         renderManager = new RenderManager(context, config, stateManager);
 

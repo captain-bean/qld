@@ -7,8 +7,10 @@ import com.marshall.benjy.qld.core.game.input.commands.MovePlayerCommand;
 import com.marshall.benjy.qld.core.game.messaging.Topics;
 import com.marshall.benjy.qld.core.game.state.api.QLDGameState;
 import com.marshall.benjy.qld.core.game.state.api.StateManager;
+import com.marshall.benjy.qld.core.game.state.datatype.Player;
 import com.marshall.benjy.qld.core.game.state.datatype.tile.Tile;
 import com.marshall.benjy.qld.core.game.state.datatype.tile.TileTypes;
+import com.marshall.benjy.qld.core.game.state.generator.LegacyLevelGenerator;
 import org.apache.camel.CamelContext;
 
 import javax.swing.plaf.nimbus.State;
@@ -42,7 +44,7 @@ public class Director {
         Position newPosition = new Position(oldPosition.getX() + command.getDeltaX(),
                 oldPosition.getZ() + command.getDeltaZ());
 
-        if(!validPlayerPosition(newPosition)) {
+        if(!PlayerMovementValidator.validMove(state, newPosition)) {
             return;
         }
 
@@ -50,28 +52,16 @@ public class Director {
 
         stateManager.changeTile(newPosition, TileTypes.BLOWED_UP);
 
-        // Change level if finished
+        if(LevelFinishedChecker.isFinished(state.getLevel())) {
+            stateManager.changeLevel(LegacyLevelGenerator.generateLegacyLevel(15, 15));
+            movePlayerPublisher.sendMessage(Topics.MOVE_PLAYER, state.getLevel().getStartPosition());
+        }
     }
 
-    private boolean validPlayerPosition(Position position) {
-        QLDGameState state = stateManager.getState();
 
-        Tile[][] tiles = state.getLevel().getTiles();
-        if(position.getX() < 0 || position.getZ() < 0 || position.getX() >= tiles.length || position.getZ() >= tiles[0].length) {
-            return false;
-        }
-        TileTypes tileType = tiles[position.getX()][position.getZ()].getType();
-        if(tileType == TileTypes.BLOWED_UP || tileType == TileTypes.WOOD) {
-            return false;
-        }
-        return true;
-    }
 
     public void handleMoveCameraIntent(MoveCameraCommand command) {
         moveCameraPublisher.sendMessage(Topics.MOVE_CAMERA, command);
     }
-
-
-
 
 }
