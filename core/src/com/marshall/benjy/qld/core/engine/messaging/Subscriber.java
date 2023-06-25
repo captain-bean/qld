@@ -1,14 +1,14 @@
-package com.marshall.benjy.qld.core.game.messaging;
+package com.marshall.benjy.qld.core.engine.messaging;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 
 import java.util.function.Consumer;
 
-public class QLDConsumer<T> {
+public class Subscriber<T> {
 
     private Consumer<T> consumer;
-    public QLDConsumer(CamelContext context, String topic, Consumer<T> consumer) {
+    public Subscriber(CamelContext context, String topic, Consumer<T> consumer) {
         this.consumer = consumer;
 
         try {

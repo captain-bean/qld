@@ -1,6 +1,7 @@
 package com.marshall.benjy.qld.core.game;
 
-import com.marshall.benjy.qld.core.game.input.commands.InputPublisher;
+import com.marshall.benjy.qld.core.game.director.Director;
+import com.marshall.benjy.qld.core.game.input.InputPublisher;
 import com.marshall.benjy.qld.core.game.render.api.RenderManager;
 import com.marshall.benjy.qld.core.game.state.api.StateManager;
 import org.apache.camel.CamelContext;
@@ -26,6 +27,8 @@ public class Application {
         renderManager = new RenderManager(context, config, stateManager);
 
         inputPublisher = new InputPublisher(context);
+
+        Director director = new Director(context, stateManager);
     }
 
     public void render() {

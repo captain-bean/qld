@@ -1,11 +1,11 @@
-package com.marshall.benjy.qld.core.game.messaging;
+package com.marshall.benjy.qld.core.engine.messaging;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 
-public class QLDPublisher<T> {
+public class Publisher<T> {
     private ProducerTemplate template;
-    public QLDPublisher(CamelContext context) {
+    public Publisher(CamelContext context) {
         this.template = context.createProducerTemplate();
     }
 

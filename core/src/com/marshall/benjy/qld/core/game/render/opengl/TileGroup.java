@@ -1,5 +1,6 @@
 package com.marshall.benjy.qld.core.game.render.opengl;
 
+import com.marshall.benjy.qld.core.engine.render.ecs.component.UpdateComponent;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.QLDEntity;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.state.Constants;
@@ -13,56 +14,68 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
-public class LevelContainer {
+public class TileGroup extends QLDEntity {
 
-	private static final Logger logger = LogManager.getLogger(LevelContainer.class);
+	private static final Logger logger = LogManager.getLogger(TileGroup.class);
 	private Level level;
-	public Map<Position,QLDEntity> instances = new HashMap<>();
+	public Map<Position, QLDEntity> instances = new HashMap<>();
+	public List<Position> dirtyList = new ArrayList<>();
 	private TileTypePaths tileTypes;
 
-	public LevelContainer(Level level) {
+	public TileGroup(Level level) {
 		this.level = level;
 		this.tileTypes = new TileTypePaths();
+		add(new UpdateComponent((delta) -> {
+			update();
+		}));
 	}
 
-	public void updateInstances() {
+	public void updateAllTiles() {
 		for (int x = 0; x < level.getTiles().length; x++) {
 			for (int z = 0; z < level.getTiles()[x].length; z++) {
 				Tile workingTile = level.getTiles()[x][z];
 				String modelPath = "Models/" + tileTypes.getTilePaths(workingTile);
 				TileEntity tileInstance;
-				if(instances.containsKey(new Position(x,z))){
+				if (instances.containsKey(new Position(x,z))) {
 					tileInstance = (TileEntity) instances.get(new Position(x,z));
 					tileInstance.setTileModel(modelPath);
 					instances.remove(new Position(x,z));
-				}else{
+				} else {
 					tileInstance = new TileEntity(modelPath);
 					tileInstance.translate(x * Constants.SCALE, 0, z * Constants.SCALE);
 					tileInstance.setShader(DefaultShader.SHADER_ID);
 				}
-
 
 				instances.put(new Position(x,z),tileInstance);
 			}
 		}
 	}
 
-	public Collection<QLDEntity> getInstances() {
+	public void update() {
 		if (!instances.isEmpty()) {
-			return instances.values();
+			for(Position p : dirtyList) {
+				updateTileInstance(p);
+			}
+			return;
 		}
 
 		try {
-			updateInstances();
-			return instances.values();
+			updateAllTiles();
 		} catch (Exception ex) {
-			logger.error("Error while updating level instances: ", ex);
+			logger.error("Error while initializing level instances: ", ex);
 			instances.clear();
-			return Collections.emptyList();
 		}
 	}
 
-	public void onTileUpdated(Position position){
+	public Collection<QLDEntity> getInstances() {
+		return instances.values();
+	}
+
+	public void markPositionDirty(Position position) {
+		dirtyList.add(position);
+	}
+
+	public void updateTileInstance(Position position){
 		TileEntity tileInstance = (TileEntity) instances.get(position);
 		int x = position.getX();
 		int z = position.getZ();

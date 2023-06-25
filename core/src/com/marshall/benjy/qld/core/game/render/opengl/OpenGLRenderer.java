@@ -19,7 +19,7 @@ import com.marshall.benjy.qld.core.game.state.api.QLDGameState;
 import java.util.Collection;
 
 public class OpenGLRenderer implements QLDRenderer {
-    private LevelContainer levelContainer;
+    private TileGroup levelContainer;
     private PlayerEntity playerEntity;
     private QLDShader shader, spriteShader;
     private DevCamera camera;
@@ -36,14 +36,14 @@ public class OpenGLRenderer implements QLDRenderer {
         scene = new Scene(camera);
         modelLoader = new ModelLoader();
 
-        levelContainer = new LevelContainer(initialState.getLevel());
+        levelContainer = new TileGroup(initialState.getLevel());
         playerEntity = new PlayerEntity(initialState.getPlayer(), camera.getCamera(), "Models/rectangle.obj");
 
         shader = new DefaultShader();
         shader.init();
 
         environment = DevEnvironment.instance();
-        levelContainer.updateInstances();
+        levelContainer.updateAllTiles();
 
         GameObject skybox = new GameObject();
         skybox.setModel("Models/skybox.obj");
@@ -58,6 +58,7 @@ public class OpenGLRenderer implements QLDRenderer {
         }
         playerEntity.setShader(shader.SHADER_ID);
         scene.addEntity(playerEntity);
+        scene.addEntity(levelContainer);
         scene.addEntity(skybox);
 
     }
@@ -83,7 +84,7 @@ public class OpenGLRenderer implements QLDRenderer {
 
     @Override
     public void onTileUpdated(Position position) {
-        levelContainer.onTileUpdated(position);
+        levelContainer.markPositionDirty(position);
     }
 
     public void updatePlayerInstance() {
