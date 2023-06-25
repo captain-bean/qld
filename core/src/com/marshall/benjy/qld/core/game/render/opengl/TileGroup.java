@@ -1,6 +1,7 @@
 package com.marshall.benjy.qld.core.game.render.opengl;
 
 import com.marshall.benjy.qld.core.engine.render.ecs.component.UpdateComponent;
+import com.marshall.benjy.qld.core.engine.render.ecs.entity.GameObject;
 import com.marshall.benjy.qld.core.engine.render.ecs.entity.QLDEntity;
 import com.marshall.benjy.qld.core.engine.render.shaders.DefaultShader;
 import com.marshall.benjy.qld.core.engine.state.Constants;
@@ -14,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
-public class TileGroup extends QLDEntity {
+public class TileGroup extends GameObject {
 
 	private static final Logger logger = LogManager.getLogger(TileGroup.class);
 	private Level level;
@@ -71,7 +72,7 @@ public class TileGroup extends QLDEntity {
 		}
 	}
 
-	private Collection<QLDEntity> getTileEntities() {
+	public Collection<QLDEntity> getTileEntities() {
 		return tileEntities.values();
 	}
 

@@ -54,6 +54,7 @@ public class OpenGLRenderer implements QLDRenderer {
         playerEntity.setShader(shader.SHADER_ID);
         scene.addEntity(playerEntity);
         scene.addEntity(levelContainer);
+        scene.addEntities(levelContainer.getTileEntities());
         scene.addEntity(skybox);
     }
     public void render() {
